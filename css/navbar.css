@@ -1,0 +1,12 @@
+.navbar .navbar-container {
+    padding: 0 20px;
+}
+.navbar .brand {
+    padding: 0 0 0 20px;
+}
+.logoutButton {
+    margin-left: 10px;
+}
+#username i {
+    margin-top: 2px;
+}

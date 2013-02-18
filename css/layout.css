@@ -1,0 +1,46 @@
+body {
+    padding-top: 60px;
+}
+.breadcrumb {
+    background-color: #F4F4F4;
+    border: 1px solid #EAEAEA;
+}
+.box {
+    background-color: #FFF;
+    border: 1px solid #EEE;
+    padding: 20px;
+}
+.boxRounded {
+    background-color: #FFF;
+    margin-bottom: 20px;
+    padding: 20px;
+    -moz-border-radius-top-right: 10px;
+    -webkit-border-bottom-left-radius: 10px;
+    border-radius: 10px;
+    border: 1px solid #EEE;
+}
+.boxDark {
+    background-color: #F4F4F4;
+    border: 1px solid #EAEAEA;
+}
+.boxDark hr {
+    border-top: 1px solid #E4E4E4;
+    border-bottom: 1px solid #FCFCFC;
+}
+
+.centered {
+    text-align: center;
+}
+.left {
+    text-align: left;
+}
+.dropdown {
+    text-align:left;
+}
+.hide {
+    display: none;
+}
+#homeBreadcrumb i.icon-home {
+    margin-top: 1px;
+    margin-right: 4px;
+}

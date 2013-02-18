@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<?php
+    session_start();
+    if(isset($_COOKIE['authToken']))
+    {
+            header('Location: campaign.php');
+            exit();
+    }
+    include('notice.php');
+?>
+<html>
+    <head>
+        <title>Ohmage - Please log in.</title>
+        <meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
+        <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>
+        <link href="css/layout.css" rel="stylesheet" type="text/css"/>
+        <link href="css/login.css" rel="stylesheet" type="text/css"/>
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/jquery-cookie.js"></script>
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/ohmage-login.js"></script>
+        <script type="text/javascript" src="js/alerts.js"></script>
+    </head>
+    <body class="loginBody">
+        <div class="container">
+            <div class="row">
+                <div class="span12 centered content">
+                    <?php
+                        getNotice();
+                    ?>
+                    <div class="boxRounded boxDark">
+                        <a href="http://www.ohmage.org"><img src="img/ohmage-logo.png"></a>
+                        <h1>Campaign Authoring</h1>
+                        <br>
+                        <p>Please login to create or edit your Ohmage campaigns.</p>
+                        <hr>
+                        <div class="row">
+                            <div class="offset2 span6">
+                                <form class="form-horizontal" id="login-form">
+                                    <div class="control-group">
+                                        <label class="control-label" for="inputUsername">Username</label>
+                                        <div class="controls">
+                                            <input type="text" class="span4" id="inputUsername" placeholder="Username">
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label" for="inputPassword">Password</label>
+                                        <div class="controls">
+                                            <input type="password" class="span4" id="inputPassword" placeholder="Password">
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <div class="controls">
+                                            <button type="submit" class="btn btn-primary btn-large btn-block">Login</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php
+            include('footer.php');
+        ?>
+    </body>
+</html>

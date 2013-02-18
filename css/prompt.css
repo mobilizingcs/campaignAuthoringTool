@@ -1,0 +1,109 @@
+#multiChoiceAnswer, #multiChoiceValue {
+    height: 200px;
+}
+
+#advancedCondition {
+    width: 90%;
+    margin: auto;
+    margin-bottom: 10px;
+}
+
+#surveyXml {
+    margin: auto;
+    width: 80%;
+    height: 380px;
+    text-align: left;
+}
+pre {
+  overflow: auto;
+  word-wrap: normal;
+  white-space: pre;
+}
+
+#previousItemsSortable {
+    list-style: none;
+    margin-left: 0;
+}
+#previousItemsSortable li {
+    padding: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    background-color: #FFF;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px #A4A4A4;
+    -moz-box-shadow: 2px 2px 5px #A4A4A4;
+    -webkit-box-shadow: 2px 2px 5px #A4A4A4;
+    overflow: hidden;
+}
+.editItem {
+    margin-right: 10px;
+}
+
+
+.accordion-group {
+    overflow: hidden;
+    background-color: #FCFCFC;
+}
+.accordion-heading a{
+    color: #444;
+    background-color: #FFF;
+}
+
+
+
+td, th {
+    padding: 5px;
+    text-align:left;
+}
+.overlay, .overlayXML{
+    background:transparent url(images/overlay.png) repeat top left;
+    position:fixed;
+    top:0px;
+    bottom:0px;
+    left:0px;
+    right:0px;
+    z-index:100;
+}
+
+.OverlayBox{
+    position:fixed;
+    top:-300px;
+    left:30%;
+    right:30%;
+    background-color:#fff;
+    color:#7F7F7F;
+    padding:20px;
+    border:2px solid #ccc;
+    -moz-border-radius: 20px;
+    -webkit-border-radius:20px;
+    -khtml-border-radius:20px;
+    -moz-box-shadow: 0 1px 5px #333;
+    -webkit-box-shadow: 0 1px 5px #333;
+    z-index:101;
+}
+a.boxclose{
+    float:right;
+    width:26px;
+    height:26px;
+    background:transparent url(images/cancel.png) repeat top left;
+    margin-top:-30px;
+    margin-right:-30px;
+    cursor:pointer;
+}
+
+#condition_container{
+    display:none;
+    position:fixed;      
+    background:#FFFFFF;    
+    border:2px solid #cecece;    
+    z-index:2;    
+    padding:11px;    
+    font-size:13px;  
+}
+
+.form-field * {
+    vertical-align: right;
+}   
+ 

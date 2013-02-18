@@ -1,0 +1,9 @@
+.btn-small i.icon-remove {
+    margin-top: 1px;
+}
+.addPropertiesBox {
+    min-height: 200px;
+}
+.addPropertiesBox button {
+    margin-bottom: 10px;
+}

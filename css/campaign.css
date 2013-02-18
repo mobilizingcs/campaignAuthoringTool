@@ -1,0 +1,7 @@
+#privacyStateBtn, #runningStateBtn {
+    width: 150px;
+}
+
+.btn i.icon-white {
+    margin-left: 5px;
+}
