@@ -10,7 +10,7 @@
             <form class="form-horizontal" id="messageForm">
                 <input type="hidden" name="editMessageId" id="editMessageId">
                 <div class="control-group">
-                    <label class="control-label" for="messageId">Message <i class="icon-asterisk"></i></label>
+                    <label class="control-label" for="messageId">Message ID<i class="icon-asterisk"></i></label>
                     <div class="controls">
                         <textarea name="id" id="messageId" placeholder="A unique identifier for this message."></textarea>
                         <i class="help-icon icon-question-sign" data-original-title="A unique identifier for this message." rel="tooltip" data-placement="right"></i>

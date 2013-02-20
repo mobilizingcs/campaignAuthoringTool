@@ -10,7 +10,7 @@
             <form class="form-horizontal" id="promptForm">
                 <input type="hidden" name="editPromptId" id="editPromptId">
                 <div class="control-group">
-                    <label class="control-label" for="promptId">Display Label <i class="icon-asterisk"></i></label>
+                    <label class="control-label" for="promptId">Prompt ID <i class="icon-asterisk"></i></label>
                     <div class="controls">
                         <input type="text" name="id" id="promptId" placeholder="A unique identifier for the prompt." />
                         <i class="help-icon icon-question-sign" data-original-title="A unique identifier for the prompt." rel="tooltip" data-placement="right"></i>

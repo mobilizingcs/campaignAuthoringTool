@@ -76,9 +76,8 @@ var campaignEditor = {
             index = contentList.length;
         } else {
             // We need to save the ID in case another condition references this item
-            console.log(contentList[index]['message']['editId']);
             savedId = contentList[index]['message']['editId'];
-            console.log(savedId);
+            
             // savedId = contentList[index]['message']['id'];
             contentList.splice(index, 1);
         }
@@ -88,7 +87,7 @@ var campaignEditor = {
         message['id'] = messageData['id'];
         if (messageData['messageCondition']) message['condition'] = messageData['messageCondition'];
         
-        message['editId'] =  typeof(saveId) === "undefined" ? campaignEditor.maxItemIndex(contentList) + 1 : savedId;
+        message['editId'] =  typeof(savedId) === "undefined" ? campaignEditor.maxItemIndex(contentList) + 1 : savedId;
         //message['editId'] = typeof(saveId) === "undefined" ? campaignEditor.maxItemIndex(contentList) + 1 : savedId;
         contentList.splice(index, 0, {'message': message});
 
@@ -134,6 +133,7 @@ var campaignEditor = {
         } else {
             // We need to save the ID in case another condition references this item
             savedId = contentList[index]['prompt']['editId'];
+            console.log(savedId);
             contentList.splice(index, 1);
         }
 
@@ -155,9 +155,10 @@ var campaignEditor = {
         }
         promptItem['properties'] = properties;
 
-        promptItem['editId'] = typeof(saveId) === "undefined" ? campaignEditor.maxItemIndex(contentList) + 1 : savedId;
+        promptItem['editId'] = typeof(savedId) === "undefined" ? campaignEditor.maxItemIndex(contentList) + 1 : savedId;
         contentList.splice(index, 0, {'prompt': promptItem});
-
+        console.log(contentList);
+        console.log(index);
         return index;
 
     },

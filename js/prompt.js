@@ -174,6 +174,7 @@ $(function() {
 
     function setupEditMessage (message) {
         var itemId = message['editId'];
+        console.log(itemId);
         $('#editMessageId').val(itemId);
         $('#messageText').val(message['messageText']);
         $('#messageId').val(message['id']);
@@ -190,7 +191,8 @@ $(function() {
 
      function setupEditPrompt (prompt) {
         // TODO
-        var itemId = prompt['id'];
+        var itemId = prompt['editId'];
+        console.log(itemId);
         $('#editPromptId').val(itemId);
         $('#promptId').val(prompt['id']);
         $('#displayLabel').val(prompt['displayLabel']);
@@ -311,7 +313,7 @@ $(function() {
             console.log(messageId);
             itemIndex = campaignEditor.surveyItemIndexes(campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList']['']).indexOf(messageId);
             //itemIndex = indexMapper[campaignEditor.surveyItemIndexes(campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList']['']).indexOf(id)];
-            //console.log(itemIndex);
+            console.log(itemIndex);
             campaignEditor.addMessage(messageData, itemIndex);
         } else {
             event.preventDefault();
@@ -344,13 +346,15 @@ $(function() {
         var promptData = $this.serializeObject();
         disabled.attr('disabled','disabled');
 
-        console.log(promptData);
         var promptType = promptData['promptType'];
         var itemIndex;
         properties = addProperties(promptData, promptType);
         if (promptData['editPromptId']) {
+            event.preventDefault();
             var promptId = parseInt(promptData['editPromptId']);
+            console.log(promptId);
             itemIndex = campaignEditor.surveyItemIndexes(campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList']['']).indexOf(promptId);
+            console.log(itemIndex);
             campaignEditor.addPrompt(
                 campaignWrapper['campaign'], 
                 $.cookie('currentSurvey'),
@@ -368,7 +372,6 @@ $(function() {
                 itemIndex
            );
         } else {
-            console.log("test")
             itemIndex = campaignEditor.addPrompt(
                 campaignWrapper['campaign'], 
                 $.cookie('currentSurvey'),
@@ -386,6 +389,7 @@ $(function() {
            );
         } 
 
+        console.log(itemIndex);
         if (itemIndex === false) {
             surveyItemError('Some required fields are missing!')
             event.preventDefault();

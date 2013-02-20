@@ -38,6 +38,7 @@ function addNumberToPrevItem(index) {
         '<button type="button" class="btn btn-primary pull-right editItem"><i class="icon-pencil icon-white"></i> Edit</button>' +
         '<strong><em>(123)</em> Number</strong><br><p>' + prompt['promptText'] + '</p>' + 
         '<p><strong>Range: </strong>' + min + ' - ' + max + '</p></li>';
+    $('#previousItemsSortable').children().eq(index).remove();    
     if (index != 0) {
         $(newItem).insertAfter($('#previousItemsSortable').children().eq(index - 1)).slideToggle().removeClass('hide');
     } else {
@@ -54,6 +55,7 @@ function addPhotoToPrevItem(index) {
         '<button type="button" class="btn btn-primary pull-right editItem"><i class="icon-pencil icon-white"></i> Edit</button>' +
         '<i class="icon-camera"></i> <strong>Photo</strong><br><br><p>' + prompt['promptText'] + '</p>' +
         '<p><strong>Maximum Vertical Resolution: </strong>' + maxRes + '</p></li>';
+    $('#previousItemsSortable').children().eq(index).remove();
     if (index != 0) {
         $(newItem).insertAfter($('#previousItemsSortable').children().eq(index - 1)).slideToggle().removeClass('hide');
     } else {
@@ -69,6 +71,7 @@ function addRemoteToPrevItem(index) {
         '<button type="button" class="btn btn-primary pull-right editItem"><i class="icon-pencil icon-white"></i> Edit</button>' +
         '<i class="icon-user"></i> <strong>Remote Activity</strong><br><p>' + prompt['promptText'] + '</p>' +
         '</li>';
+    $('#previousItemsSortable').children().eq(index).remove();
     if (index != 0) {
         $(newItem).insertAfter($('#previousItemsSortable').children().eq(index - 1)).slideToggle().removeClass('hide');
     } else {
@@ -84,6 +87,7 @@ function addSingleChoiceToPrevItem(index) {
         '<button type="button" class="btn btn-primary pull-right editItem"><i class="icon-pencil icon-white"></i> Edit</button>' +
         '<i class="icon-ok-circle"></i> <strong>Single Choice</strong><br><p>' + prompt['promptText'] + '</p>' +
         '</li>';
+    $('#previousItemsSortable').children().eq(index).remove();
     if (index != 0) {
         $(newItem).insertAfter($('#previousItemsSortable').children().eq(index - 1)).slideToggle().removeClass('hide');
     } else {
@@ -102,6 +106,7 @@ function addTextToPrevItem(index) {
         '<button type="button" class="btn btn-primary pull-right editItem"><i class="icon-pencil icon-white"></i> Edit</button>' +
         '<i class="icon-font"></i> <strong>Text</strong><br><p>' + prompt['promptText'] + '</p>' +
         '<p><strong>Character Count Range: </strong>' + min + ' - ' + max + '</p></li>';
+    $('#previousItemsSortable').children().eq(index).remove();
     if (index != 0) {
         $(newItem).insertAfter($('#previousItemsSortable').children().eq(index - 1)).slideToggle().removeClass('hide');
     } else {
@@ -117,6 +122,7 @@ function addTimestampToPrevItem(index) {
         '<button type="button" class="btn btn-primary pull-right editItem"><i class="icon-pencil icon-white"></i> Edit</button>' +
         '<i class="icon-time"></i> <strong>Timestamp</strong><br><p>' + prompt['promptText'] + '</p>' +
         '</li>';
+    $('#previousItemsSortable').children().eq(index).remove();
     if (index != 0) {
         $(newItem).insertAfter($('#previousItemsSortable').children().eq(index - 1)).slideToggle().removeClass('hide');
     } else {
