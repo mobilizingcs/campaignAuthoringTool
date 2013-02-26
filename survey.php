@@ -63,6 +63,14 @@
                             <hr>
                             <form class="form-horizontal" id="surveyForm" action="prompt.php">
                                 <div class="control-group">
+                                    <label class="control-label" for="surveyId">Survey Id <i class="icon-asterisk"></i></label>
+                                    <div class="controls">
+                                        <input type="text" id="surveyId" />
+                                        <i class="help-icon icon-question-sign" data-original-title="A unique identifier for this survey." rel="tooltip" data-placement="right"></i>
+                                    </div>
+                                </div>
+
+                                <div class="control-group">
                                     <label class="control-label" for="surveyTitle">Title <i class="icon-asterisk"></i></label>
                                     <div class="controls">
                                         <input type="text" id="surveyTitle" />
