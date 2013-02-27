@@ -68,12 +68,14 @@ $(function() {
     });
     
     
-    //Original post
+
+    //sOriginal post
     $('#submitCampaign').click(function() {
         var xmlFile = '<?xml version="1.0" encoding="UTF-8"?>' + json2xml({'campaign': campaignWrapper['campaign']});
         $.post("https://test.ohmage.org/app/user_info/read", { auth_token: $.cookie('authToken'), client: 'campaign-webapp' }, function(response) {
             if (response.result === 'success') {
                 var classes = Object.keys(response['data'][$.cookie('username')]['classes']).join();
+                console.log('test');
                  $.post("submitCampaign.php", { 
                     auth_token: $.cookie('authToken'), 
                     client: "campaign-webapp", 
@@ -102,7 +104,6 @@ $(function() {
             }
         }, "json");
     });
-
     
     /*
     $('#submitCampaign').click(function() {
@@ -142,5 +143,9 @@ $(function() {
             }
         }, "json");
     });
+<<<<<<< HEAD
     */
+=======
+*/
+>>>>>>> commit from laptop
 });
