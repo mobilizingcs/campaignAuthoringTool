@@ -143,7 +143,8 @@ function addProperties(input, promptType) {
         temp = propertiesText[0].split(":");
         key = temp[1];
         property = {};
-        property['key'] = key;
+        property['key'] = 'maxDimension';
+        property['label'] = key;
         properties['property'].push(property);
         return properties;
     }
@@ -183,6 +184,9 @@ function addProperties(input, promptType) {
     else if (promptType == "timestamp") {
         // doing nothing
         return properties;
+    }
+    else if (promptType == "video") {
+        // TODO
     }
     else {
         // invalid

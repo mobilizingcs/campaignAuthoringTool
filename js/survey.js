@@ -30,6 +30,7 @@ $(function() {
         var surveyData = {};
 
         // Extract all form data and show error to user if present
+        surveyData['id'] = $('#surveyId').val();
         surveyData['title'] = $('#surveyTitle').val();
         surveyData['description'] = false;
         // Check if field is hidden, and if so, don't include it
@@ -65,7 +66,9 @@ $(function() {
             localStorage['campaignWrapper'] = JSON.stringify(campaignWrapper);
         }
     });
-
+    
+    
+    //Original post
     $('#submitCampaign').click(function() {
         var xmlFile = '<?xml version="1.0" encoding="UTF-8"?>' + json2xml({'campaign': campaignWrapper['campaign']});
         $.post("https://test.ohmage.org/app/user_info/read", { auth_token: $.cookie('authToken'), client: 'campaign-webapp' }, function(response) {
@@ -78,6 +81,7 @@ $(function() {
                     privacy_state: campaignWrapper['privacyState'],
                     class_urn_list: classes,
                     xml: xmlFile }, function(response) {
+                    console.log(response);
                     var responseJSON = JSON.parse(response.substring(0, response.length - 1));
                     if (responseJSON['result'] === 'success') {
                         var successAlert = '<div class="alert alert-success createCampaignSuccess hide"><button class="close">&times;</button><strong>Campaign Submitted Successfully!</strong></div>';
@@ -98,4 +102,47 @@ $(function() {
             }
         }, "json");
     });
+
+    
+    /*
+    $('#submitCampaign').click(function() {
+        //var xmlFile = '<?xml version="1.0" encoding="UTF-8"?>' + json2xml({'campaign': campaignWrapper['campaign']});
+        var xmlFile = '@xmlCampaign.xml;type=text//xml'
+        $.post("https://test.ohmage.org/app/user_info/read", { auth_token: $.cookie('authToken'), client: 'campaign-webapp' }, function(response) {
+            if (response.result === 'success') {
+                var classes = Object.keys(response['data'][$.cookie('username')]['classes']).join();
+                var myData = {auth_token: $.cookie('authToken'), 
+                        client: "campaign-webapp", 
+                        running_state: campaignWrapper['runningState'],
+                        privacy_state: campaignWrapper['privacyState'],
+                        class_urn_list: classes,
+                        xml: xmlFile };
+                $.ajax ({
+                    type: "POST",
+                    url:"https://test.ohmage.org/app/campaign/create",
+                    contentType:attr( "enctype", "multipart/form-data" ),
+                    data: myData,
+                    crossDomain: true
+                    }).done(function(response) {
+                    var responseJSON = JSON.parse(response.substring(0, response.length - 1));
+                    if (responseJSON['result'] === 'success') {
+                        var successAlert = '<div class="alert alert-success createCampaignSuccess hide"><button class="close">&times;</button><strong>Campaign Submitted Successfully!</strong></div>';
+                        $(successAlert).insertAfter('.newSurvey hr').slideToggle();
+                        if($('.createCampaignSuccess').size() > 1) {
+                            $('.createCampaignSuccess').slice(1).delay('1000').slideToggle('slow',function() { $(this).alert('close')});
+                        }
+                    } else {
+                        var errorAlert = '<div class="alert alert-error createCampaignError hide"><button class="close">&times;</button><strong>Error:</strong> ' + responseJSON['errors'][0]['text'] + '</div>';
+                        $(errorAlert).insertAfter('.newSurvey hr').slideToggle();
+                        if($('.createCampaignError').size() > 1) {
+                            $('.createCampaignError').slice(1).delay('1000').slideToggle('slow',function() { $(this).alert('close')});
+                        }
+                    }
+                }, "text");
+            } else {
+                console.log('CLASS FAILURE');
+            }
+        }, "json");
+    });
+    */
 });

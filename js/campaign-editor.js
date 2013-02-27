@@ -31,7 +31,7 @@ var campaignEditor = {
     */
     addSurvey: function(campaign, surveyData) {
         // Check if all required components are present
-        if (!campaign || !surveyData['title'] || !surveyData['submitText'] ||
+        if (!campaign || !surveyData['id'] || !surveyData['title'] || !surveyData['submitText'] ||
             (surveyData['showSummary'] && !surveyData['summaryText']) || 
             (typeof(surveyData['anytime']) === 'undefined')) {
             return false;
@@ -39,7 +39,8 @@ var campaignEditor = {
 
         var survey = {};
            
-        survey['id'] = surveyData['title'].replace(/\s/g, '');    // ID is equivalent to title sans whitespace
+        //survey['id'] = surveyData['title'].replace(/\s/g, '');    // ID is equivalent to title sans whitespace
+        survey['id'] = surveyData['id'];
         survey['title'] = surveyData['title'];
         if (surveyData['description']) survey['description'] = surveyData['description'];
         if (surveyData['introText']) survey['introText'] = surveyData['introText'];

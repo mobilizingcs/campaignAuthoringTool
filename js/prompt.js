@@ -65,6 +65,9 @@ $(function() {
                 break;
             case 'timestamp':
                 // Timestamp modal is not needed.  Do nothing.
+                break;
+            case 'video':
+                //TODO
                 break;                
             default:
                 break;
@@ -252,6 +255,8 @@ $(function() {
             case "timestamp":
                 
                 break;
+            case "video":
+                break;
             default:
                 console.log('Error, unknown prompt type found.');
                 break;
@@ -418,6 +423,9 @@ $(function() {
                     break;
                 case "timestamp":
                     addTimestampToPrevItem(itemIndex)
+                    break;
+                case "video":
+                    // TODO
                     break;
                 default:
                     console.log('Error, unknown prompt type found.');

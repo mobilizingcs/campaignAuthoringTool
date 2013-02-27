@@ -70,6 +70,7 @@
                             <option value="single_choice_custom">Single Choice Custom</option>
                             <option value="text">Text</option>
                             <option value="timestamp">Timestamp</option>
+                            <option value="video">Video</option>
                         </select>
                         <i class="help-icon icon-question-sign" data-original-title="Choose type of your prompt" rel="tooltip" data-placement="right"></i>
                     </div>
