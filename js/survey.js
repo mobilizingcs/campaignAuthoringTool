@@ -112,17 +112,15 @@ $(function() {
             if (response.result === 'success') {
                 var classes = Object.keys(response['data'][$.cookie('username')]['classes']).join();
                 var myData = {auth_token: $.cookie('authToken'), 
-                        client: "campaign-webapp", 
-                        running_state: campaignWrapper['runningState'],
-                        privacy_state: campaignWrapper['privacyState'],
-                        class_urn_list: classes,
-                        xml: xmlFile };
+            
                 $.ajax ({
                     type: "POST",
                     url:"https://test.ohmage.org/app/campaign/create",
                     contentType:attr( "enctype", "multipart/form-data" ),
                     data: myData,
                     crossDomain: true
+                        xml: xmlFile 
+                            }
                     }).done(function(response) {
                     var responseJSON = JSON.parse(response.substring(0, response.length - 1));
                     if (responseJSON['result'] === 'success') {
