@@ -60,7 +60,7 @@ $(function() {
     function displayTextValues() {
         var min = $('#minTextLength').val();
         var max = $('#maxTextLength').val();
-        var properties = "Min:" + min + "\n" + "Max:" + max;
+        var properties = "min:" + min + "\n" + "max:" + max;
 
         $('#addedPrompt').val(properties);
 
@@ -95,6 +95,17 @@ $(function() {
         $('#inputRemote').val('');
     }
 
+    function displayVideoValues() {
+        if ($('#maxLength').val()== null || $('#maxLength').val() == "") $('#maxLength').val(180);
+        var length = $('#maxLength').val();
+
+        var properties = "max_seconds:" + length;
+
+        $('#addedPrompt').val(properties);
+
+        $('#maxLength').val('');
+    }
+
     $('#multiChoiceSubmit').click(function() {
         displayMultiChoiceValues();
         $('#multiChoiceModal').modal('hide');
@@ -125,6 +136,9 @@ $(function() {
         $('#remoteActivityModal').modal('hide');
     });
 
-
+    $('#videoSubmit').click(function() {
+        displayVideoValues();
+        $('#videoModal').modal('hide');
+    });
 
 });

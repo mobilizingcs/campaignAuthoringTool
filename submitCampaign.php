@@ -1,21 +1,25 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
+    // echo "hello world";
     $xmlFile = "xmlCampaign.xml";
-    $fh = fopen($xmlFile, 'w');
-    echo "test"s;
+    $fh = fopen($xmlFile, 'w') or die("can't open write file");
+    // var_dump(is_writable($xmlFile));
+    
     fwrite($fh, $_POST["xml"]);
-    echo "test2"s;
+    
     fclose($fh);
-    echo "test3"s;
+    
     $url = "https://test.ohmage.org/app/campaign/create";
     $ch = curl_init($url);
     //curl_setopt($ch, CURLOPT_URL, $url); 
-    echo "test4"s;
+    
     $data = array("auth_token" => $_POST["auth_token"],
         "client" => $_POST["client"],
         "running_state" => $_POST["running_state"],
         "privacy_state" => $_POST["privacy_state"],
         "class_urn_list" => $_POST["class_urn_list"],
-        "xml" => "@C:\\Users\\TaiPham\\Documents\\GitHub\\campaignAuthoringTool\\xmlCampaign.xml");
+        //"xml" => "@C:\\Users\\TaiPham\\Documents\\GitHub\\campaignAuthoringTool\\xmlCampaign.xml");
         "xml" => "@/Users/tai/campaignAuthoringTool/xmlCampaign.xml");
 
     curl_setopt($ch, CURLOPT_POST, 1);

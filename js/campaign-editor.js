@@ -148,18 +148,22 @@ var campaignEditor = {
             promptItem['abbreviatedText'] = abbrText;
         }
         promptItem['promptType'] = promptType;
-        promptItem['default'] = defaultValue;
+
+        if (defaultValue!=null && defaultValue!="") {
+            promptItem['default'] = defaultValue;
+        }
+
         if (condition) promptItem['condition'] = condition;
         promptItem['skippable'] = skippable
         if (skippable) {
-            promptItem['skipLabel'] = skipLabel;
+            if (skipLabel) promptItem['skipLabel'] = skipLabel;
         }
         promptItem['properties'] = properties;
 
         promptItem['editId'] = typeof(savedId) === "undefined" ? campaignEditor.maxItemIndex(contentList) + 1 : savedId;
         contentList.splice(index, 0, {'prompt': promptItem});
-        console.log(contentList);
-        console.log(index);
+        //console.log(contentList);
+        //console.log(index);
         return index;
 
     },

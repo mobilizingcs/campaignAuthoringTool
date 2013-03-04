@@ -75,6 +75,22 @@ $.fn.serializeObject = function()
 };
 
 /*
+    Delete all the editId from the local storage
+*/
+function deleteEditField(contentList) {
+    for (var i = 0; i < contentList.length; i++) {
+        var item = contentList[i];
+        if (item['message']) {
+            delete item['message'].editId;
+        } else if (item['prompt']) {
+            delete item['prompt'].editId;
+        } else {
+            delete item['repeatableSet'].editId;
+        }
+    }
+}
+
+/*
     Saves the form to be cleared (after a setTimeout delay)
 */
 function formCallback(form){
@@ -167,7 +183,7 @@ function addProperties(input, promptType) {
         return properties;
     }
     else if (promptType == "text") {
-         propertiesText = text.split("\n");
+        propertiesText = text.split("\n");
         for (i = 0; i < 2; i++)
         {
             property = {};
@@ -186,7 +202,14 @@ function addProperties(input, promptType) {
         return properties;
     }
     else if (promptType == "video") {
-        // TODO
+        propertiesText = text.split("\n");
+        temp = propertiesText[0].split(":");
+        key = temp[1];
+        property = {};
+        property['key'] = 'max_seconds';
+        property['label'] = key;
+        properties['property'].push(property);
+        return properties;
     }
     else {
         // invalid

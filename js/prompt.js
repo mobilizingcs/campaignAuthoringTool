@@ -39,6 +39,18 @@ $(function() {
         }
     }
 
+    var skipLabel = $('#skipLabelLabel').text();
+    $('#skippable').change(function() { 
+        if (this.checked) {
+            $('#skipLabel').removeAttr('disabled');
+            $('#skipLabelLabel').append('<span class="label label-info">Required</span>');
+        }
+        else {
+            $('#skipLabel').attr('disabled', 'disabled');
+            $('#skipLabelLabel').html(skipLabel);
+        }
+    });
+
     $("#groupPromptType").change(function() {
         $this = $(this);
         console.log($this.val());
@@ -67,7 +79,7 @@ $(function() {
                 // Timestamp modal is not needed.  Do nothing.
                 break;
             case 'video':
-                //TODO
+                $('#videoModal').modal('show');
                 break;                
             default:
                 break;
@@ -85,6 +97,8 @@ $(function() {
 
     $('#saveSurvey').click(function(e) {
         if (confirm('Are you sure you wish to save this survey?')) {
+            deleteEditField(campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList']['']);
+            //console.log(campaignWrapper);
             localStorage['campaignWrapper'] = JSON.stringify(campaignWrapper);
         } else {
             e.preventDefault();
@@ -256,6 +270,7 @@ $(function() {
                 
                 break;
             case "video":
+                // TODO
                 break;
             default:
                 console.log('Error, unknown prompt type found.');
@@ -345,6 +360,7 @@ $(function() {
     
     // submit prompt and save to JSON object
     $('#promptForm').submit(function(event) {
+        event.preventDefault();
         var $this = $(this);
 
         var disabled = $this.find(':input:disabled').removeAttr('disabled');
@@ -377,6 +393,7 @@ $(function() {
                 itemIndex
            );
         } else {
+            event.preventDefault();
             itemIndex = campaignEditor.addPrompt(
                 campaignWrapper['campaign'], 
                 $.cookie('currentSurvey'),
@@ -394,7 +411,6 @@ $(function() {
            );
         } 
 
-        console.log(itemIndex);
         if (itemIndex === false) {
             surveyItemError('Some required fields are missing!')
             event.preventDefault();
@@ -419,13 +435,13 @@ $(function() {
                     addSingleChoiceToPrevItem(itemIndex);
                     break;
                 case "text":
-                    addTextToPrevItem(itemIndex)
+                    addTextToPrevItem(itemIndex);
                     break;
                 case "timestamp":
-                    addTimestampToPrevItem(itemIndex)
+                    addTimestampToPrevItem(itemIndex);
                     break;
                 case "video":
-                    // TODO
+                    addVideoToPrevItem(itemIndex);
                     break;
                 default:
                     console.log('Error, unknown prompt type found.');
@@ -445,7 +461,11 @@ $(function() {
 
     $('#viewXML').click(function() {
         console.log(campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]);
-        var xml = json2xml({'survey': campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]});
+        var tmp = campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')];
+        console.log(tmp);
+        deleteEditField(tmp['contentList'][''])
+        //var xml = json2xml({'survey': campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]});
+        var xml = json2xml({'survey': tmp});
         $('#surveyXml').text(vkbeautify.xml(xml));
         $('#xmlModal').modal('show');
     })

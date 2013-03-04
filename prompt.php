@@ -94,6 +94,7 @@
                                     include('promptModals/numberModal.php');
                                     include('promptModals/remoteActivityModal.php');
                                     include('promptModals/textModal.php');
+                                    include('promptModals/videoModal.php');
                                     include('surveyItems/newMessage.php');
                                     include('surveyItems/newPrompt.php');
                                     include('surveyItems/newRepeatableSet.php');

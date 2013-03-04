@@ -33,14 +33,14 @@ $(function() {
         surveyData['id'] = $('#surveyId').val();
         surveyData['title'] = $('#surveyTitle').val();
         surveyData['description'] = false;
-        // Check if field is hidden, and if so, don't include it
+        // Check if field is hidden and empty, and if so, don't include it
         if (!$('#surveyDescription').hasClass('hide')) {
-            surveyData['description'] = $('#surveyDescription').val();
+            if ($('#surveyDescription').val()) surveyData['description'] = $('#surveyDescription').val();
         }
         surveyData['introText'] = false;
-        // Check if field is hidden, and if so, don't include it
-        if (!$('.introTextInput').hasClass('hide')) {
-            surveyData['introText'] = $('#surveyIntroText').val();
+        // Check if field is hidden and empty, and if so, don't include it
+        if (!$('#surveyIntroText').hasClass('hide')) {
+            if ($('#surveyIntroText').val()) surveyData['introText'] = $('#surveyIntroText').val();
         }
         surveyData['submitText'] = $('#surveySubmitText').val();
         surveyData['showSummary'] = $('#showSummary').attr('checked') ? true : false;
@@ -71,6 +71,8 @@ $(function() {
 
     //sOriginal post
     $('#submitCampaign').click(function() {
+        //deleteEditField(campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList']['']);
+        //console.log(campaignWrapper);
         var xmlFile = '<?xml version="1.0" encoding="UTF-8"?>' + json2xml({'campaign': campaignWrapper['campaign']});
         $.post("https://test.ohmage.org/app/user_info/read", { auth_token: $.cookie('authToken'), client: 'campaign-webapp' }, function(response) {
             if (response.result === 'success') {
@@ -83,8 +85,9 @@ $(function() {
                     privacy_state: campaignWrapper['privacyState'],
                     class_urn_list: classes,
                     xml: xmlFile }, function(response) {
-                    console.log(response);
-                    var responseJSON = JSON.parse(response.substring(0, response.length - 1));
+                    var jsonStart = response.indexOf('{');
+                    var json = response.substring(jsonStart, response.length);
+                    var responseJSON = JSON.parse(json);
                     if (responseJSON['result'] === 'success') {
                         var successAlert = '<div class="alert alert-success createCampaignSuccess hide"><button class="close">&times;</button><strong>Campaign Submitted Successfully!</strong></div>';
                         $(successAlert).insertAfter('.newSurvey hr').slideToggle();
@@ -145,7 +148,4 @@ $(function() {
     });
 <<<<<<< HEAD
     */
-=======
-*/
->>>>>>> commit from laptop
 });
