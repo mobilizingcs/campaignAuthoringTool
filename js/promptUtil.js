@@ -91,6 +91,15 @@ function deleteEditField(contentList) {
 }
 
 /*
+    Check if n is a number
+*/
+function isNumber(n) {
+  //return !isNaN(parseFloat(n)) && isFinite(n);
+  var RE = /^\d*$/;
+  return RE.test(n);
+}
+
+/*
     Saves the form to be cleared (after a setTimeout delay)
 */
 function formCallback(form){

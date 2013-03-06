@@ -117,8 +117,23 @@ $(function() {
     });
 
     $('#numberSubmit').click(function() {
-        displayNumberValues();
-        $('#numberModal').modal('hide');
+        var min = $('#minNumber').val();
+        var max = $('#maxNumber').val();
+        if (min==="" || max=="") {
+            alert('Min and Max values must not be empty');
+        }
+        else if (isNumber(min) && isNumber(max)) {
+            if (Number(max) >= Number(min)) {
+                displayNumberValues();
+                $('#numberModal').modal('hide');
+            }
+            else {
+                alert('Max value must be greater than or equal min value');
+            }
+        }
+        else {
+            alert('Min and Max values need to be a number');
+        }
     });
 
     $('#photoSubmit').click(function() {
@@ -127,8 +142,23 @@ $(function() {
     });
 
     $('#textSubmit').click(function() {
-        displayTextValues();
-        $('#textModal').modal('hide');
+        var min = $('#minTextLength').val();
+        var max = $('#maxTextLength').val();
+        if (min==="" || max=="") {
+            alert('Min and Max values must not be empty');
+        }
+        else if (isNumber(min) && isNumber(max)) {
+            if (Number(max) >= Number(min)) {
+                displayTextValues();
+                $('#textModal').modal('hide');
+            }
+            else {
+                alert('Max value must be greater than or equal min value');
+            }
+        }
+        else {
+            alert('Min and Max values need to be a number');
+        }  
     });
 
     $('#remoteActivitySubmit').click(function() {
