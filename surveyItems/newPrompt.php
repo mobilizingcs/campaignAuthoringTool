@@ -25,6 +25,7 @@
                     </div>
                 </div>
                 
+                <!--
                 <div class="control-group">
                     <label class="control-label" for="displayType">Display Type <i class="icon-asterisk"></i></label>
                     <div class="controls">
@@ -39,7 +40,7 @@
                         <i class="help-icon icon-question-sign" data-original-title="The type of the data being collected, which must be one of measurement, event, count, category, or metadata." rel="tooltip" data-placement="right"></i>
                     </div>
                 </div>
-                
+                -->
                 <div class="control-group">
                     <label class="control-label" for="promptText">Prompt Text <i class="icon-asterisk"></i></label>
                     <div class="controls">
@@ -48,6 +49,7 @@
                     </div>
                 </div>
                 
+                <!--
                 <div class="control-group">
                     <label class="control-label" for="abbreviatedText">Abbreviated Text <i class="icon-asterisk"></i></label>
                     <div class="controls">
@@ -55,7 +57,8 @@
                         <i class="help-icon icon-question-sign" data-original-title="An abbreviated version of the prompt text for use in situations where space is limited or for display purposes." rel="tooltip" data-placement="right"></i>
                     </div>
                 </div>
-                
+                -->
+
                 <div class="control-group">
                     <label class="control-label" for="promptType">Prompt Type <i class="icon-asterisk"></i></label>
                     <div class="controls">
@@ -80,17 +83,6 @@
                             <textarea name="properties" id="addedPrompt" readonly></textarea>
                         </div>
                     </div>
-                    <!-- Overlay window section -->
-                    
-                    <div class="overlay" id="overlay" style="display:none;"></div>
-
-                    <div class="OverlayBox" id="PromptBox">
-                        <div class="data" id="data">
-                        </div>
-                        <div class="control-group">
-                            <button type="button" class="btn btn-primary" data-toggle="button" id="PromptBoxOK">OK</button>
-                        </div>
-                    </div>
                 </div>
                 
                 <div class="accordion" id="OptionalSection">
@@ -103,10 +95,10 @@
                         <div id="newSection" class="accordion-body collapse">
                             <div class="accordion-inner">
                                 <div class="control-group">
-                                    <label class="control-label" for="default">Default</label>
+                                    <!--<label type="hiden" class="control-label" for="default">Default</label>-->
                                     <div class="controls">
-                                        <input type="text" name="default" id="default" placeholder="Default" />
-                                        <i class="help-icon icon-question-sign" data-original-title="The default value for this prompt. This is type-dependent." rel="tooltip" data-placement="right"></i>
+                                        <input type="hidden" name="default" id="default" placeholder="Default" />
+                                        <!--<i class="help-icon icon-question-sign" data-original-title="The default value for this prompt. This is type-dependent." rel="tooltip" data-placement="right"></i>-->
                                     </div>
                                 </div>
                                 <div class="control-group">

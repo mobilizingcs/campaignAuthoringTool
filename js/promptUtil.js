@@ -91,12 +91,19 @@ function deleteEditField(contentList) {
 }
 
 /*
-    Check if n is a number
+    Check if n is a  positive number
 */
-function isNumber(n) {
+function isPositiveNumber(n) {
   //return !isNaN(parseFloat(n)) && isFinite(n);
   var RE = /^\d*$/;
   return RE.test(n);
+}
+
+/*
+    Check if n is a number
+*/
+function isNumber(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
 /*

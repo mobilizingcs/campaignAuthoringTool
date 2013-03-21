@@ -20,7 +20,7 @@
                     <label class="control-label" for="messageText">Message <i class="icon-asterisk"></i></label>
                     <div class="controls">
                         <textarea name="messageText" id="messageText" placeholder="The message to display to the user."></textarea>
-                        <i class="help-icon icon-question-sign" data-original-title="The message to display to the user." rel="tooltip" data-placement="right"></i>
+                        <i class="help-icon icon-question-sign" data-original-title="The text to be displayed to the user." rel="tooltip" data-placement="right"></i>
                     </div>
                 </div>
                 <div class="control-group">

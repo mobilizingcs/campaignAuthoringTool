@@ -29,7 +29,8 @@
         <script type="text/javascript" src="js/help-icon.js"></script>
         <script type="text/javascript" src="js/vkbeautify.0.99.00.beta.js"></script>
         <script type="text/javascript" src="js/breadcrumb.js"></script>
-        <script type="text/javascript" src="js/promptType.js"></script>       
+        <script type="text/javascript" src="js/promptType.js"></script>   
+        <script type="text/javascript" src="js/Constant.js"></script>       
     </head>
     <body>
         <?php

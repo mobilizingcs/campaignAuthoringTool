@@ -121,8 +121,8 @@ var campaignEditor = {
 
         var showSummary = campaign['surveys']['survey'][surveyIndex]['showSummary'];
         // Check if all required components are present
-        if (!campaign || !surveyIndex || !id || !displayLabel || !displayType ||
-            !promptText || (showSummary && !abbrText) || !promptType ||
+        if (!campaign || !surveyIndex || !id || !displayLabel ||
+            !promptText || !promptType ||
             (skippable && !skipLabel) || !properties) {
             return false;
         }
@@ -142,11 +142,11 @@ var campaignEditor = {
 
         promptItem['id'] = id;
         promptItem['displayLabel'] = displayLabel;
-        promptItem['displayType'] = displayType;
+        //promptItem['displayType'] = displayType;
         promptItem['promptText'] = promptText;
-        if (showSummary) {
-            promptItem['abbreviatedText'] = abbrText;
-        }
+        //if (showSummary) {
+        //    promptItem['abbreviatedText'] = abbrText;
+        //}
         promptItem['promptType'] = promptType;
 
         if (defaultValue!=null && defaultValue!="") {

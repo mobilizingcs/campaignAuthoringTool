@@ -74,7 +74,7 @@
                                     <label class="control-label" for="surveyTitle">Title <i class="icon-asterisk"></i></label>
                                     <div class="controls">
                                         <input type="text" id="surveyTitle" />
-                                        <i class="help-icon icon-question-sign" data-original-title="The name of your survey." rel="tooltip" data-placement="right"></i>
+                                        <i class="help-icon icon-question-sign" data-original-title="A name for the survey to be displayed to the user." rel="tooltip" data-placement="right"></i>
                                     </div>
                                 </div>
 
@@ -84,7 +84,7 @@
                                         <label class="control-label" for="surveyDescription">Desciption </label>
                                         <div class="controls">
                                             <textarea id="surveyDescription" class="" placeholder="Enter the description of your survey here..."></textarea>
-                                            <i class="help-icon icon-question-sign" data-original-title="What is your survey about?" rel="tooltip" data-placement="right"></i>
+                                            <i class="help-icon icon-question-sign" data-original-title="A user-friendly description of the survey." rel="tooltip" data-placement="right"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -95,7 +95,7 @@
                                         <label class="control-label" for="surveyIntroText">Introduction Text</label>
                                         <div class="controls">
                                             <textarea id="surveyIntroText" placeholder="Text to display to the user before they begin the survey..."></textarea>
-                                            <i class="help-icon icon-question-sign" data-original-title="Text to display to the user before they begin the survey." rel="tooltip" data-placement="right"></i>
+                                            <i class="help-icon icon-question-sign" data-original-title="The text to be displayed when a survey is started." rel="tooltip" data-placement="right"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -104,10 +104,11 @@
                                     <label class="control-label" for="surveySubmitText">Submit Text <i class="icon-asterisk"></i></label>
                                     <div class="controls">
                                         <textarea id="surveySubmitText" placeholder="Text to display to a user upon survey completion..."></textarea>
-                                        <i class="help-icon icon-question-sign" data-original-title="Text to display to the user after they complete the survey." rel="tooltip" data-placement="right"></i>
+                                        <i class="help-icon icon-question-sign" data-original-title="The text to be displayed on the submit screen once a survey has been completed." rel="tooltip" data-placement="right"></i>
                                     </div>
                                 </div>     
 
+                                <!--
                                 <div class="control-group">
                                     <div class="controls">
                                         <label class="checkbox">
@@ -116,7 +117,9 @@
                                         </label>
                                     </div>
                                 </div> 
+                                -->
 
+                                <!--
                                 <div class="summaryTextInput hide">
                                     <div class="control-group">
                                         <label class="control-label" id="surveySummaryTextLabel">Summary Text <i class="icon-asterisk"></i></label>
@@ -138,13 +141,14 @@
                                         </div>
                                     </div> 
                                 </div>
-
+                                -->
+                                
                                 <div class="control-group">
                                     <div class="controls">
                                         <label class="checkbox">
                                             <input type="checkbox" id="surveyAnytime" value="">
                                             Do you want the survey to be active upon submission?
-                                            <i class="help-icon icon-question-sign" data-original-title="Note: You can also activate this survey at a later time." rel="tooltip" data-placement="right"></i>
+                                            <i class="help-icon icon-question-sign" data-original-title="A boolean value indicating whether or not the survey may be taken at any time. If false, the survey may only be taken when a trigger has fired indicating that the user may now take the survey." rel="tooltip" data-placement="right"></i>
                                         </label>
                                     </div>
                                 </div>                          

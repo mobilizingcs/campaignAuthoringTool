@@ -5,7 +5,7 @@
     </div>
     <div class="modal-body centered">
         <p>What is the maximum length of the video the user can upload?</p>
-        <input type="text" id="maxLength" placeholder="Maximum Length"/>
+        <input type="text" id="maxVideoLength"/>
     </div>
     <div class="modal-footer">
         <button class="btn btn-primary" id="videoSubmit">Save changes</button>

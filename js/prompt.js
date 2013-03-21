@@ -53,39 +53,69 @@ $(function() {
 
     $("#groupPromptType").change(function() {
         $this = $(this);
-        console.log($this.val());
-        switch ($this.val()) {
-            case 'multi_choice':
-            case 'multi_choice_custom':
-                $('#multiChoiceModal').modal('show');
-                break;
-            case 'single_choice':
-            case 'single_choice_custom':
-                $('#singleChoiceModal').modal('show');
-                break;
-            case 'number':
-                $('#numberModal').modal('show');
-                break;
-            case 'photo':
-                $('#photoModal').modal('show');
-                break; 
-            case 'remote_activity':
-                $('#remoteActivityModal').modal('show');
-                break;
-            case 'text':
-                $('#textModal').modal('show');
-                break;
-            case 'timestamp':
-                // Timestamp modal is not needed.  Do nothing.
-                break;
-            case 'video':
-                $('#videoModal').modal('show');
-                break;                
-            default:
-                break;
+        var changeConfirm = true;
+        if ($('#addedPrompt').val != "") {
+            var text = "WARNING: Choosing new prompt type will clear all the data of old prompt type\n Proceed ?"
+            changeConfirm = confirm(text);
         }
+
+        if (changeConfirm) {
+            
+            $('#addedPrompt').val(""); // clear text box
+            switch ($this.val()) {
+                case 'multi_choice':
+                case 'multi_choice_custom':
+                    $('#multiChoiceModal').modal('show');
+                    break;
+                case 'single_choice':
+                case 'single_choice_custom':
+                    //$('#singleChoiceModal').modal('show');
+                    // automatically fit modal
+                    // reset modal
+                    $('#singleChoiceTable').empty();
+                    $('#singleChoiceTable').append("<tr><th>Label</th><th>Value</th></tr><tr><td><input type='text' class='singleLabel' /></td><td><input type='text' class='singleValue' /></td><td><button class='btn btn-primary'>X</button></td></tr>");
+                    $('#singleChoiceDefault').empty();
+                    $('#singleChoiceDefault')
+                        .append($("<option></option>")
+                        .attr("value",-1)
+                        .text("None")); 
+                    $('#singleChoiceModal').modal({
+                        backdrop: true,
+                        keyboard: true
+                    }).css({
+                        width: 'auto',
+                        'margin-left': function () {
+                            return -($(this).width() / 2);
+                        }
+                    });
+                    break;
+                case 'number':
+                    $('#numberModal').modal('show');
+                    break;
+                case 'photo':
+                    $('#photoModal').modal('show');
+                    break; 
+                case 'remote_activity':
+                    $('#remoteActivityModal').modal('show');
+                    break;
+                case 'text':
+                    $('#textModal').modal('show');
+                    break;
+                case 'timestamp':
+                    // Timestamp modal is not needed.  Do nothing.
+                    break;
+                case 'video':
+                    $('#videoModal').modal('show');
+                    break;                
+                default:
+                    break;
+            }
+        }
+
+        //$this.val(0);
     });
 
+    
     $('#previousItemsSortable').sortable({
         start: function(event, ui) {
             $(ui.item).data('startIndex', ui.item.index());
@@ -468,5 +498,47 @@ $(function() {
         var xml = json2xml({'survey': tmp});
         $('#surveyXml').text(vkbeautify.xml(xml));
         $('#xmlModal').modal('show');
-    })
+    });
+
+    // modal stuff
+    function updateSelection() {
+        $('#singleChoiceDefault').empty();
+        var key = 0;
+        $('#singleChoiceDefault')
+            .append($("<option></option>")
+            .attr("value",-1)
+            .text("None")); 
+        $('#singleChoiceTable tr:not(:first-child)').each(function()
+        {
+            $this = $(this);
+            var label = $this.find(".singleLabel").val();
+            $('#singleChoiceDefault')
+             .append($("<option></option>")
+             .attr("value",key++)
+             .text(label)); 
+        });
+    };
+    function singleValidateValue() {
+        $this = $(this);
+        var val = $this.val();
+        if (!isPositiveNumber(val)) {
+            alert('Value must be a positive number');
+            $this.css("background-color", "red");
+        }
+    }
+
+    $("table[id=singleChoiceTable]").on("click", "button", function() {
+        $(this).closest("tr").remove();
+        updateSelection();
+    }); 
+
+    $("#addSingleBtn").click(function () {
+        var row = "<tr><td><input type=text class='singleLabel'/></td><td><input type=text class='singleValue'/></td><td><button class='btn btn-primary'>X</button></td></tr>";
+        $("table[id=singleChoiceTable]").append(row);
+    });
+
+    // delegate
+    $('#singleChoiceModal').delegate('.singleLabel', 'change', updateSelection);
+    $('#singleChoiceModal').delegate('.singleValue', 'change', singleValidateValue);
+
 });
