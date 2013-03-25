@@ -30,7 +30,10 @@
         <script type="text/javascript" src="js/vkbeautify.0.99.00.beta.js"></script>
         <script type="text/javascript" src="js/breadcrumb.js"></script>
         <script type="text/javascript" src="js/promptType.js"></script>   
-        <script type="text/javascript" src="js/Constant.js"></script>       
+        <script type="text/javascript" src="js/Constant.js"></script> 
+        <script type="text/javascript" src="js/modal.js"></script> 
+               
+               
     </head>
     <body>
         <?php
@@ -87,18 +90,19 @@
                             <h2 class="centered">Add a New Survey Item</h2>
                             <div class="accordion" id="addNewItemAccordion">
                                 <?php
+                                    include('promptModals/promptTypeModal.php');
                                     include('promptModals/conditionModal.php');
                                     include('promptModals/viewXmlModal.php');
-                                    include('promptModals/multiChoiceModal.php');
-                                    include('promptModals/singleChoiceModal.php');
-                                    include('promptModals/photoModal.php');
-                                    include('promptModals/numberModal.php');
-                                    include('promptModals/remoteActivityModal.php');
-                                    include('promptModals/textModal.php');
-                                    include('promptModals/videoModal.php');
+                                    //include('promptModals/multiChoiceModal.php');
+                                    //include('promptModals/singleChoiceModal.php');
+                                    //include('promptModals/photoModal.php');
+                                    //include('promptModals/numberModal.php');
+                                    //include('promptModals/remoteActivityModal.php');
+                                    //include('promptModals/textModal.php');
+                                    //include('promptModals/videoModal.php');
                                     include('surveyItems/newMessage.php');
                                     include('surveyItems/newPrompt.php');
-                                    include('surveyItems/newRepeatableSet.php');
+                                    //include('surveyItems/newRepeatableSet.php');
                                 ?>                          
                             </div>
                         </div>

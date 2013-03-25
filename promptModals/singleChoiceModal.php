@@ -41,8 +41,8 @@
     <div class="modal-body">
         <div class="control-group">
             <div class="controls">
-                <label class="control-label pull-left" for="singleDefaultCheckbox">Default</label>
-                <select class="pull-right" id="singleChoiceDefault">
+                <span>Default</span>
+                <select id="singleChoiceDefault">
                     <option value=-1>None</option>
                 </select>
                 <i class="help-icon icon-question-sign" data-original-title="The default value for this prompt. This is type-dependent." rel="tooltip" data-placement="right"></i>

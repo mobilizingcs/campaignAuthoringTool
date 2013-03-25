@@ -1,7 +1,7 @@
 <div class="accordion-group">
     <div class="accordion-heading">
         <a class="accordion-toggle" data-toggle="collapse" data-parent="#addNewItemAccordion" href="#newMessage">
-            Add a new message
+            Create a new message
         </a>
     </div>
     <div id="newMessage" class="accordion-body collapse">

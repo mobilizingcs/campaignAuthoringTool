@@ -61,6 +61,16 @@
 
                 <div class="control-group">
                     <label class="control-label" for="promptType">Prompt Type <i class="icon-asterisk"></i></label>
+                    
+                    <div class="controls">
+                        <div class="input-append">
+                            <input type="text" id="promptTypeText" placeholder="None." disabled/>
+                            <button type="button" class="btn" id="promptTypeBtn">Edit</button>
+                        </div>
+                        <i class="help-icon icon-question-sign" data-original-title="Choose type of your prompt." rel="tooltip" data-placement="right"></i>
+                    </div>
+                    
+                    <!--
                     <div class="controls">
                         <select name="promptType" id="groupPromptType">
                             <option value="">Please choose a prompt type</option>
@@ -77,88 +87,46 @@
                         </select>
                         <i class="help-icon icon-question-sign" data-original-title="Choose type of your prompt" rel="tooltip" data-placement="right"></i>
                     </div>
+                    -->
                     <div class="controls">  
                         <div>
                             <br>
                             <textarea name="properties" id="addedPrompt" readonly></textarea>
                         </div>
                     </div>
-                </div>
-                
-                <div class="accordion" id="OptionalSection">
-                    <div class="accordion-group">
-                        <div class="accordion-heading">
-                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#OptionalSection" href="#newSection">
-                                Optional Properties
-                            </a>
-                        </div>
-                        <div id="newSection" class="accordion-body collapse">
-                            <div class="accordion-inner">
-                                <div class="control-group">
-                                    <!--<label type="hiden" class="control-label" for="default">Default</label>-->
-                                    <div class="controls">
-                                        <input type="hidden" name="default" id="default" placeholder="Default" />
-                                        <!--<i class="help-icon icon-question-sign" data-original-title="The default value for this prompt. This is type-dependent." rel="tooltip" data-placement="right"></i>-->
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <label class="control-label" for="condition">Condition</label>
-                                    <div class="controls">
-                                        <div class="input-append">
-                                            <input type="text" name="promptCondition" id="promptCondition" placeholder="None." disabled/>
-                                            <button type="button" class="btn" id="promptConditionBtn">Edit</button>
-                                        </div>
-                                        <i class="help-icon icon-question-sign" data-original-title="The condition which determines if the prompt is displayed or not." rel="tooltip" data-placement="right"></i>
-                                    </div>
-                                    <!--
-                                    <div class="overlay" id="overlayCondition" style="display:none;"></div>
-                                    <div class="OverlayBox" id="ConditionBox">
-                                        <table id="conditionTable">
-                                            <tr>
-                                                <td><input name="condType" type="radio" style="vertical-align: middle" value="Simple" checked="checked"></td>
-                                                <td>Simple</td>
-                                                <td><input name="condType" type="radio" style="vertical-align: middle" value="Advance"></td>
-                                                <td>Advance</td>
-                                            </tr>
-                                        </table>
-                                        <p> </p>
-                                        <div id="condType">
-                                            <select id="promptIDList">
-                                               
-                                            </select>
-                                            <select id="operator" width="70"  style="width: 70px">
-                                                <option value="==">&#61;</option>
-                                                <option value="!=">&#33;&#61;</option>
-                                                <option value="<">&#60;</option>
-                                                <option value="<=">&#60;&#61;</option>
-                                                <option value=">">&#62;</option>
-                                                <option value=">=">&#62;&#61;</option>
-                                            </select>
-                                            <input type="text" id="conditionValue" placeholder="value"/>
-                                        </div>
-                                        <p><button type="button" class="btn btn-primary" id="saveCondition" value="condition">Save Condition</button></p>
-                                    </div>
-                                    -->
-                                </div>
-                                <div class="control-group">
-                                    <div class="controls"> 
-                                        <label class="checkbox">
-                                            <input type="checkbox" name="skippable" id="skippable">
-                                            Can this survey be skippable?
-                                        </label>
-                                    </div>
-                                </div> 
-                                
-                                <div class="control-group">
-                                    <label class="control-label" for="skipLabel">Skip Label</label>
-                                    <div class="controls">
-                                        <input type="text" name="skipLabel" id="skipLabel" placeholder="Skip Label" disabled/>
-                                        <i class="help-icon icon-question-sign" data-original-title="If skippable, this is the text of the button to use to skip the label." rel="tooltip" data-placement="right"></i>
-                                    </div> 
-                                </div>                    
-                            </div>
+                    <div class="control-group">
+                        <!--<label type="hiden" class="control-label" for="default">Default</label>-->
+                        <div class="controls">
+                            <input type="hidden" name="default" id="default" placeholder="Default" />
+                            <!--<i class="help-icon icon-question-sign" data-original-title="The default value for this prompt. This is type-dependent." rel="tooltip" data-placement="right"></i>-->
                         </div>
                     </div>
+                    <div class="control-group">
+                        <label class="control-label" for="condition">Condition</label>
+                        <div class="controls">
+                            <div class="input-append">
+                                <input type="text" name="promptCondition" id="promptCondition" placeholder="None." disabled/>
+                                <button type="button" class="btn" id="promptConditionBtn">Edit</button>
+                            </div>
+                            <i class="help-icon icon-question-sign" data-original-title="The condition which determines if the prompt is displayed or not." rel="tooltip" data-placement="right"></i>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="controls"> 
+                            <label class="checkbox">
+                                <input type="checkbox" name="skippable" id="skippable">
+                                Can this survey be skippable?
+                            </label>
+                        </div>
+                    </div> 
+                    
+                    <div class="control-group">
+                        <label class="control-label" for="skipLabel">Skip Label</label>
+                        <div class="controls">
+                            <input type="text" name="skipLabel" id="skipLabel" placeholder="Skip Label" disabled/>
+                            <i class="help-icon icon-question-sign" data-original-title="If skippable, this is the text of the button to use to skip the label." rel="tooltip" data-placement="right"></i>
+                        </div> 
+                    </div>   
                 </div>
                 
                 <div class="control-group">

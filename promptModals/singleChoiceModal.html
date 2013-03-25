@@ -1,0 +1,29 @@
+<div class="centered">
+    <!--
+    <div style="text-align:center;">
+        <button class="btn btn-primary" id="addSingleBtn">Add Question</button>
+    </div>
+    -->
+    <table id="singleChoiceTable" align="center">
+      <tr>
+        <th>Option #</th>
+        <th>Label</th>
+        <th>Value</th>
+      </tr>
+      <tr>
+        <td><input type="text" class="singleOptionNum" value="1"/></td>
+        <td><input type="text" class="singleLabel" /></td>
+        <td><input type="text" class="singleValue" /></td>
+        <td><button class='btn btn-primary add'>+</button></td>
+        <td><button class='btn btn-primary delete'>X</button></td>
+      </tr>
+    </table>
+</div>
+<div class="centered">
+    <span>Default</span>
+    <select id="singleChoiceDefault">
+        <option value=-1>None</option>
+    </select>
+    <i class="help-icon icon-question-sign" data-original-title="The default value for this prompt. This is type-dependent." rel="tooltip" data-placement="right"></i>         
+</div>
+    

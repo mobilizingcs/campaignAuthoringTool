@@ -143,7 +143,7 @@ $(function() {
 
         $('#maxVideoLength').val('');
     }
-
+    /*
     $('#multiChoiceSubmit').click(function() {
         displayMultiChoiceValues();
         $('#multiChoiceModal').modal('hide');
@@ -158,25 +158,40 @@ $(function() {
         var min = $('#minNumber').val();
         var max = $('#maxNumber').val();
         var defaultValue = $('#numberDefault').val();
+        var errorMessage = "Error:";
+        var minError = false, maxError = false;
 
-        if ((defaultValue != "" && !isNumber(defaultValue)) || Number(defaultValue) > Number(max) || Number(defaultValue) < Number(min)) {
-            alert('Default value must be a number between Min and Max');
+        if (min == "") {
+            errorMessage += "\nMin value must not be empty";
+            minError = true;
         }
+        else if (!isNumber(min)) {
+            errorMessage += "\nMin value must be a number";
+            minError = true;
+        }
+
+        if (max == "") {
+            errorMessage += "\nMax value must not be empty";
+            maxError = true;
+        }
+        else if (!isNumber(max)) {
+            errorMessage += "\nMax value must be a number";
+            maxError = true;
+        }
+
+        if (minError || maxError) alert(errorMessage);
         else {
-            if (min==="" || max=="") {
-                if (min=="") alert('Min values must not be empty');
-                else alert('Max values must not be empty');
-            }
-            else if (!isNumber(min) || !isNumber(max)) { // not number
-                if (!isNumber(min)) alert('Min values must be a number');
-                else alert('Max values must be a number');
-            } else { // both are numbers
-                if (Number(max) >= Number(min)) {
+            if (Number(max) < Number(min)) alert('Max value must be greater than or equal min value');
+            else {
+                if ((defaultValue != "" && !isNumber(defaultValue)) || Number(defaultValue) > Number(max) || Number(defaultValue) < Number(min)) {
+                    alert('Default value must be a number between Min and Max');
+                }
+                else {
                     displayNumberValues();
                     $('#numberModal').modal('hide');
                 }
-                else alert('Max value must be greater than or equal min value');
             }
+
         }
     });
 
@@ -194,21 +209,35 @@ $(function() {
     $('#textSubmit').click(function() {
         var min = $('#minTextLength').val();
         var max = $('#maxTextLength').val();
-        
+        var errorMessage = "Error:";
+        var minError = false, maxError = false;
 
-        if (min==="" || max=="") {
-            if (min=="") alert('Min values must not be empty');
-            else alert('Max values must not be empty');
+        if (min == "") {
+            errorMessage += "\nMin value must not be empty";
+            minError = true;
         }
-        else if (!isPositiveNumber(min) || !isPositiveNumber(max)) { // not number
-            if (!isPositiveNumber(min)) alert('Min values must be a positive number');
-            else alert('Max values must be a positive number');
-        } else { // both are numbers
-            if (Number(max) >= Number(min)) {
-                displayTextValues();
-                $('#textModal').modal('hide');
+        else if (!isPositiveNumber(min)) {
+            errorMessage += "\nMin value must be a number";
+            minError = true;
+        }
+
+        if (max == "") {
+            errorMessage += "\nMax value must not be empty";
+            maxError = true;
+        }
+        else if (!isPositiveNumber(max)) {
+            errorMessage += "\nMax value must be a number";
+            maxError = true;
+        }
+
+        if (minError || maxError) alert(errorMessage);
+        else {
+            if (Number(max) < Number(min)) alert('Max value must be greater than or equal min value');
+            else {
+                displayNumberValues();
+                $('#numberModal').modal('hide');
             }
-            else alert('Max value must be greater than or equal min value');
+
         }
     });
 
@@ -225,6 +254,137 @@ $(function() {
         else {
              displayVideoValues();
             $('#videoModal').modal('hide');
+        }
+    });
+    */
+    $('#promptTypeSubmit').click(function() {
+        var type = jQuery("#groupPromptType").val();
+
+
+        switch (type) {
+        case 'multi_choice':
+        case 'multi_choice_custom':
+            $('#multiChoiceModal').modal('show');
+            break;
+        case 'single_choice':
+            $('#promptTypeText').val("Single Choice");
+            displaySingleChoiceValues();
+            $('#promptTypeModal').modal('hide');
+            break;
+        case 'single_choice_custom':
+            $('#promptTypeText').val("Single Choice Custom");
+            displaySingleChoiceValues();
+            $('#promptTypeModal').modal('hide');
+            break;
+        case 'number':
+            $('#promptTypeText').val("Number");
+            var min = $('#minNumber').val();
+            var max = $('#maxNumber').val();
+            var defaultValue = $('#numberDefault').val();
+            var errorMessage = "Error:";
+            var minError = false, maxError = false;
+
+            if (min == "") {
+                errorMessage += "\nMin value must not be empty";
+                minError = true;
+            }
+            else if (!isNumber(min)) {
+                errorMessage += "\nMin value must be a number";
+                minError = true;
+            }
+
+            if (max == "") {
+                errorMessage += "\nMax value must not be empty";
+                maxError = true;
+            }
+            else if (!isNumber(max)) {
+                errorMessage += "\nMax value must be a number";
+                maxError = true;
+            }
+
+            if (minError || maxError) alert(errorMessage);
+            else {
+                if (Number(max) < Number(min)) alert('Max value must be greater than or equal min value');
+                else {
+                    if (defaultValue == "") {
+                        displayNumberValues();
+                        $('#promptTypeModal').modal('hide');
+                    }
+                    else if (!isNumber(defaultValue) || Number(defaultValue) > Number(max) || Number(defaultValue) < Number(min)) {
+                        alert('Default value must be a number between Min and Max');
+                    }
+                    else {
+                        displayNumberValues();
+                        $('#promptTypeModal').modal('hide');
+                    }
+                }
+
+            }
+            break;
+        case 'photo':
+            $('#promptTypeText').val("Photo");
+            var len = $('#maxRes').val();
+            if (len == "") alert('Maximum resolution must not be empty');
+            else if (!isPositiveNumber(len)) alert('Maximum resolution must be a positive number');
+            else {
+                displayPhotoValues();
+                $('#promptTypeModal').modal('hide');
+            }
+            break; 
+        case 'remote_activity':
+            $('#promptTypeText').val("Remote Activity");
+            displayRemoveActivityValues();
+            $('#promptTypeModal').modal('hide');
+            break;
+        case 'text':
+            $('#promptTypeText').val("Text");
+            var min = $('#minTextLength').val();
+            var max = $('#maxTextLength').val();
+            var errorMessage = "Error:";
+            var minError = false, maxError = false;
+            if (min == "") {
+                errorMessage += "\nMin value must not be empty";
+                minError = true;
+            }
+            else if (!isPositiveNumber(min)) {
+                errorMessage += "\nMin value must be a number";
+                minError = true;
+            }
+            if (max == "") {
+                errorMessage += "\nMax value must not be empty";
+                maxError = true;
+            }
+            else if (!isPositiveNumber(max)) {
+                errorMessage += "\nMax value must be a number";
+                maxError = true;
+            }
+            if (minError || maxError) alert(errorMessage);
+            else {
+                if (Number(max) < Number(min)) alert('Max value must be greater than or equal min value');
+                else {
+                    displayTextValues();
+                    $('#promptTypeModal').modal('hide');
+                }
+
+            }
+            break;
+        case 'timestamp':
+            $('#promptTypeText').val("Timestamp");
+            // Timestamp modal is not needed.  Do nothing.
+            break;
+        case 'video':
+            $('#promptTypeText').val("Video");
+            var len = $('#maxVideoLength').val();
+
+            if (len == "") alert('Video length must not be empty');
+            else if (!isPositiveNumber(len)) alert('Video length must be a positive number');
+            else {
+                 displayVideoValues();
+                $('#promptTypeModal').modal('hide');
+            }
+            break;                
+        default:
+            break;
         }
     });
 });
