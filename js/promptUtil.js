@@ -153,6 +153,7 @@ function addProperties(input, promptType) {
                 properties['property'].push(property);
             }
         }
+        console.log(properties);
         return properties;
     }
     else if (promptType == "number") {

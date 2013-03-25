@@ -107,7 +107,15 @@ $(function() {
         $('#promptTypeModal').modal('hide');
     });
 	*/
-	var row = "<tr><td><input type='text' class='singleOptionNum' /></td><td><input type=text class='singleLabel'/></td><td><input type=text class='singleValue'/></td><td><button class='btn btn-primary add' >+</button></td><td><button class='btn btn-primary delete'>X</button></td></tr>";
+	var row = "<tr>" + 
+			"<td><button class='btn btn-primary up'><i class='icon-arrow-up icon-white'></i></button></td>" +
+				"<td><button class='btn btn-primary down'><i class='icon-arrow-down icon-white'></i></button></td>" +
+			"<td><input type='text' class='singleOptionNum' /></td>"+
+			"<td><input type=text class='singleLabel'/></td>"+
+			"<td><input type=text class='singleValue'/></td>"+
+			"<td><button class='btn btn-primary add' ><i class='icon-plus icon-white'></i></button></td>" +
+			"<td><button class='btn btn-primary delete'><i class='icon-remove icon-white'></i></button></td>" +
+			"</tr>";
 
 	$("table[id=singleChoiceTable] .delete").live("click", function(e) {
 		e.preventDefault();
@@ -119,6 +127,18 @@ $(function() {
 	$("table[id=singleChoiceTable] .add").live("click", function(e) {
 		e.preventDefault();
         $(this).closest("tr").after(row);
+        updateOptionSingle();
+        updateSelection();
+    });
+
+    $("table[id=singleChoiceTable] .up,.down").live("click", function(e){
+    	e.preventDefault();
+        var row = $(this).parents("tr:first");
+        if ($(this).is(".up")) {
+            row.insertBefore(row.prev());
+        } else {
+            row.insertAfter(row.next());
+        }
         updateOptionSingle();
         updateSelection();
     });

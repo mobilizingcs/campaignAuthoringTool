@@ -426,6 +426,7 @@ $(function() {
         disabled.attr('disabled','disabled');
 
         var promptType = promptData['promptType'];
+        console.log(promptType);
         var itemIndex;
         properties = addProperties(promptData, promptType);
         if (promptData['editPromptId']) {

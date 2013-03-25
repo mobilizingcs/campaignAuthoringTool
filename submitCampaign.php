@@ -12,15 +12,16 @@ ini_set('display_errors', '1');
     
     $url = "https://test.ohmage.org/app/campaign/create";
     $ch = curl_init($url);
-    //curl_setopt($ch, CURLOPT_URL, $url); 
+    $xmlPath = "@" . realpath(dirname(__FILE__)) . "/" . $xmlFile;
+    //echo $xmlPath; 
     
     $data = array("auth_token" => $_POST["auth_token"],
         "client" => $_POST["client"],
         "running_state" => $_POST["running_state"],
         "privacy_state" => $_POST["privacy_state"],
         "class_urn_list" => $_POST["class_urn_list"],
-        //"xml" => "@C:\\Users\\TaiPham\\Documents\\GitHub\\campaignAuthoringTool\\xmlCampaign.xml");
-        "xml" => "@/Users/tai/campaignAuthoringTool/xmlCampaign.xml");
+        //"xml" => "@/Users/tai/campaignAuthoringTool/xmlCampaign.xml");
+        "xml" => $xmlPath);
 
     curl_setopt($ch, CURLOPT_POST, 1);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data);

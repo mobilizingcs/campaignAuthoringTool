@@ -142,11 +142,7 @@ var campaignEditor = {
 
         promptItem['id'] = id;
         promptItem['displayLabel'] = displayLabel;
-        //promptItem['displayType'] = displayType;
         promptItem['promptText'] = promptText;
-        //if (showSummary) {
-        //    promptItem['abbreviatedText'] = abbrText;
-        //}
         promptItem['promptType'] = promptType;
 
         if (defaultValue!=null && defaultValue!="") {

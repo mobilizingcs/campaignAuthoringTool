@@ -65,6 +65,7 @@
                     <div class="controls">
                         <div class="input-append">
                             <input type="text" id="promptTypeText" placeholder="None." disabled/>
+                            <input type="hidden" name="promptType" id="promptType"/>
                             <button type="button" class="btn" id="promptTypeBtn">Edit</button>
                         </div>
                         <i class="help-icon icon-question-sign" data-original-title="Choose type of your prompt." rel="tooltip" data-placement="right"></i>

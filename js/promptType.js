@@ -19,25 +19,6 @@ $(function() {
     }
 
     function displaySingleChoiceValues() {
-        /*
-        var answers = $('#singleChoiceAnswer').val().replace('\r\n', '\n').split('\n');
-        var values = $('#singleChoiceValue').val().replace('\r\n', '\n').split('\n');
-
-        var properties = "";
-        for (var i = 0; i < answers.length; ++i) {
-            if (i < values.length) {
-                properties += answers[i] + ':' + values[i] + '\n';
-            } else {
-                properties += answers[i] + ':\n'
-            }
-        }
-
-        $('#addedPrompt').val(properties);
-
-        $('#singleChoiceAnswer').val('');
-        $('#singleChoiceValue').val('');
-        */
-        
         var defaultValue = $('#singleChoiceDefault').val();
         var defaultText = $('#singleChoiceDefault option:selected').text();;
 
@@ -49,14 +30,14 @@ $(function() {
         $('#singleChoiceTable tr:not(:first-child)').each(function()
         {
             $this = $(this);
+            var option = $this.find(".singleOptionNum").val();
             var label = $this.find(".singleLabel").val();
             var value = $this.find(".singleValue").val();
             properties += label + ":" + value + "\n";
-            //key++;
-            //alert(Label:" + label + " Value:" + value);
-            if (label === defaultText) {
+            defaultCheck = option + ': ' + label;
+
+            if (defaultCheck === defaultText) {
                 $('#default').val(key);
-                alert(label);
             }
             key++;
         });
@@ -386,5 +367,6 @@ $(function() {
         default:
             break;
         }
+        $('#promptType').val(type);
     });
 });
