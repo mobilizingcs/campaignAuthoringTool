@@ -5,19 +5,20 @@ var campaignEditor = {
     INPUT: Campaign metadata
     OUTPUT: New campaign object
     */
-    createCampaign: function(title, version) {
+    createCampaign: function(title, urn, version) {
         if (typeof(version) === 'undefined') {
             version = 1;
         }
 
-        if (!title) {
+        if (!title || !urn) {
             return false;
         }
 
         var author = $.cookie('username');
         var campaign = {};
 
-        campaign['campaignUrn'] = campaignEditor.generateCampaignURN(title, author, version);
+        //campaign['campaignUrn'] = campaignEditor.generateCampaignURN(title, author, version);
+        campaign['campaignUrn'] = urn;
         campaign['campaignName'] = title;
         campaign['surveys'] = {'survey': []};
 
@@ -45,7 +46,6 @@ var campaignEditor = {
         if (surveyData['description']) survey['description'] = surveyData['description'];
         if (surveyData['introText']) survey['introText'] = surveyData['introText'];
         survey['submitText'] = surveyData['submitText'];
-        survey['showSummary'] = surveyData['showSummary'];
         if (surveyData['showSummary']) {
             survey['summaryText'] = surveyData['summaryText'];
             survey['editSummary'] = surveyData['editSummary'];
@@ -84,8 +84,9 @@ var campaignEditor = {
         }
         var message = {};
 
-        message['messageText'] = messageData['messageText'];
         message['id'] = messageData['id'];
+        message['messageText'] = messageData['messageText'];
+        
         if (messageData['messageCondition']) message['condition'] = messageData['messageCondition'];
         
         message['editId'] =  typeof(savedId) === "undefined" ? campaignEditor.maxItemIndex(contentList) + 1 : savedId;
@@ -248,5 +249,11 @@ var campaignEditor = {
                 return item['repeatableSet']['editId'];
             }
         });
+    },
+
+    // function to parse campaign from xml
+    campaignParser: function(jsonContent) {
+        
+        return 0;
     }
 };

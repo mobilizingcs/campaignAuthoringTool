@@ -7,3 +7,15 @@
 .addPropertiesBox button {
     margin-bottom: 10px;
 }
+
+#surveyXml {
+    margin: auto;
+    width: 80%;
+    height: 380px;
+    text-align: left;
+}
+pre {
+  overflow: auto;
+  word-wrap: normal;
+  white-space: pre;
+}

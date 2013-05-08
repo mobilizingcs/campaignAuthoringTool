@@ -5,3 +5,11 @@
 .btn i.icon-white {
     margin-left: 5px;
 }
+
+.authors{
+    border: 0; 
+    padding: 0; 
+    margin: 0; 
+    background-color: transparent !important;
+    text-align: left; 
+}

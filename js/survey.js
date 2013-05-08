@@ -67,23 +67,31 @@ $(function() {
         }
     });
     
+    $('#viewSurveyXML').click(function() {
+        var tmp = campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')];
     
+        //var xml = json2xml({'survey': campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]});
+        var xml = '<?xml version="1.0" encoding="UTF-8"?>' + json2xml({'campaign': campaignWrapper['campaign']});
+        $('#surveyXml').text(vkbeautify.xml(xml));
+        $('#xmlModal').modal('show');
+    });    
 
     //sOriginal post
     $('#submitCampaign').click(function() {
         //deleteEditField(campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList']['']);
         //console.log(campaignWrapper);
         var xmlFile = '<?xml version="1.0" encoding="UTF-8"?>' + json2xml({'campaign': campaignWrapper['campaign']});
+        console.log(campaignWrapper['description']);
         $.post("https://test.ohmage.org/app/user_info/read", { auth_token: $.cookie('authToken'), client: 'campaign-webapp' }, function(response) {
             if (response.result === 'success') {
                 var classes = Object.keys(response['data'][$.cookie('username')]['classes']).join();
-                console.log('test');
                  $.post("submitCampaign.php", { 
                     auth_token: $.cookie('authToken'), 
                     client: "campaign-webapp", 
                     running_state: campaignWrapper['runningState'],
                     privacy_state: campaignWrapper['privacyState'],
-                    class_urn_list: classes,
+                    description: campaignWrapper['description'],
+                    class_urn_list: campaignWrapper['classes'],
                     xml: xmlFile }, function(response) {
                     var jsonStart = response.indexOf('{');
                     var json = response.substring(jsonStart, response.length);
@@ -107,45 +115,6 @@ $(function() {
             }
         }, "json");
     });
+
     
-    /*
-    $('#submitCampaign').click(function() {
-        //var xmlFile = '<?xml version="1.0" encoding="UTF-8"?>' + json2xml({'campaign': campaignWrapper['campaign']});
-        var xmlFile = '@xmlCampaign.xml;type=text//xml'
-        $.post("https://test.ohmage.org/app/user_info/read", { auth_token: $.cookie('authToken'), client: 'campaign-webapp' }, function(response) {
-            if (response.result === 'success') {
-                var classes = Object.keys(response['data'][$.cookie('username')]['classes']).join();
-                var myData = {auth_token: $.cookie('authToken'), 
-            
-                $.ajax ({
-                    type: "POST",
-                    url:"https://test.ohmage.org/app/campaign/create",
-                    contentType:attr( "enctype", "multipart/form-data" ),
-                    data: myData,
-                    crossDomain: true
-                        xml: xmlFile 
-                            }
-                    }).done(function(response) {
-                    var responseJSON = JSON.parse(response.substring(0, response.length - 1));
-                    if (responseJSON['result'] === 'success') {
-                        var successAlert = '<div class="alert alert-success createCampaignSuccess hide"><button class="close">&times;</button><strong>Campaign Submitted Successfully!</strong></div>';
-                        $(successAlert).insertAfter('.newSurvey hr').slideToggle();
-                        if($('.createCampaignSuccess').size() > 1) {
-                            $('.createCampaignSuccess').slice(1).delay('1000').slideToggle('slow',function() { $(this).alert('close')});
-                        }
-                    } else {
-                        var errorAlert = '<div class="alert alert-error createCampaignError hide"><button class="close">&times;</button><strong>Error:</strong> ' + responseJSON['errors'][0]['text'] + '</div>';
-                        $(errorAlert).insertAfter('.newSurvey hr').slideToggle();
-                        if($('.createCampaignError').size() > 1) {
-                            $('.createCampaignError').slice(1).delay('1000').slideToggle('slow',function() { $(this).alert('close')});
-                        }
-                    }
-                }, "text");
-            } else {
-                console.log('CLASS FAILURE');
-            }
-        }, "json");
-    });
-<<<<<<< HEAD
-    */
 });
