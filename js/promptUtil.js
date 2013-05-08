@@ -107,6 +107,14 @@ function isNumber(n) {
 }
 
 /*
+    check if n is whole positive
+*/
+function isPositiveInteger(s)
+{
+    return /^\d+$/.test(s);
+}
+
+/*
     Saves the form to be cleared (after a setTimeout delay)
 */
 function formCallback(form){
@@ -131,32 +139,57 @@ function surveyItemError(text) {
 }
 
 function addProperties(input, promptType) {
-    text = input['properties'];
     var properties = {'property':[]};
-    if (promptType == "multi_choice" || promptType == "multi_choice_custom"
-        || promptType == "single_choice" || promptType == "single_choice_custom") {
-        propertiesText = text.replace("\r\n", "\n").split("\n");
-        lenText = propertiesText.length;
-        console.log(lenText);
-        for (i = 0; i < lenText; i++)
+    text = input['properties'];
+    if (promptType == "multi_choice" || promptType == "multi_choice_custom") {
+        $('#multiChoiceTable tr:not(:first-child)').each(function()
         {
             property = {};
-            temp = propertiesText[i].split(":");
-            if (temp[0] != '') {
-                key = i 
-                label = temp[0].replace("\r", "");
-                value = temp[1].replace("\r", "");
-                
-                property['key'] = key;
-                property['label'] = label;
-                property['value'] = value;
-                properties['property'].push(property);
-            }
-        }
-        console.log(properties);
+            $this = $(this);
+            var option = $this.find(".multiOptionNum").val();
+            var label = $this.find(".multiLabel").val();
+            var value = $this.find(".multiValue").val();
+            
+            property['key'] = Number(option) - 1;
+            property['label'] = label;
+            if (value != "") property['value'] = value;
+            properties['property'].push(property);
+            // key++;
+        });
+        return properties;
+    }
+    else if (promptType == "single_choice" || promptType == "single_choice_custom") {
+        $('#singleChoiceTable tr:not(:first-child)').each(function()
+        {
+            property = {};
+            $this = $(this);
+            var option = $this.find(".singleOptionNum").val();
+            var label = $this.find(".singleLabel").val();
+            var value = $this.find(".singleValue").val();
+            
+            property['key'] = Number(option) - 1;
+            property['label'] = label;
+            if (value != "") property['value'] = value;
+            properties['property'].push(property);
+            // key++;
+        });
         return properties;
     }
     else if (promptType == "number") {
+        var minNum = $('#minNumber').val();
+        var maxNum = $('#maxNumber').val();
+
+        property = {};
+        property['key'] = 'min';
+        property['label'] = minNum;
+        properties['property'].push(property);
+        property = {};
+        property['key'] = 'max';
+        property['label'] = maxNum;
+        properties['property'].push(property);
+        return properties;
+
+        /*
         propertiesText = text.split("\n");
         for (i = 0; i < 2; i++)
         {
@@ -170,14 +203,13 @@ function addProperties(input, promptType) {
             properties['property'].push(property);
         }
         return properties;
+        */
     }
     else if (promptType == "photo") {
-        propertiesText = text.split("\n");
-        temp = propertiesText[0].split(":");
-        key = temp[1];
+        var resolution = $('#maxRes').val();
         property = {};
         property['key'] = 'maxDimension';
-        property['label'] = key;
+        property['label'] = resolution;
         properties['property'].push(property);
         return properties;
     }
@@ -188,7 +220,7 @@ function addProperties(input, promptType) {
         {
             property = {};
             temp = propertiesText[i].split(":");
-            if (temp[0] != "") {
+            if (temp[0] != "" && temp[0] != 'Default') {
                 key = temp[0].toLowerCase();
                 label = temp[1].replace("\r", "");;
      
@@ -200,6 +232,19 @@ function addProperties(input, promptType) {
         return properties;
     }
     else if (promptType == "text") {
+        var min = $('#minTextLength').val();
+        var max = $('#maxTextLength').val();
+
+        property = {};
+        property['key'] = 'min';
+        property['label'] = minTextLength;
+        properties['property'].push(property);
+        property = {};
+        property['key'] = 'max';
+        property['label'] = maxTextLength;
+        properties['property'].push(property);
+        return properties;
+        /*
         propertiesText = text.split("\n");
         for (i = 0; i < 2; i++)
         {
@@ -213,6 +258,7 @@ function addProperties(input, promptType) {
             properties['property'].push(property);
         }
         return properties;
+        */
     }
     else if (promptType == "timestamp") {
         // doing nothing
@@ -222,6 +268,7 @@ function addProperties(input, promptType) {
         propertiesText = text.split("\n");
         temp = propertiesText[0].split(":");
         key = temp[1];
+        var maxSeconds = $('#maxVideoLength').val()
         property = {};
         property['key'] = 'max_seconds';
         property['label'] = key;

@@ -12,6 +12,7 @@
         <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>
         <link href="css/jquery-ui-1.9.1.min.css" rel="stylesheet" type="text/css"/>
+        <link href="css/selectBoxIt.css" rel="stylesheet" type="text/css"/>
         <link href="css/layout.css" rel="stylesheet" type="text/css"/>
         <link href="css/navbar.css" rel="stylesheet" type="text/css"/>
         <link href="css/prompt.css" rel="stylesheet" type="text/css"/>
@@ -19,19 +20,22 @@
         <script type="text/javascript" src="js/jquery-cookie.js"></script>
         <script type="text/javascript" src="js/jquery-ui-1.9.0.min.js"></script>
         <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/selectBoxIt.js"></script> 
+        <script type="text/javascript" src="js/Constant.js"></script> 
         <script type="text/javascript" src="js/navbar.js"></script>
         <script type="text/javascript" src="js/alerts.js"></script>
+        <script type="text/javascript" src="js/help-icon.js"></script>
         <script type="text/javascript" src="js/promptUtil.js"></script>
         <script type="text/javascript" src="js/json2xml.js"></script>
         <script type="text/javascript" src="js/campaign-editor.js"></script>
         <script type="text/javascript" src="js/surveyItemDisplay.js"></script>
         <script type="text/javascript" src="js/prompt.js"></script>
-        <script type="text/javascript" src="js/help-icon.js"></script>
+        
         <script type="text/javascript" src="js/vkbeautify.0.99.00.beta.js"></script>
         <script type="text/javascript" src="js/breadcrumb.js"></script>
-        <script type="text/javascript" src="js/promptType.js"></script>   
-        <script type="text/javascript" src="js/Constant.js"></script> 
-        <script type="text/javascript" src="js/modal.js"></script> 
+        <script type="text/javascript" src="js/promptType.js"></script> 
+        <script type="text/javascript" src="js/modal.js"></script>   
+        <script type="text/javascript" src="js/condition.js"></script>
                
                
     </head>
@@ -56,7 +60,7 @@
                         <strong>Number of Questions: </strong>
                         <span id="numQuestion">0</span>
                         <hr>
-                        <button type="button" class="btn btn-primary btn-block" id="viewXML">View XML</button>
+                        <button type="button" class="btn btn-primary btn-block" id="viewXML">View Survey XML</button>
                         <div class="overlay" id="overlayXML" style="display:none;"></div>
                         <div class="OverlayBox" id="XMLBox">
                             <div class="controls" >
@@ -81,7 +85,7 @@
 
                         <table>
                             <div class="previousItems" id="previousItem">
-                                <ul id="previousItemsSortable">
+                                <ul class="previousItemsSortable" id="previousItemsSortable">
                                 </ul>
                             </div>
                         </table>
@@ -106,7 +110,7 @@
                                 ?>                          
                             </div>
                         </div>
-                        <i class="icon-asterisk"></i> Required Fields
+                        <span class="red">*</span> Required Fields
                     </div>
                 </div>
             </div>

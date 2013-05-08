@@ -10,7 +10,7 @@
             <form class="form-horizontal" id="promptForm">
                 <input type="hidden" name="editPromptId" id="editPromptId">
                 <div class="control-group">
-                    <label class="control-label" for="promptId">Prompt ID <i class="icon-asterisk"></i></label>
+                    <label class="control-label" for="promptId">Prompt ID <span class="red">*</span></label>
                     <div class="controls">
                         <input type="text" name="id" id="promptId" placeholder="A unique identifier for the prompt." />
                         <i class="help-icon icon-question-sign" data-original-title="A unique identifier for the prompt." rel="tooltip" data-placement="right"></i>
@@ -18,31 +18,15 @@
                 </div>
 
                 <div class="control-group">
-                    <label class="control-label" for="displayLabel">Display Label <i class="icon-asterisk"></i></label>
+                    <label class="control-label" for="displayLabel">Display Label <span class="red">*</span></label>
                     <div class="controls">
                         <input type="text" name="displayLabel" id="displayLabel" placeholder="Display Label" />
                         <i class="help-icon icon-question-sign" data-original-title="The user-friendly name of this prompt used in visualizations." rel="tooltip" data-placement="right"></i>
                     </div>
                 </div>
                 
-                <!--
                 <div class="control-group">
-                    <label class="control-label" for="displayType">Display Type <i class="icon-asterisk"></i></label>
-                    <div class="controls">
-                        <select name="displayType" id="displayType">
-                            <option value="">Please choose a display type</option>
-                            <option value="Measurement">Measurement</option>
-                            <option value="Event">Event</option>
-                            <option value="Count">Count</option>
-                            <option value="Category">Category</option>
-                            <option value="Metadata">Metadata</option>
-                        </select>
-                        <i class="help-icon icon-question-sign" data-original-title="The type of the data being collected, which must be one of measurement, event, count, category, or metadata." rel="tooltip" data-placement="right"></i>
-                    </div>
-                </div>
-                -->
-                <div class="control-group">
-                    <label class="control-label" for="promptText">Prompt Text <i class="icon-asterisk"></i></label>
+                    <label class="control-label" for="promptText">Prompt Text <span class="red">*</span></label>
                     <div class="controls">
                         <textarea type="text" name="promptText" id="promptText" placeholder="Prompt Text"></textarea>
                         <i class="help-icon icon-question-sign" data-original-title="The text to display to the user when prompting them to respond." rel="tooltip" data-placement="right"></i>
@@ -60,20 +44,20 @@
                 -->
 
                 <div class="control-group">
-                    <label class="control-label" for="promptType">Prompt Type <i class="icon-asterisk"></i></label>
-                    
-                    <div class="controls">
-                        <div class="input-append">
-                            <input type="text" id="promptTypeText" placeholder="None." disabled/>
-                            <input type="hidden" name="promptType" id="promptType"/>
-                            <button type="button" class="btn" id="promptTypeBtn">Edit</button>
-                        </div>
-                        <i class="help-icon icon-question-sign" data-original-title="Choose type of your prompt." rel="tooltip" data-placement="right"></i>
-                    </div>
+                    <label class="control-label" for="promptType">Prompt Type <span class="red">*</span></label>
                     
                     <!--
                     <div class="controls">
-                        <select name="promptType" id="groupPromptType">
+                        <div class="input-append">
+                            <input type="text" id="promptTypeText" placeholder="None." disabled/>
+                            <input type="hidden" name="promptType" id="promptType"/> 
+                            <button type="button" class="linkBtn" id="promptTypeBtn">Edit Prompt Detail</button>
+                        </div>
+                        <i class="help-icon icon-question-sign" data-original-title="Click to edit prompt type" rel="tooltip" data-placement="right"></i>
+                    </div>
+                    -->
+                    <div class="controls">
+                        <select id="choosePromptType" class="promptType">
                             <option value="">Please choose a prompt type</option>
                             <option value="multi_choice">Multiple Choice</option>
                             <option value="multi_choice_custom">Multiple Choice Custom</option>
@@ -86,13 +70,16 @@
                             <option value="timestamp">Timestamp</option>
                             <option value="video">Video</option>
                         </select>
+                        <input type="hidden" name="promptType" id="promptType"/> 
                         <i class="help-icon icon-question-sign" data-original-title="Choose type of your prompt" rel="tooltip" data-placement="right"></i>
                     </div>
-                    -->
+        
+                    </br>
+                    <label class="control-label" for="addedPrompt">Prompt Details</label>
                     <div class="controls">  
                         <div>
-                            <br>
                             <textarea name="properties" id="addedPrompt" readonly></textarea>
+                            <button type="button" class="linkBtn" id="promptTypeBtn">Edit Prompt Detail</button>
                         </div>
                     </div>
                     <div class="control-group">
@@ -106,13 +93,14 @@
                         <label class="control-label" for="condition">Condition</label>
                         <div class="controls">
                             <div class="input-append">
-                                <input type="text" name="promptCondition" id="promptCondition" placeholder="None." disabled/>
-                                <button type="button" class="btn" id="promptConditionBtn">Edit</button>
+                                <textarea name="promptCondition" id="promptCondition" placeholder="None." disabled></textarea>
+                                <button type="button" class="linkBtn" id="promptConditionBtn">Edit Condition</button>
                             </div>
                             <i class="help-icon icon-question-sign" data-original-title="The condition which determines if the prompt is displayed or not." rel="tooltip" data-placement="right"></i>
                         </div>
                     </div>
                     <div class="control-group">
+                        <label class="control-label" for="skippable">Skip Option:</label>
                         <div class="controls"> 
                             <label class="checkbox">
                                 <input type="checkbox" name="skippable" id="skippable">
@@ -122,7 +110,6 @@
                     </div> 
                     
                     <div class="control-group">
-                        <label class="control-label" for="skipLabel">Skip Label</label>
                         <div class="controls">
                             <input type="text" name="skipLabel" id="skipLabel" placeholder="Skip Label" disabled/>
                             <i class="help-icon icon-question-sign" data-original-title="If skippable, this is the text of the button to use to skip the label." rel="tooltip" data-placement="right"></i>

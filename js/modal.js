@@ -1,12 +1,14 @@
 $(function() {
-	var prevValue = jQuery("#groupPromptType").val();
 	jQuery("#groupPromptType").focus(function() {
 		prevValue = $(this).val();
 	}).change(function() {
         $this = $(this);
         var changeConfirm = true;
-        if ($('#addedPrompt').val != "") {
+        if ($('#addedPrompt').val() != "") {
             var text = "WARNING: Choosing new prompt type will clear all the data of old prompt type\n Proceed ?"
+            changeConfirm = confirm(text);
+        } else {
+            var text = "WARNING: Choosing new prompt type will clear all the data in the current prompt type\n Proceed ?"
             changeConfirm = confirm(text);
         }
 
@@ -47,7 +49,9 @@ $(function() {
 					});
                     break;
                 case 'timestamp':
-                    // Timestamp modal is not needed.  Do nothing.
+                    $.get("promptModals/timestamp.html", function(data){
+                        $("#promptData").append(data);
+                    });
                     break;
                 case 'video':
 					$.get("promptModals/videoModal.html", function(data){
@@ -65,7 +69,10 @@ $(function() {
         //$this.val(0);
     });
 
+
+
 	// modal stuff
+	// single choice
 	function updateOptionSingle() {
 		var optionNum = 1;
 		$('#singleChoiceTable tr:not(:first-child)').each(function()
@@ -75,6 +82,7 @@ $(function() {
         });
 	}
     function updateSelection() {
+        //console.log($(this).val());
         $('#singleChoiceDefault').empty();
         var key = 0;
         $('#singleChoiceDefault')
@@ -94,39 +102,59 @@ $(function() {
     };
     function singleValidateValue() {
         $this = $(this);
+        $this.val($this.val().trim());
         var val = $this.val();
         if (!isPositiveNumber(val)) {
             alert('Value must be a positive number');
-            $this.css("background-color", "red");
+            $this.val("");
+            //$this.css("background-color", "red");
         }
     }
+    function checkDuplicateSingle() {
+        $this = $(this);
+        var currentLabel = $this.val().trim();
+        var currentOption = $this.parents("tr:first").find(".singleOptionNum").val();
+        var errorCode = 0;
+        var errorMessage = "";
 
-    /*
-	$('#promptTypeSubmit').click(function() {
-        //displayRemoveActivityValues();
-        $('#promptTypeModal').modal('hide');
-    });
-	*/
-	var row = "<tr>" + 
-			"<td><button class='btn btn-primary up'><i class='icon-arrow-up icon-white'></i></button></td>" +
-				"<td><button class='btn btn-primary down'><i class='icon-arrow-down icon-white'></i></button></td>" +
-			"<td><input type='text' class='singleOptionNum' /></td>"+
-			"<td><input type=text class='singleLabel'/></td>"+
-			"<td><input type=text class='singleValue'/></td>"+
-			"<td><button class='btn btn-primary add' ><i class='icon-plus icon-white'></i></button></td>" +
-			"<td><button class='btn btn-primary delete'><i class='icon-remove icon-white'></i></button></td>" +
-			"</tr>";
+        $('#singleChoiceTable tr:not(:first-child)').each(function()
+        {
+            $this = $(this);
+            var optionNum = $this.find(".singleOptionNum").val();
+            if (currentOption != optionNum) {
+                var label = $this.find(".singleLabel").val().trim();
+                if (label === currentLabel) {
+                    errorMessage += "Currently edit Option " + currentOption + " has the same label as Option " + optionNum + "\n";
+                    errorCode = 1;
+                }
+            }
+        });
+
+        if (errorCode != 0) {
+            alert("WARNING: Duplicate Label \n\n" + errorMessage + "\nIs this what you want ?");
+        }
+    };
 
 	$("table[id=singleChoiceTable] .delete").live("click", function(e) {
 		e.preventDefault();
-        $(this).closest("tr").remove();
+        if ($("#singleChoiceTable tr").length <= 2) alert("Cannot delete last option");
+        else $(this).closest("tr").remove();
         updateOptionSingle();
         updateSelection();
     });
 
 	$("table[id=singleChoiceTable] .add").live("click", function(e) {
 		e.preventDefault();
-        $(this).closest("tr").after(row);
+		var $tr = $(this).closest("tr");
+        var $clone = $tr.clone();
+        /*
+        var counter = Number($("#singleCounter").val()) + 1;
+        $("#singleCounter").val(counter);
+        $clone.find(':text').val('');
+        $clone.find('.singleOptionNum').val(counter);
+        */
+        $clone.find(':text').val('');
+        $(this).closest("tr").after($clone);
         updateOptionSingle();
         updateSelection();
     });
@@ -134,27 +162,104 @@ $(function() {
     $("table[id=singleChoiceTable] .up,.down").live("click", function(e){
     	e.preventDefault();
         var row = $(this).parents("tr:first");
-        if ($(this).is(".up")) {
+        var firstrow = $('table tr:first');
+        if ($(this).is(".up") && row.prevAll().length > 1) {
             row.insertBefore(row.prev());
-        } else {
+        } else if ($(this).is(".down") && row.nextAll().length > 0) {
             row.insertAfter(row.next());
         }
         updateOptionSingle();
         updateSelection();
     });
-    /* 
-    $("table[id=singleChoiceTable]").on("click", "button", function() {
-        $(this).closest("tr").remove();
-        updateSelection();
-    }); 
-	*/
-    /*
-    $("#addSingleBtn").click(function () {
-        var row = "<tr><td><input type=text class='singleLabel'/></td><td><input type=text class='singleValue'/></td><td><button class='btn btn-primary'>X</button></td></tr>";
-        $("table[id=singleChoiceTable]").append(row);
-    });
-	*/
     // delegate
     $('#promptTypeModal').delegate('.singleLabel', 'change', updateSelection);
+    $('#promptTypeModal').delegate('.singleLabel', 'change', checkDuplicateSingle);
     $('#promptTypeModal').delegate('.singleValue', 'change', singleValidateValue);
+
+    // multiple choice
+    function updateOptionMulti() {
+		var optionNum = 1;
+		$('#multiChoiceTable tr:not(:first-child)').each(function()
+        {
+            $this = $(this);
+            $this.find(".multiOptionNum").val(optionNum++);
+        });
+	}
+    function updateSelectionMulti() {
+        $('#multiChoiceDefault').empty();
+        var key = 0;
+        $('#multiChoiceTable tr:not(:first-child)').each(function()
+        {
+            $this = $(this);
+            var optionNum = $this.find(".multiOptionNum").val();
+            var label = $this.find(".multiLabel").val();
+            $('#multiChoiceDefault')
+             .append($("<option></option>")
+             .attr("value",key++)
+             .text(optionNum + ': ' + label)); 
+        });
+    };
+    function multiValidateValue() {
+        $this = $(this);
+        var currentLabel = $this.val().trim();
+        var val = $this.val();
+        if (!isPositiveNumber(val)) {
+            alert('Value must be a positive number');
+            $this.val("");
+            //$this.css("background-color", "red");
+        }
+    }
+    function checkDuplicateMulti() {
+        $this = $(this);
+        var currentLabel = $this.val().trim();
+        var currentOption = $this.parents("tr:first").find(".multiOptionNum").val();
+        var errorCode = 0;
+        var errorMessage = "";
+
+        $('#multiChoiceTable tr:not(:first-child)').each(function()
+        {
+            $this = $(this);
+            var optionNum = $this.find(".multiOptionNum").val();
+            if (currentOption != optionNum) {
+                var label = $this.find(".multiLabel").val().trim();
+                if (label === currentLabel) {
+                    errorMessage += "Currently edit Option " + currentOption + " has the same label as Option " + optionNum + "\n";
+                    errorCode = 1;
+                }
+            }
+        });
+        if (errorCode != 0) {
+            alert("WARNING: Duplicate Label \n\n" + errorMessage + "\nIs this what you want ?");
+        }
+    };
+
+    $("table[id=multiChoiceTable] .upMulti,.downMulti,.addMulti,.deleteMulti").live("click", function(e){
+    	e.preventDefault();
+        var row = $(this).parents("tr:first");
+        var firstrow = $('table tr:first');
+        if ($(this).is(".upMulti") && row.prevAll().length > 1) {
+            row.insertBefore(row.prev());
+        } else if ($(this).is(".downMulti") && row.nextAll().length > 0) {
+            row.insertAfter(row.next());
+        } else if ($(this).is(".addMulti")) {
+        	var $tr = $(this).closest("tr");
+    		var $clone = $tr.clone();
+            //var counter = Number($("#multiCounter").val()) + 1;
+            //$("#multiCounter").val(counter);
+            $clone.find(':text').val('');
+            //$clone.find('.multiOptionNum').val(counter);
+        	$(this).closest("tr").after($clone);
+        } else if ($(this).is(".deleteMulti")) {
+            if ($("#multiChoiceTable tr").length <= 2) alert("Cannot delete last option");
+        	else $(this).closest("tr").remove();
+        }
+
+        updateOptionMulti();
+        updateSelectionMulti();
+    });
+    // delegate
+    $('#promptTypeModal').delegate('.multiLabel', 'change', updateSelectionMulti);
+    $('#promptTypeModal').delegate('.multiLabel', 'change', checkDuplicateMulti);
+    $('#promptTypeModal').delegate('.multiValue', 'change', multiValidateValue);
+
 });

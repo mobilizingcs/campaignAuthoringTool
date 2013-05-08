@@ -106,4 +106,55 @@ a.boxclose{
 .form-field * {
     vertical-align: right;
 }   
- 
+
+/* prompt type modal */
+.linkBtn {
+    background:none;
+    border:none;
+    margin:5;
+    padding:5;
+    color:#0000FF;
+    text-decoration:underline;
+}
+
+/*
+.singleOptionNum, .multiOptionNum {
+    text-align: right;
+}
+*/
+table {
+    table-layout:fixed;
+} 
+
+.upCondition .downCondition {
+
+}
+
+.conditionGroupNum {
+    border: 0; 
+    padding: 0; 
+    margin: 0; 
+    background-color: white !important;
+    text-align: center; 
+    font-weight: bold;
+    font-size: large;
+}
+
+.textLink {
+    color: blue !important;
+    text-decoration: underline;
+}
+
+.detailLabel {
+    text-decoration: underline;
+}
+
+.detailList { 
+    text-align: left;
+    text-indent: 2em;
+    font-style: italic; 
+}
+
+.error2 {
+    border: 1px solid #f00 !important;
+}

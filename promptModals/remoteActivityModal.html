@@ -1,16 +1,44 @@
 <div class="modal-body">
-    <span> Package </span>
-    <input type="text" id="packageRemote" placeholder="Package"/> </br>
-    <span> Activity </span>
-    <input type="text" id="activityRemote" placeholder="Activity"/> </br>
-    <span> Action </span>
-    <input type="text" id="actionRemote" placeholder="Action"/> </br>
-    <span> Auto Launch </span>
-    <input type="text" id="autolaunchRemote" placeholder="Auto Launch"/> </br>
-    <span> Retries </span>
-    <input type="text" id="retriesRemote" placeholder="Retries"/> </br>
-    <span> Min Run </span>
-    <input type="text" id="minrunRemote" placeholder="Min Run"/> </br>
-    <span> Input </span>
-    <input type="text" id="inputRemote" placeholder="Input"/> </br>
+    <p>
+        All field are required except the Input field
+    </p>
+    <table id="remoteActivityTable" align="center">
+        <tr>
+            <th>Key</th>
+            <th>Label</th>
+        </tr>
+        <tr>
+            <td><span> Package </span></td>
+            <td><input type="text" id="packageRemote" placeholder="Package"/></td>
+        </tr>
+        <tr>
+            <td><span> Activity </span></td>
+            <td><input type="text" id="activityRemote" placeholder="Activity"/></td>
+        </tr>
+        <tr>
+            <td><span> Action </span></td>
+            <td><input type="text" id="actionRemote" placeholder="Action"/></td>
+        </tr>
+        <tr>
+            <td><span> Auto Launch </span></td>
+            <td>
+                <select class="span2 autolaunch" id="autoLaunchRemote">
+                    <option value="true">True</option>
+                    <option value="false">False</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><span> Retries </span></td>
+            <td><input type="text" id="retriesRemote" placeholder="Retries"/></td>
+        </tr>
+        <tr>
+            <td><span> Min Run </span></td>
+            <td><input type="text" id="minrunRemote" placeholder="Min Run"/></td>
+        </tr>
+        <tr>
+            <td><span> Input (Optional)</span></td>
+            <td><input type="text" id="inputRemote" placeholder="Input"/></td>
+        </tr>
+    </table>
 </div>

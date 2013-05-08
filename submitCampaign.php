@@ -3,7 +3,9 @@ error_reporting(E_ALL);
 ini_set('display_errors', '1');
     // echo "hello world";
     $xmlFile = "xmlCampaign.xml";
-    $fh = fopen($xmlFile, 'w') or die("can't open write file");
+    $xmlFilePath = "/var/www/campaignAuthoring/" . $xmlFile;
+    $fh = fopen($xmlFilePath, 'w') or die("can't open write file");
+    //$fh = fopen($xmlFile, 'w') or die("can't open write file");
     // var_dump(is_writable($xmlFile));
     
     fwrite($fh, $_POST["xml"]);
@@ -12,7 +14,8 @@ ini_set('display_errors', '1');
     
     $url = "https://test.ohmage.org/app/campaign/create";
     $ch = curl_init($url);
-    $xmlPath = "@" . realpath(dirname(__FILE__)) . "/" . $xmlFile;
+    //$xmlPath = "@" . realpath(dirname(__FILE__)) . "/" . $xmlFile;
+    $xmlPath = "@" . $xmlFilePath;
     //echo $xmlPath; 
     
     $data = array("auth_token" => $_POST["auth_token"],
@@ -20,6 +23,7 @@ ini_set('display_errors', '1');
         "running_state" => $_POST["running_state"],
         "privacy_state" => $_POST["privacy_state"],
         "class_urn_list" => $_POST["class_urn_list"],
+        "description" => $_POST["description"],
         //"xml" => "@/Users/tai/campaignAuthoringTool/xmlCampaign.xml");
         "xml" => $xmlPath);
 

@@ -1,16 +1,24 @@
 <div class="modal-body centered">
     <p>What is the minimum and maximum character count you wish to allow</p>
-    <span> Min: </span>
-    <input type="text" id="minTextLength"/>
-    <span> Max: </span>
-    <input type="text" id="maxTextLength"/>
-</div>
-<div class="modal-body">
-    <div class="control-group">
-        <div class="controls">
-            <span> Default: </span>
-            <input type="text" id="textDefault"/>
-            <i class="help-icon icon-question-sign" data-original-title="The default value for this prompt. This is type-dependent." rel="tooltip" data-placement="right"></i>
-        </div>    
-    </div>            
+    <table id="textTable" align="center">
+        <tr>
+            <th>Key</th>
+            <th>Label</th>
+        </tr>
+        <tr>
+            <td><span> Min: </span></td>
+            <td><input type="text" id="minTextLength" value="0"/></td>
+        </tr>
+        <tr>
+            <td><span> Max: </span></td>
+            <td><input type="text" id="maxTextLength" value="10"/></td>
+        </tr>
+        <tr>
+            <td><span> Default: </span></td>
+            <td>
+                <input type="text" id="textDefault"/>
+                <i class="help-icon icon-question-sign" data-original-title="The default value for this prompt. This is type-dependent." rel="tooltip" data-placement="right"></i>
+            </td>
+        </tr>
+    </table>
 </div>

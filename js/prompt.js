@@ -4,6 +4,17 @@ var tempSurvey = campaignWrapper['campaign']['surveys']['survey'][$.cookie('curr
 //var indexMapper = {};
 
 $(function() {
+
+    // populate promot page with information
+    $('#choosePromptType').val("");
+    $('#groupPromptType').val("");
+    $('#addedPrompt').val("");
+    $('#conditionType').val("");
+    updateNumQuestion();
+    // Calls the selectBoxIt method on your HTML select box
+    //$("select").selectBoxIt({
+    //    theme: "bootstrap"
+    //});
     for (i in campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList']['']) {
         console.log(campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''][i]);
         if (campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''][i]['message']) {
@@ -51,6 +62,67 @@ $(function() {
         }
     });
 
+    function showNewModal() {
+        var prevValue = jQuery("#choosePromptType").val();
+        $('#promptData').empty();
+        switch (prevValue) {
+            case 'multi_choice':
+            case 'multi_choice_custom':
+                $.get("promptModals/multiChoiceModal.html", function(data){
+                    $("#promptData").append(data);
+                });
+                break;
+            case 'single_choice':
+            case 'single_choice_custom':
+                $.get("promptModals/singleChoiceModal.html", function(data){
+                    $("#promptData").append(data);
+                });
+                break;
+            case 'number':
+                $.get("promptModals/numberModal.html", function(data){
+                    $("#promptData").append(data);
+                });
+                break;
+            case 'photo':
+                $.get("promptModals/photoModal.html", function(data){
+                    $("#promptData").append(data);
+                });
+                break; 
+            case 'remote_activity':
+                $.get("promptModals/remoteActivityModal.html", function(data){
+                    $("#promptData").append(data);
+                });
+                break;
+            case 'text':
+                $.get("promptModals/textModal.html", function(data){
+                    $("#promptData").append(data);
+                });
+                break;
+            case 'timestamp':
+                $.get("promptModals/timestamp.html", function(data){
+                            $("#promptData").append(data);
+                        });
+                break;
+            case 'video':
+                $.get("promptModals/videoModal.html", function(data){
+                    $("#promptData").append(data);
+                });
+                break;                
+            default:
+                break;
+        }
+
+        $('#promptTypeModal').modal('show');
+        $('#promptTypeModal').modal({
+            backdrop: true,
+            keyboard: true
+        }).css({
+            width: 'auto',
+            'margin-left': function () {
+                return -($(this).width() / 2);
+            }
+        });
+    }
     $('#promptTypeBtn').click(function() {
         $('#promptTypeModal').modal('show');
         $('#promptTypeModal').modal({
@@ -62,87 +134,8 @@ $(function() {
                 return -($(this).width() / 2);
             }
         });
+        //showModal();
     });
-    /*
-    $("#groupPromptType").change(function() {
-        $this = $(this);
-        var changeConfirm = true;
-        if ($('#addedPrompt').val != "") {
-            var text = "WARNING: Choosing new prompt type will clear all the data of old prompt type\n Proceed ?"
-            changeConfirm = confirm(text);
-        }
-
-        if (changeConfirm) {
-            
-            $('#addedPrompt').val(""); // clear text box
-            switch ($this.val()) {
-                case 'multi_choice':
-                case 'multi_choice_custom':
-                    $('#multiChoiceModal').modal('show');
-                    break;
-                case 'single_choice':
-                case 'single_choice_custom':
-                    //$('#singleChoiceModal').modal('show');
-                    // automatically fit modal
-                    // reset modal
-                    $('#singleChoiceTable').empty();
-                    $('#singleChoiceTable').append("<tr><th>Label</th><th>Value</th></tr><tr><td><input type='text' class='singleLabel' /></td><td><input type='text' class='singleValue' /></td><td><button class='btn btn-primary'>X</button></td></tr>");
-                    $('#singleChoiceDefault').empty();
-                    $('#singleChoiceDefault')
-                        .append($("<option></option>")
-                        .attr("value",-1)
-                        .text("None")); 
-                    $('#singleChoiceModal').modal({
-                        backdrop: true,
-                        keyboard: true
-                    }).css({
-                        width: 'auto',
-                        'margin-left': function () {
-                            return -($(this).width() / 2);
-                        }
-                    });
-                    break;
-                case 'number':
-                    $('#numberModal').modal('show');
-                    break;
-                case 'photo':
-                    $('#photoModal').modal('show');
-                    break; 
-                case 'remote_activity':
-                    $('#remoteActivityModal').modal('show');
-                    break;
-                case 'text':
-                    $('#textModal').modal('show');
-                    break;
-                case 'timestamp':
-                    // Timestamp modal is not needed.  Do nothing.
-                    break;
-                case 'video':
-                    $('#videoModal').modal('show');
-                    break;                
-                default:
-                    break;
-            }
-        }
-
-        //$this.val(0);
-    });
-    */
-    /*
-    $("#groupPromptType option").mouseup(function() {
-
-        $(this).parent().val($(this).attr("value"));
-        //var open = $(this).data("isopen");
-        var val = $(this).val();
-
-        if(open) {
-            alert(val);
-        }
-
-        //$(this).data("isopen", !open);
-    });
-    */
-
     
     $('#previousItemsSortable').sortable({
         start: function(event, ui) {
@@ -154,33 +147,51 @@ $(function() {
     }).disableSelection();
 
     $('#saveSurvey').click(function(e) {
-        if (confirm('Are you sure you wish to save this survey?')) {
-            deleteEditField(campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList']['']);
-            //console.log(campaignWrapper);
-            localStorage['campaignWrapper'] = JSON.stringify(campaignWrapper);
+        if (campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''].length != 0) {// survey need at least 1 prompt
+            if (confirm('Are you sure you wish to save this survey?')) {
+                deleteEditField(campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList']['']);
+                //console.log(campaignWrapper);
+                localStorage['campaignWrapper'] = JSON.stringify(campaignWrapper);
+            } else {
+                e.preventDefault();
+            }
         } else {
+            alert("Survey need at least one prompt.");
             e.preventDefault();
         }
     }) 
 
+    jQuery("#choosePromptType").change(function(){
+        $this = $(this);
+        $('.promptType').val($this.val());
+    });
 
+    function clearTableData() {
+        $('#simpleConditionTbl tr:gt(1)').remove();
+        $('.conditionPromptType').val('');
+        $('.conditionValue').val('');
+        $('.simpleConditionTbl').val('');
+    }
     function setUpConditionPromptList() {
         // remove all previous options 
-        if ($('#previousPrompts option').length != 0) $('#previousPrompts option').remove();
-
+        if ($('.previousPrompts option').length != 0) $('.previousPrompts option').remove();
+        $('.previousPrompts').append($('<option>', { value : ""})
+                                     .text('None'));
         var size = campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''].length;
 
         for (var i = 0; i < size; i++) {
             var item = campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''][i]
             if (item['message']) {
                 var value = item['message']['id'];
-                $('#previousPrompts').append($('<option>', { value : i })
-                                     .text(value));
+                var text = value;
+                $('.previousPrompts').append($('<option>', { value : 'message' })
+                                     .text(text));
             }
             else if (item['prompt']) {
                 var value = item['prompt']['id'];
-                $('#previousPrompts').append($('<option>', { value : i })
-                                     .text(value));
+                var text = value;
+                $('.previousPrompts').append($('<option>', { value :  item['prompt']['promptType']})
+                                     .text(text));
             }
         }        
     }
@@ -189,62 +200,50 @@ $(function() {
     $('#messageConditionBtn').click(function() {
         $('#conditionSource').val('message');
         $('#advancedCondition').val($(this).prev().val());
-        setUpConditionPromptList();
+        if($('#messageCondition').val().trim() == "") setUpConditionPromptList();
         $('#conditionModal').modal('show');
+        $('#conditionModal').modal({
+            backdrop: true,
+            keyboard: true
+        }).css({
+            width: 'auto',
+            'margin-left': function () {
+                return -($(this).width() / 2);
+            }
+        });
     });
 
     $('#promptConditionBtn').click(function() {
         $('#conditionSource').val('prompt');
         $('#advancedCondition').val($(this).prev().val());
-        setUpConditionPromptList();
+        if($('#promptCondition').val().trim() == "") {
+            $('#simpleConditionTbl tr:gt(1)').remove();
+            clearTableData();
+            setUpConditionPromptList();
+        }
         $('#conditionModal').modal('show');
-    });
-
-    // Condition toggle button
-    $('#conditionToggle').click(function(){
-        var $this = $(this);
-        if ($this.text() === 'Simple') {
-            $this.text('Advanced');
-            $('#conditionType').val('advanced');
-        } else {
-            $this.text('Simple');
-            $('#conditionType').val('simple');
-        }
-        $this.toggleClass('btn-inverse');
-        $('#simpleCondition').toggle();
-        $('#advancedCondition').toggle();
-    });
-
-
-    // Condition submit button
-    $('#conditionSubmit').click(function(){
-        if ($('#conditionType').val() == 'simple') {
-
-        }
-        else { //advance condition
-            var source = $('#conditionSource').val();
-            var text = $('#advancedCondition').val();
-            switch (source) {
-                case 'message':
-                    $('#messageCondition').val(text);
-                    break;
-                case 'prompt':
-                    $('#promptCondition').val(text);
-                    break;
-                default:
-                    break;
+        $('#conditionModal').modal({
+            backdrop: true,
+            keyboard: true
+        }).css({
+            width: 'auto',
+            'margin-left': function () {
+                return -($(this).width() / 2);
             }
-        }
-
-        $('#conditionModal').modal('hide');
+        });
     });
+
 
     $('#previousItemsSortable').on('click', 'button.deleteItem', function() {
+        /*
         $parent = $(this).parent();
         var index = $('#previousItemsSortable li').index($parent);
         $parent.slideUp('fast');
         setTimeout(deleteItemCallback($parent), 200);
         campaignEditor.deleteItem(index);
+        updateNumQuestion();
+        */
+        alert("Not Implemented yet");
     });
 
     function setupEditMessage (message) {
@@ -354,6 +353,7 @@ $(function() {
     }
 
     $('#previousItemsSortable').on('click', 'button.editItem', function() {
+        /*
         $parent = $(this).parent();
         var currentSurvey = campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')];
         var index = $('#previousItemsSortable li').index($parent);
@@ -368,6 +368,8 @@ $(function() {
         } else {
 
         }
+        */
+        alert("Not Implemented yet");
     });
 
 
@@ -404,7 +406,7 @@ $(function() {
             return;
         }
         addMessageToPrevItems(itemIndex);
-
+        updateNumQuestion();
         // cleanup code
         $('#editMessageId').val('');
         $('#createMessage').text('Create Message');
@@ -432,7 +434,6 @@ $(function() {
         if (promptData['editPromptId']) {
             event.preventDefault();
             var promptId = parseInt(promptData['editPromptId']);
-            console.log(promptId);
             itemIndex = campaignEditor.surveyItemIndexes(campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList']['']).indexOf(promptId);
             console.log(itemIndex);
             campaignEditor.addPrompt(
@@ -506,6 +507,7 @@ $(function() {
                     console.log('Error, unknown prompt type found.');
                     break;
             }
+            updateNumQuestion();
         }
 
         // cleanup code
@@ -529,47 +531,46 @@ $(function() {
         $('#xmlModal').modal('show');
     });
 
-    /*
-    // modal stuff
-    function updateSelection() {
-        $('#singleChoiceDefault').empty();
-        var key = 0;
-        $('#singleChoiceDefault')
-            .append($("<option></option>")
-            .attr("value",-1)
-            .text("None")); 
-        $('#singleChoiceTable tr:not(:first-child)').each(function()
-        {
-            $this = $(this);
-            var label = $this.find(".singleLabel").val();
-            $('#singleChoiceDefault')
-             .append($("<option></option>")
-             .attr("value",key++)
-             .text(label)); 
-        });
-    };
-    function singleValidateValue() {
-        $this = $(this);
-        var val = $this.val();
-        if (!isPositiveNumber(val)) {
-            alert('Value must be a positive number');
-            $this.css("background-color", "red");
-        }
+    function updateNumQuestion() {
+        var length = campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''].length;
+        $('#numQuestion').html(length);
     }
-    
-    
-    $("table[id=singleChoiceTable]").on("click", "button", function() {
-        $(this).closest("tr").remove();
-        updateSelection();
-    }); 
-
-    $("#addSingleBtn").click(function () {
-        var row = "<tr><td><input type=text class='singleLabel'/></td><td><input type=text class='singleValue'/></td><td><button class='btn btn-primary'>X</button></td></tr>";
-        $("table[id=singleChoiceTable]").append(row);
-    });
-
     // delegate
-    $('#singleChoiceModal').delegate('.singleLabel', 'change', updateSelection);
-    $('#singleChoiceModal').delegate('.singleValue', 'change', singleValidateValue);
-    */    
+    var prevValue = jQuery("#choosePromptType").val();
+    $('#choosePromptType').on('mousedown', 'option', function (event) {
+        event.preventDefault();
+        if ($(this).val() === prevValue) {
+            $('#promptTypeBtn').trigger('click');
+        }
+    });
+    jQuery("#choosePromptType").focus(function() {
+        prevValue = $(this).val();
+    }).change(function() {
+        $this = $(this);
+        var changeConfirm = true;
+        if ($('#addedPrompt').val() != "") {
+            var text = "WARNING: Choosing new prompt type will clear all the data of old prompt type\n Proceed ?"
+            changeConfirm = confirm(text);
+        } else {
+            var text = "WARNING: Choosing new prompt type will clear all the data in the current prompt type\n Proceed ?"
+            changeConfirm = confirm(text);
+        }
+
+        if (changeConfirm) {
+            $('#addedPrompt').val(""); // clear text box   
+            showNewModal();
+        } else {
+            $this.val(prevValue);
+            prevValue = $this.val();
+        }
+
+        //$this.val(0);
+    });
+    /*
+    $("#previousItemsSortable").live("change", function(e) {
+        e.preventDefault();
+        updateNumQuestion();
+    });
+    $('#previousItems').delegate('.previousItemsSortable ul', 'change', updateNumQuestion);
+    */
 });

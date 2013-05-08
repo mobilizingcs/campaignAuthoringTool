@@ -15,8 +15,29 @@ var PhotoPrompt = {
 
 var VideoPrompt = {
 	default_value: 180,
+	min_value: 1,
 	max_value: 600
 }
+
+var RemoteActivityPrompt = {
+	min_retries: 1,
+	min_minRun: 1
+}
+
+var RESERVED_KEYWORDS = ["NOT_DISPLAYED","SKIPPED"];
+
+var operator = [ '<option value="==">==</option>',
+                '<option value="&gt;">&gt;</option>',
+                '<option value="&gt;=">&gt;=</option>',
+                '<option value="&lt;">&lt;</option>',
+                '<option value="&lt;=">&lt;=</option>',
+                '<option value="!=">!=</option>'
+				];
+
+var conditionValueChoice = ['<option value="NOT_DISPLAYED">Not Display</option>',
+                            '<option value="SKIPPED">Skipped</option>',
+                            '<option value="USER_INPUT">Specify value</option>'
+							];
 // 
 $(function() {
 

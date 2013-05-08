@@ -1,0 +1,51 @@
+<div class="centered">
+    <div class="centerd">
+        <p style="text-align:left;">
+            Create condtions using predefined operator and conjunction as below. </br>
+            If you know the condition syntax or want to create more complex condition, please choose "Advanced Option". 
+        </p>
+    </div>
+    </br>
+    </br>
+    <table id="simpleConditionTbl" align="center">
+      <tr>
+        <th>Move Up</th>
+        <th>Move Down</th>
+        <th>Option #</th>
+        <th>Prompt ID</th>
+        <th>Prompt Type</th>
+        <th>Operator</th>
+        <th>Value</th>
+        <th>Conjunction</th>
+        <th>Add</th>
+        <th>Delete</th>
+      </tr>
+      <tr>
+        <td><button class='btn btn-primary upCondition'><i class="icon-arrow-up icon-white"></i></button></td>
+        <td><button class='btn btn-primary downCondition'><i class="icon-arrow-down icon-white"></i></button></td>
+        <td><input type="text" class="span1 conditionNum" value="1" readonly/></td>
+        <td><select class="span2 previousPrompts" id="previousPrompts"></select></td>
+        <td><input type="text" class="span2 conditionPromptType" readonly/></td>
+        <td>
+            <select class="span2 operator">
+                <option value="==">is equal to</option>
+                <option value=">">is greater than</option>
+                <option value=">=">is greater than or equal to</option>
+                <option value="<">is less than </option>
+                <option value="<=">is less than or equal to</option>
+                <option value="!=">is not equal to</option>
+            </select>
+        </td>
+        <td><input type="text" class="conditionValue" /></td>
+        <td>
+            <select class="span1 conjunction" >
+                <option value="">None</option>
+                <option value="and">AND</option>
+                <option value="or">OR</option>
+            </select>
+        </td>
+        <td><button class='btn btn-primary addCondition'><i class="icon-plus icon-white"></i></button></td>
+        <td><button class='btn btn-primary deleteCondition'><i class="icon-remove icon-white"></i></button></td>
+      </tr>
+    </table>
+</div>
