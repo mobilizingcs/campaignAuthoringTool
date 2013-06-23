@@ -1,0 +1,56 @@
+#surveyXml {
+    margin: auto;
+    width: 80%;
+    height: 380px;
+    text-align: left;
+}
+pre {
+  overflow: auto;
+  word-wrap: normal;
+  white-space: pre;
+}
+
+#existingSurveysSortable {
+    list-style: none;
+    margin-left: 0;
+}
+#existingSurveysSortable li {
+    padding: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    background-color: #FFF;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px #A4A4A4;
+    -moz-box-shadow: 2px 2px 5px #A4A4A4;
+    -webkit-box-shadow: 2px 2px 5px #A4A4A4;
+    overflow: hidden;
+}
+.editItem {
+    margin-right: 10px;
+}
+
+
+.accordion-group {
+    overflow: hidden;
+    background-color: #FCFCFC;
+}
+.accordion-heading a{
+    color: #444;
+    background-color: #FFF;
+}
+
+label {
+    width: 75px;
+    margin-right:5px;
+    display: inline-block;
+}
+
+textarea {
+    height: 40px;
+}
+input[type='checkbox'] {
+    width: 20px;
+    margin-right: : 5px;
+}

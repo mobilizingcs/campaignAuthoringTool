@@ -27,12 +27,17 @@
 
                 </div> 
                 <div class="centered" id="simpleCondition">
-                    <input type="hidden" id="conditionGroupCounter" value="1"/>
+                    <input type="hidden" id="conditionGroupCounter" value="0"/>
                     <div class="centerd">
                         <p style="text-align:left;">
                             Create condtions using predefined operator and conjunction as below. </br>
-                            If you know the condition syntax or want to create more complex condition, please choose "Advanced Option". 
+                            If you know the condition syntax or want to create more complex condition, please choose "Advanced Option".
                         </p>
+                    </div>
+                    <div class="centered" id="simpleConditionHelp">
+                        <p style="text-align:left;" >
+                            Hover your mouse over <a class="conditionTooltip" title="" rel="tooltip" data-html="true" href="#" data-placement="right">here</a> to show instructions
+                        </P>
                     </div>
                     </br>
                     </br>
@@ -73,7 +78,8 @@
                                         <option value="USER_INPUT">Input your own value</option>
                                     </select>
                                 </td>
-                                <td><input type="text" class="conditionValue span2" value="" disabled/></td>
+                                <td class="valueRow"><!--<input type="text" class="conditionValue span2" value="" disabled/>-->
+                                </td>
                                 <td>
                                     <select class="span1 conjunction" >
                                         <option value="">None</option>
@@ -155,6 +161,6 @@
     </div>
     <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-        <button class="btn btn-primary" id="conditionSubmit">Save changes</button>
+        <button class="btn" id="conditionSubmit">Save changes</button>
     </div>
 </div>

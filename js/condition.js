@@ -5,6 +5,8 @@
 $(function() {
     $('#conditionGroupCounter').val('1');
     $('.advancedCondition').val("");
+    $('.conjunction').val("");
+
 	var prevValue = jQuery("#conditionType").val();
 
 	if (prevValue === "simple") {
@@ -69,7 +71,7 @@ $(function() {
 	});
 
 	function updateOptionCondition() {
-		var optionNum = 1;
+		var optionNum = 0;
 		$('#simpleConditionTbl tr:not(:first-child)').each(function()
         {
             $this = $(this);
@@ -79,6 +81,7 @@ $(function() {
 	function updateConditionPromptType() {
 		$this = $(this);
 		var promptType = $this.val();
+        $this.parents("tr:first").find(".valueRow").empty();
 		$this.parents("tr:first").find(".conditionValue").val('');
 
 		switch (promptType) {
@@ -328,14 +331,9 @@ $(function() {
             	errorCode = 1;
             } else {
                 if (valueChoice == "USER_INPUT") {
-                //var value = $this.parents("tr:first").find(".conditionValue").val();
-                //var errorCode = 0;
-                //var errorMessage = "";
-                console.log(value);
 
                 // get promptID
                 var promptID = $this.find(".previousPrompts option:selected").text();
-                console.log(promptID);
 
                 switch (promptType) {
                     case 'message':
@@ -453,6 +451,7 @@ $(function() {
         	var $tr = $(this).closest("tr");
     		var $clone = $tr.clone();
             $clone.find(':text').val('');
+            $clone.find('.valueRow').empty();
             $clone.find('.conditionValue').attr('disabled', 'disabled');
             $clone.find('.conditionValue').removeClass('error2');
         	$(this).closest("tr").after($clone);
@@ -553,13 +552,49 @@ $(function() {
                     $this.parents("tr:first").find(".conditionValueChoice option").remove();
                     $this.parents("tr:first").find(".conditionValueChoice").append('<option value="NOT_DISPLAYED">Not Display</option>'+
                                                                         '<option value="SKIPPED">Skipped</option>'+
-                                                                        '<option value="USER_INPUT">Input your own value</option>');
+                                                                        '<option value="USER_INPUT">Specify value</option>');
                     $this.parents("tr:first").find(".conditionValue").attr('disabled', 'disabled');
                     break;
                 default:
                     $this.parents("tr:first").find(".conditionValueChoice option").remove();
-                    $this.parents("tr:first").find(".conditionValueChoice").append('<option value="USER_INPUT">Input your own value</option>');
-                    $this.parents("tr:first").find(".conditionValue").removeAttr('disabled');
+                    $this.parents("tr:first").find(".conditionValueChoice").append('<option value="USER_INPUT">Specify value</option>');
+                    // process for different prompt type
+                    var promptType = $this.parents("tr:first").find(".previousPrompts").val();
+                    switch (promptType) {
+                        case 'multi_choice':
+                        case 'multi_choice_custom':
+                        case 'single_choice':
+                        case 'single_choice_custom':
+                            var promptID = $this.parents("tr:first").find(".previousPrompts option:selected").text();
+                            // find the prompt in the contentList
+                            var numOption = 0;
+                            for (i in campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList']['']) {
+                                if (campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''][i]['prompt']) {
+                                    if (campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''][i]['prompt']['id'] == promptID) {
+                                        numOption = campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''][i]['prompt']['properties']['property'].length;
+                                        console.log(numOption);
+                                        break;
+                                    }
+                                }
+                            }
+                            $this.parents("tr:first").find(".valueRow").append('<select class="conditionValue span1" ></select>');
+                            for (j=0; j<numOption; j++) {
+                                var option = '<option value=' + j + '>' + j + '</option>';
+                                $this.parents("tr:first").find(".conditionValue").append(option);
+                            }
+                            break;
+                        case 'number':
+                        case 'text':
+                            $this.parents("tr:first").find(".valueRow").append('<input type="text" class="conditionValue span1" value="" disabled/>');
+                            $this.parents("tr:first").find(".conditionValue").removeAttr('disabled');
+                            $this.parents("tr:first").find(".conditionValue").val('');
+                            break;
+                        default:
+                            // cannot reach here
+                            return false;
+                            break;
+                    } // end switch
+                    //$this.parents("tr:first").find(".conditionValue").removeAttr('disabled');
                     break;
             }
         }
@@ -570,16 +605,56 @@ $(function() {
         $this = $(this);
         switch($this.val()) {
             case 'NOT_DISPLAYED':
-                $this.parents("tr:first").find(".conditionValue").attr('disabled', 'disabled');
-                $this.parents("tr:first").find(".conditionValue").val('');
+                $this.parents("tr:first").find(".valueRow").empty();
+                //$this.parents("tr:first").find(".conditionValue").attr('disabled', 'disabled');
+                //$this.parents("tr:first").find(".conditionValue").val('');
                 break;
             case 'SKIPPED':
-                $this.parents("tr:first").find(".conditionValue").attr('disabled', 'disabled');
-                $this.parents("tr:first").find(".conditionValue").val('');
+                $this.parents("tr:first").find(".valueRow").empty();
+                //$this.parents("tr:first").find(".conditionValue").attr('disabled', 'disabled');
+                //$this.parents("tr:first").find(".conditionValue").val('');
                 break;
             case 'USER_INPUT':
-                $this.parents("tr:first").find(".conditionValue").removeAttr('disabled');
-                $this.parents("tr:first").find(".conditionValue").val('');
+                // process for different prompt type
+                var promptType = $this.parents("tr:first").find(".previousPrompts").val();
+                switch (promptType) {
+                    case 'multi_choice':
+                    case 'multi_choice_custom':
+                    case 'single_choice':
+                    case 'single_choice_custom':
+                        var promptID = $this.parents("tr:first").find(".previousPrompts option:selected").text();
+                        // find the prompt in the contentList
+                        var numOption = 0;
+                        for (i in campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList']['']) {
+                            if (campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''][i]['prompt']) {
+                                if (campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''][i]['prompt']['id'] == promptID) {
+                                    numOption = campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''][i]['prompt']['properties']['property'].length;
+                                    console.log(numOption);
+                                    break;
+                                }
+                            }
+                        }
+                        $this.parents("tr:first").find(".valueRow").append('<select class="conditionValue span1" ></select>');
+                        for (j=0; j<numOption; j++) {
+                            var option = '<option value=' + j + '>' + j + '</option>';
+                            $this.parents("tr:first").find(".conditionValue").append(option);
+                        }
+                        break;
+                    case 'number':
+                    case 'text':
+                        $this.parents("tr:first").find(".valueRow").append('<input type="text" class="conditionValue span1" value="" disabled/>');
+                        $this.parents("tr:first").find(".conditionValue").removeAttr('disabled');
+                        $this.parents("tr:first").find(".conditionValue").val('');
+                        break;
+                    default:
+                        // cannot reach here
+                        return false;
+                        break;
+                } // end switch
+                //$this.parents("tr:first").find(".valueRow").append('<input type="text" class="conditionValue span2" value="" disabled/>');
+                //$this.parents("tr:first").find(".conditionValue").removeAttr('disabled');
+                //$this.parents("tr:first").find(".conditionValue").val('');
+
                 break;
             default:
                 break;
@@ -616,11 +691,19 @@ $(function() {
         //console.log($newRow);
     });
     
-
-    /*
-    * New condition stuff
-    *
-    */
+    $(".conditionTooltip").live({
+        mouseenter: function() {
+            var $this = $(this);
+            $this.attr('data-original-title', simpleConditionTooltip);
+            $this.tooltip('show');
+           },
+        mouseleave: function() {
+              var $this = $(this);
+            $this.tooltip('hide');
+           }
+       }
+    );
+    
     jQuery(".addThisCondition").live("click", function(e){
         e.preventDefault();
         $this = $(this);
@@ -654,27 +737,4 @@ $(function() {
         var oldVal = $('.advancedCondition').val();
         $('.advancedCondition').val(oldVal + conjunction + '\n'); 
     });
-
-    $.fn.extend({detachOptions: function(o) {
-        var s = this;
-        return s.each(function(){
-            var d = s.data('selectOptions') || [];
-            s.find(o).each(function() {
-                d.push($(this).detach());
-            });
-            s.data('selectOptions', d);
-        });
-    }, attachOptions: function(o) {
-        var s = this;
-        return s.each(function(){
-            var d = s.data('selectOptions') || [];
-            for (var i in d) {
-                if (d[i].is(o)) {
-                    s.append(d[i]);
-                    console.log(d[i]);
-                    // TODO: remove option from data array
-                }
-            }
-        });
-    }});
 });

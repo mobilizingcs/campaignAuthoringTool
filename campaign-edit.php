@@ -7,7 +7,7 @@
 ?>
 <html>
     <head>
-        <title>Create Campaign</title>
+        <title>Edit Campaign</title>
         <meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
         <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>
@@ -19,9 +19,10 @@
         <script type="text/javascript" src="js/bootstrap.min.js"></script>
         <script type="text/javascript" src="js/json2xml.js"></script>
         <script type="text/javascript" src="js/jquery.xml2json.js"></script>
+        <script type="text/javascript" src="js/menu.js"></script>
         <script type="text/javascript" src="js/alerts.js"></script>
         <script type="text/javascript" src="js/navbar.js"></script>
-        <script type="text/javascript" src="js/campaign.js"></script>
+        <script type="text/javascript" src="js/campaign-edit.js"></script>
         <script type="text/javascript" src="js/help-icon.js"></script>
         <script type="text/javascript" src="js/campaign-editor.js"></script>
     </head>
@@ -36,31 +37,26 @@
                 </ul>
             </div>
             <div class="row">
-                <div class="span12 content">
+                <div class="span3">
+                    <div class="boxRounded boxDark" id="campaignMenu">
+                        <!--<div class="center">-->
+                            <h5></h5>
+                            <button type="button" class="btn btn-block" id="editCampaign">Edit Campaign Info</button>
+                            <button type="button" class="btn btn-block" id="createNewSurvey">Create New Survey</button>
+                            <button type="button" class="btn btn-block" id="editExistingSurvey">Edit Existing Surveys</button>
+                            <button type="button" class="btn btn-block" id="viewSurveyXML">View Campaign XML</button>
+                            <button type="button" class="btn btn-info btn-block" id="submitCampaign">Submit Campaign to Server</button>
+                        <!--</div>-->
+                        <?php
+                            include('promptModals/viewXmlModal.php');
+                        ?>
+                    </div>
+                </div>
+                <div class="span9 content">
                     <div class="boxRounded boxDark">
-                        <h4>Campaign Editor <small>Create a new campaign, or edit an existing one.</small></h4>
-                        <!--
-                        <div class="existing-campaigns">
-                            <hr>
-                            <h3>Edit an Existing Campaign</h3>
-                            <form class="form-horizontal">
-                                <div class="control-group">
-                                    <label class="control-label" for="campaignTitle">Campaign</label>
-                                    <div class="controls">
-                                        <select class="campaign-select"></select>
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <div class="controls">
-                                        <button type="submit" id="edit-campaign" class="btn btn-primary">Edit Campaign <i class="icon-pencil icon-white"></i></button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        -->
+                        <h5>Edit Campaign</h5>
                         <div class="new-campaign">
                             <form class="form-horizontal" id="campaign-form" action="existing-surveys.php">
-                                <h5>Create a New Campaign</h5>
                                 <div class="control-group">
                                     <label class="control-label" for="campaignTitle">Campaign Name <span class="red">*</span></label>
                                     <div class="controls">
@@ -85,10 +81,6 @@
                                 <div class="control-group">
                                     <label class="control-label" for="classes">Classes <span class="red">*</span></label>
                                     <div class="controls">
-                                        <!--
-                                        <input type="text" class="span4" id="classes" placeholder="Classes" />
-                                        <i class="help-icon icon-question-sign" data-original-title="Classes that use this campaign" rel="tooltip" data-placement="right"></i>
-                                    -->
                                         <select class="classes"></select>
                                     </div>
                                 </div>
@@ -114,50 +106,12 @@
                                 </div>
                                 <div class="control-group">
                                     <div class="controls">
-                                        <button type="submit" id="create-campaign" class="btn">Create Campaign <i class="icon-plus icon-black"></i></button>
+                                        <button type="submit" id="edit-campaign" class="btn">Edit Campaign <i class="icon-plus icon-black"></i></button>
                                     </div>
                                 </div>
                             </form>
                             <span class="red">*</span> <small>Required Fields</small>
                         </div>
-                        <!--
-                        <div class="existing-campaigns">
-                            <hr>
-                            <h3>Edit an Existing Campaign</h3>
-                            <form class="form-horizontal">
-                                <div class="control-group">
-                                    <label class="control-label" for="campaignTitle">Campaign</label>
-                                    <div class="controls">
-                                        <select class="campaign-select"></select>
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <div class="controls">
-                                        <button type="submit" id="edit-campaign" class="btn">Edit Campaign <i class="icon-pencil icon-white"></i></button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-
-
-                        <div class="testing-campaigns">
-                            <hr>
-                            <h3>Campaign from XML (for testing purpose only)</h3>
-                            <form class="form-horizontal" id="test-campaign" action="survey.php">
-                                <div class="control-group">
-                                    <label class="control-label" for="campaignXml">XML</label>
-                                    <div class="controls">
-                                        <textarea id="campaignXml" class="campaignXml"></textarea>
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <div class="controls">
-                                        <button type="submit" id="test-campaign" class="btn btn-primary">Test Campaign <i class="icon-pencil icon-white"></i></button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        -->
                     </div>
                 </div>
             </div>

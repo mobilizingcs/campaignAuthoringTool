@@ -26,6 +26,31 @@ var campaignEditor = {
     },
 
     /*
+    Edit curent campaign object.
+    INPUT: Campaign metadata
+    OUTPUT: campaign object
+    */
+    editCampaign: function(campaign, title, urn, version) {
+        if (typeof(version) === 'undefined') {
+            version = 1;
+        }
+
+        if (!title || !urn) {
+            return false;
+        }
+
+        var author = $.cookie('username');
+        //var campaign = {};
+
+        //campaign['campaignUrn'] = campaignEditor.generateCampaignURN(title, author, version);
+        campaign['campaignUrn'] = urn;
+        campaign['campaignName'] = title;
+        //campaign['surveys'] = {'survey': []};
+
+        return true;
+    },
+
+    /*
     Adds a survey to the given campaign object.
     INPUT: Campaign object, survey metadata
     OUTPUT: True if the addition succeeded, false otherwise
@@ -54,6 +79,33 @@ var campaignEditor = {
         survey['contentList'] = {'': []}
         campaign['surveys']['survey'].push(survey);
 
+
+        return true;
+    },
+
+    /*
+    Edit a survey.
+    INPUT: Campaign object, survey metadata, survey's index
+    OUTPUT: True if the edition succeeded, false otherwise
+    */
+    editSurvey: function(campaign, surveyData, index) {
+        // Check if all required components are present
+        if (!campaign || !surveyData['id'] || !surveyData['title'] || !surveyData['submitText'] ||
+            (surveyData['showSummary'] && !surveyData['summaryText']) || 
+            (typeof(surveyData['anytime']) === 'undefined')) {
+            return false;
+        }
+
+        var survey = {};
+
+        survey['id'] = surveyData['id'];
+        survey['title'] = surveyData['title'];
+        if (surveyData['description']) survey['description'] = surveyData['description'];
+        if (surveyData['introText']) survey['introText'] = surveyData['introText'];
+        survey['submitText'] = surveyData['submitText'];
+        survey['anytime'] = surveyData['anytime'];
+        survey['contentList'] = campaign['surveys']['survey'][index]['contentList'];
+        campaign['surveys']['survey'][index] = survey;
 
         return true;
     },
@@ -96,6 +148,32 @@ var campaignEditor = {
         return index;
     },
 
+
+    /*
+    Edit a message to the given survey of the given campaign.
+    INPUT: Campaign object, the index of the survey within that campaign, and messageData
+        messageData can contain the following keys:
+            messageText,
+            condition
+    OUTPUT: Index of added item, false otherwise
+    */
+    editMessage: function(messageData, index) {
+        // Check if all required components are present
+        if (!messageData['messageText'] || !messageData['id']) {
+            return false;
+        }
+
+        var contentList = campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''];
+        var message = {};
+
+        console.log(contentList[index]['message']['id']);
+        contentList[index]['message']['id'] = messageData['id'];
+        contentList[index]['message']['messageText'] = messageData['messageText'];
+        
+        if (messageData['messageCondition']) contentList[index]['message']['condition'] = messageData['messageCondition'];
+        
+        return true;
+    },
 
     //TODO: TURN PARAMETERS INTO AN OBJECT INSTEAD...
     /*
@@ -165,10 +243,82 @@ var campaignEditor = {
 
     },
 
+    /*
+    Adds a prompt to the given survey of the given campaign.
+    INPUT: Campaign object, the index of the survey within that campaign, prompt metadata
+    OUTPUT: Index of added item, false otherwise
+    */
+    editPrompt: function(
+        campaign,
+        surveyIndex,
+        id,
+        displayLabel,
+        promptText,
+        promptType,
+        defaultValue,
+        condition,
+        skippable,
+        skipLabel,
+        properties, 
+        index
+        ) {
+
+        var showSummary = campaign['surveys']['survey'][surveyIndex]['showSummary'];
+        // Check if all required components are present
+        if (!campaign || !surveyIndex || !id || !displayLabel ||
+            !promptText || !promptType ||
+            (skippable && !skipLabel) || !properties) {
+            if (!campaign) alert('campaign');
+            else if (!surveyIndex) alert('survey');
+            else if (!id) alert('id');
+            else if (!displayLabel) alert('label');
+            else if (!promptText) alert('prompt text');
+            else if (!promptType) alert('promptType');
+            else if (skippable && !skipLabel) {
+                alert(skippable + " " + skipLabel);
+            }
+            else if (!properties) alert('properti');
+            return false;
+        }
+
+        //var savedId;
+        var contentList = campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''];
+
+        var promptItem = {};
+
+        contentList[index]['prompt']['id'] = id;
+        contentList[index]['prompt']['displayLabel'] = displayLabel;
+        contentList[index]['prompt']['promptText'] = promptText;
+        contentList[index]['prompt']['promptType'] = promptType;
+
+        if (defaultValue!=null && defaultValue!="") {
+            contentList[index]['prompt']['default'] = defaultValue;
+        } else if (typeof(defaultValue) === "undefined") {
+            delete contentList[index]['prompt'].default;
+        }
+
+        if (condition) contentList[index]['prompt']['condition'] = condition;
+        contentList[index]['prompt']['skippable'] = skippable;
+        if (skippable) {
+            if (skipLabel) contentList[index]['prompt']['skipLabel'] = skipLabel;
+        } else { 
+            if (contentList[index]['prompt']['skipLabel']) delete contentList[index]['prompt'].skipLabel;
+        }
+        contentList[index]['prompt']['properties'] = properties;
+
+        //console.log(contentList);
+        //console.log(index);
+        return true;
+
+    },
+
     deleteItem: function(index) {
         campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''].splice(index, 1);
     },
 
+    deleteSurvey: function(index) {
+        campaignWrapper['campaign']['surveys']['survey'].splice(index,1);
+    },
     /*
     Adds a repeatable set to the given survey of the given campaign.
     INPUT: Campaign object, the index of the survey within that campaign, repeatable set metadata
@@ -228,6 +378,14 @@ var campaignEditor = {
 
         // Remove element, and insert it into endIndex
         contentList.splice(endIndex, 0, contentList.splice(startIndex, 1)[0]);
+    },
+
+    // Function used when user moves a survey.  Takes the object at an index and moves it to another.
+    shiftSurveys: function(startIndex, endIndex) {
+        var surveys = campaignWrapper['campaign']['surveys']['survey'];
+
+        // Remove element, and insert it into endIndex
+        surveys.splice(endIndex, 0, surveys.splice(startIndex, 1)[0]);
     },
 
     // Find the current maximum index in the contentList

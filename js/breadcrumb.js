@@ -1,7 +1,7 @@
 $(function() {
     var $campaignPage = $('#campaignBreadcrumb');
     if ($campaignPage.children('a').length > 0) {
-        $campaignPage.children('a').html('<strong>Campaign: </strong>' + $.cookie('currentCampaign'));
+        $campaignPage.children('a').html('<strong>campaign: </strong>' + $.cookie('currentCampaign'));
     } else {
         $campaignPage.html('<strong>Campaign: </strong>' + $.cookie('currentCampaign'));
     }

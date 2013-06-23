@@ -52,7 +52,7 @@
                                     </div>
                                     <div class="control-group">
                                         <div class="controls">
-                                            <button type="submit" class="btn btn-primary btn-large btn-block">Login</button>
+                                            <button type="submit" class="btn btn-info btn-large btn-block">Login</button>
                                         </div>
                                     </div>
                                 </form>

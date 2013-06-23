@@ -48,7 +48,7 @@ pre {
 }
 .accordion-heading a{
     color: #444;
-    background-color: #FFF;
+    /*background-color: #FFF;*/
 }
 
 
@@ -141,10 +141,13 @@ table {
 }
 
 .textLink {
-    color: blue !important;
+    color: #0088CC !important;
     text-decoration: underline;
 }
 
+.underline {
+    text-decoration: underline;
+}
 .detailLabel {
     text-decoration: underline;
 }
@@ -157,4 +160,24 @@ table {
 
 .error2 {
     border: 1px solid #f00 !important;
+}
+
+.tooltip-inner {
+    white-space:pre;
+    max-width:none;
+}
+
+.conditionTooltip {
+    white-space:pre;
+    max-width: none !important;
+}
+
+.inline-label {
+    width: 100px;
+    margin-right:5px;
+    display: inline-block;
+}
+
+textarea {
+    height: 40px;
 }

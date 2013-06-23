@@ -38,6 +38,20 @@ var conditionValueChoice = ['<option value="NOT_DISPLAYED">Not Display</option>'
                             '<option value="SKIPPED">Skipped</option>',
                             '<option value="USER_INPUT">Specify value</option>'
 							];
+
+var simpleConditionTooltip = "<div class='left'><p><span style=text-decoration:underline;>Message: </span>-Available operator:==, !=; -Available values: Not Displayed</p>" +
+							"<p><span style=text-decoration:underline;>Multiple Choice, Multiple Choice Custom:</span> -Available operator:==, >, >=, <, <=, !=; -Available values: Not Displayed, Skipped, Specify Value; -Note: User input must be number (one of the option keys)</p>" +
+							"<p><span style=text-decoration:underline;>Number:</span> -Available operator:==, >, >=, <, <=, !=; -Available values: Not Displayed, Skipped, Specify Value; -Note: User input must be a number</p>" +
+							"<p><span style=text-decoration:underline;>Photo:</span> -Available operator:==, !=; -Available values: Not Displayed, Skipped</p>" +
+							"<p><span style=text-decoration:underline;>Remote Activity:</span> -Available operator:==, !=; -Available values: Not Displayed, Skipped</p>" +
+							"<p><span style=text-decoration:underline;>Single Choice, Single Choice Custom:</span> -Available operator:==, >, >=, <, <=, !=; -Available values: Not Displayed, Skipped, Specify Value; -Note: User input must be number (one of the option keys)</p>" +
+							"<p><span style=text-decoration:underline;>Text:</span> -Available operator:==, !=; -Available values: Not Displayed, Skipped, Specify Value; -Note: User input can be any string</p>" +
+							"<p><span style=text-decoration:underline;>Timestamp:</span> -Available operator:==, !=; -Available values: Not Displayed, Skipped</p>" +
+							"<p><span style=text-decoration:underline;>Video:</span> -Available operator:==, !=; -Available values: Not Displayed, Skipped</p>" +
+							"</div>"
+
+var isEditing = false;
+var editObj;
 // 
 $(function() {
 

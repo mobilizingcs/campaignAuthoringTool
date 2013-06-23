@@ -7,7 +7,11 @@ $(function() {
         var tmp = ""; // default value
 
         if (defaultText == 'None' || defaultText == "") {
-            $('#default').val("");
+            if (!isEditing)
+                $('#default').val("");
+            else {
+                editObj.find('.editPromptDetails').find('.default').val("");
+            }
         } else {
             
             jQuery.each(defaultValue,function(index, item){
@@ -17,7 +21,10 @@ $(function() {
                 $('#multiChoiceTable tr').eq(child).find('.isDefault').val(1);    
             });
             //console.log(tmp);
-            $('#default').val(tmp.slice(0,-1));
+            if (!isEditing)
+                $('#default').val(tmp.slice(0,-1));
+            else
+                editObj.find('.editPromptDetails').find('.default').val(tmp.slice(0,-1));
         }
 
         var key = 0;
@@ -36,7 +43,10 @@ $(function() {
             key++;
         });
 
-        $('#addedPrompt').val(properties);
+        if (!isEditing)
+            $('#addedPrompt').val(properties);
+        else
+            editObj.find('.editPromptDetails').find('.addedPrompt').val(properties);
     }
 
     function displaySingleChoiceValues() {
@@ -48,7 +58,11 @@ $(function() {
         var defaultVal = "\n\nDefault: ";
 
         if (defaultText == 'None') {
-            $('#default').val("");
+            if (!isEditing)
+                $('#default').val("");
+            else {
+                editObj.find('.editPromptDetails').find('.default').val("");
+            }
         }
         var key = 0;
         var properties = "";
@@ -64,12 +78,26 @@ $(function() {
             defaultCheck = option + ': ' + label;
 
             if (defaultCheck === defaultText) { 
-                $('#default').val(key);
+                if (!isEditing)
+                    $('#default').val(key);
+                else {
+                    editObj.find('.editPromptDetails').find('.default').val(key);
+                }
             }
             key++;
         });
-
-        $('#addedPrompt').val(properties);
+        if (defaultText == 'None') {
+            if (!isEditing)
+                $('#default').val("");
+            else {
+                editObj.find('.editPromptDetails').find('.default').val("");
+            }
+        }
+        if (!isEditing)
+            $('#addedPrompt').val(properties);
+        else {
+            editObj.find('.editPromptDetails').find('.addedPrompt').val(properties);
+        }
 
 
 
@@ -83,17 +111,31 @@ $(function() {
         var properties = "min:" + minNum + "\n" + "max:" + maxNum;
 
         if (defaultValue != "") {
-            $('#default').val(defaultValue);
-
+            if (!isEditing)
+                $('#default').val(defaultValue);
+            else {
+                editObj.find('.editPromptDetails').find('.default').val(defaultValue);
+            }
+        } else {
+            if (!isEditing)
+                $('#default').val("");
+            else
+                editObj.find('.editPromptDetails').find('.default').val("");
         }
-        $('#addedPrompt').val(properties + '\n' + defaultText);
+        if (!isEditing)
+            $('#addedPrompt').val(properties + '\n' + defaultText);
+        else
+            editObj.find('.editPromptDetails').find('.addedPrompt').val(properties + '\n' + defaultText);
     }
 
     function displayPhotoValues() {
         var resolution = $('#maxRes').val();
         var properties = "resolution:" + resolution;
 
-        $('#addedPrompt').val(properties);
+        if (!isEditing)
+            $('#addedPrompt').val(properties);
+        else
+            editObj.find('.editPromptDetails').find('.addedPrompt').val(properties);
     }
 
     function displayTextValues() {
@@ -104,9 +146,15 @@ $(function() {
         var properties = "min:" + min + "\n" + "max:" + max;
 
         if (defaultValue != "") {
-            $('#default').val(defaultValue);
+            if (!isEditing)
+                $('#default').val(defaultValue);
+            else
+                editObj.find('.editPromptDetails').find('.default').val(defaultValue);
         }
-        $('#addedPrompt').val(properties + '\n' + defaultText);
+        if (!isEditing)
+            $('#addedPrompt').val(properties + '\n' + defaultText);
+        else
+            editObj.find('.editPromptDetails').find('.addedPrompt').val(properties + '\n' + defaultText);
     }
 
     function displayRemoveActivityValues() {
@@ -125,7 +173,10 @@ $(function() {
                       + "Min run:" + min + "\n"
                       + "Input:" + input + "\n"  
 
-        $('#addedPrompt').val(properties);
+        if (!isEditing)
+            $('#addedPrompt').val(properties);
+        else
+            editObj.find('.editPromptDetails').find('.addedPrompt').val(properties);
     }
 
     function displayVideoValues() {
@@ -134,7 +185,10 @@ $(function() {
 
         var properties = "max_seconds:" + length;
 
-        $('#addedPrompt').val(properties);
+        if (!isEditing)
+            $('#addedPrompt').val(properties);
+        else
+            editObj.find('.editPromptDetails').find('.addedPrompt').val(properties);
     }
 
     function validateSingleChoice() {
@@ -260,14 +314,19 @@ $(function() {
     }
 
     $('#promptTypeSubmit').click(function() {
-        var type = jQuery("#groupPromptType").val();
-        $('#choosePromptType').val(type);
+        if (!isEditing) {
+            var type = jQuery("#groupPromptType").val();
+            $('#choosePromptType').val(type);
+        } else {
+            var type = editObj.find('.editPromptDetails').find('.choosePromptType').val();
+            console.log(type);
+        }
         switch (type) {
         case 'multi_choice':
             var validate = validateMultiChoice();
             if (validate == true) {
                 $('#promptTypeText').val("Multiple Choice");
-                displayMultiChoiceValues();
+                displayMultiChoiceValues(editObj);
                 $('#promptTypeModal').modal('hide');
             }
             break;
@@ -283,6 +342,7 @@ $(function() {
             var validate = validateSingleChoice();
             if (validate == true) {
                 $('#promptTypeText').val("Single Choice");
+                
                 displaySingleChoiceValues();
                 $('#promptTypeModal').modal('hide');
             }
@@ -291,6 +351,7 @@ $(function() {
             var validate = validateSingleChoice();
             if (validate == true) {
                 $('#promptTypeText').val("Single Choice Custom");
+                
                 displaySingleChoiceValues();
                 $('#promptTypeModal').modal('hide');
             }
@@ -443,6 +504,7 @@ $(function() {
         default:
             break;
         }
+
         $('#promptType').val(type);
     });
 });

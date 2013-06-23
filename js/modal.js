@@ -74,7 +74,7 @@ $(function() {
 	// modal stuff
 	// single choice
 	function updateOptionSingle() {
-		var optionNum = 1;
+		var optionNum = 0;
 		$('#singleChoiceTable tr:not(:first-child)').each(function()
         {
             $this = $(this);
@@ -85,10 +85,12 @@ $(function() {
         //console.log($(this).val());
         $('#singleChoiceDefault').empty();
         var key = 0;
+        
         $('#singleChoiceDefault')
             .append($("<option></option>")
             .attr("value",-1)
             .text("None")); 
+        
         $('#singleChoiceTable tr:not(:first-child)').each(function()
         {
             $this = $(this);
@@ -178,7 +180,7 @@ $(function() {
 
     // multiple choice
     function updateOptionMulti() {
-		var optionNum = 1;
+		var optionNum = 0;
 		$('#multiChoiceTable tr:not(:first-child)').each(function()
         {
             $this = $(this);

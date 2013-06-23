@@ -26,7 +26,7 @@ $(function() {
     // Privacy State Button
     $('#runningStateBtn').click(function(e) {
         var $this = $(this);
-        $this.toggleClass('btn-success btn-danger');
+        //$this.toggleClass('btn-success btn-danger');
         if ($this.html() === 'Running') {
             $this.html('Stopped');
         } else {
@@ -38,7 +38,7 @@ $(function() {
     // Running State Button
     $('#privacyStateBtn').click(function(button) {
         var $this = $(this);
-        $this.toggleClass('btn-success btn-danger');
+        //$this.toggleClass('btn-success btn-danger');
         if ($this.html() === 'Shared') {
             $this.html('Private');
         } else {

@@ -2,15 +2,18 @@ var campaignWrapper = $.parseJSON(localStorage['campaignWrapper']);
 
 $(function() {
     for (i in campaignWrapper['campaign']['surveys']['survey']) {
-        var surveySelect = '<option value="' + i + '">' + campaignWrapper['campaign']['surveys']['survey'][i]['title'] + '</option>';
+        //var surveySelect = '<option value="' + i + '">' + campaignWrapper['campaign']['surveys']['survey'][i]['title'] + '</option>';
+        var surveySelect = '<li value="' + i + '"><a href="#">' + campaignWrapper['campaign']['surveys']['survey'][i]['title'] + '</option>';
         $(surveySelect).appendTo('#existingSurveys');
     }
 
-    $('#editExistingSurvey').click(function() {
-        $.cookie('currentSurvey', $('#existingSurveys').val());
+    /*
+    $('#existingSurveys li').click(function() {
+        //console.log($(this).val());
+        $.cookie('currentSurvey', $(this).val());
         window.location.replace('prompt.php');
     });
-
+    */
     $('#surveyTitle').focus();
 
     $('.formToggleBtn').click(function(e) {
@@ -67,6 +70,7 @@ $(function() {
         }
     });
     
+    /*
     $('#viewSurveyXML').click(function() {
         var tmp = campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')];
     
@@ -75,13 +79,11 @@ $(function() {
         $('#surveyXml').text(vkbeautify.xml(xml));
         $('#xmlModal').modal('show');
     });    
-
+    */
     //sOriginal post
+    /*
     $('#submitCampaign').click(function() {
-        //deleteEditField(campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList']['']);
-        //console.log(campaignWrapper);
         var xmlFile = '<?xml version="1.0" encoding="UTF-8"?>' + json2xml({'campaign': campaignWrapper['campaign']});
-        console.log(campaignWrapper['description']);
         $.post("https://test.ohmage.org/app/user_info/read", { auth_token: $.cookie('authToken'), client: 'campaign-webapp' }, function(response) {
             if (response.result === 'success') {
                 var classes = Object.keys(response['data'][$.cookie('username')]['classes']).join();
@@ -115,6 +117,6 @@ $(function() {
             }
         }, "json");
     });
-
+    */
     
 });

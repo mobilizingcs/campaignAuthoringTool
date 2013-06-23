@@ -140,7 +140,8 @@ function surveyItemError(text) {
 
 function addProperties(input, promptType) {
     var properties = {'property':[]};
-    text = input['properties'];
+    var text = input['properties'];
+    console.log(text);
     if (promptType == "multi_choice" || promptType == "multi_choice_custom") {
         $('#multiChoiceTable tr:not(:first-child)').each(function()
         {
@@ -150,7 +151,7 @@ function addProperties(input, promptType) {
             var label = $this.find(".multiLabel").val();
             var value = $this.find(".multiValue").val();
             
-            property['key'] = Number(option) - 1;
+            property['key'] = Number(option);
             property['label'] = label;
             if (value != "") property['value'] = value;
             properties['property'].push(property);
@@ -167,7 +168,7 @@ function addProperties(input, promptType) {
             var label = $this.find(".singleLabel").val();
             var value = $this.find(".singleValue").val();
             
-            property['key'] = Number(option) - 1;
+            property['key'] = Number(option);
             property['label'] = label;
             if (value != "") property['value'] = value;
             properties['property'].push(property);
@@ -237,28 +238,13 @@ function addProperties(input, promptType) {
 
         property = {};
         property['key'] = 'min';
-        property['label'] = minTextLength;
+        property['label'] = min;
         properties['property'].push(property);
         property = {};
         property['key'] = 'max';
-        property['label'] = maxTextLength;
+        property['label'] = max;
         properties['property'].push(property);
         return properties;
-        /*
-        propertiesText = text.split("\n");
-        for (i = 0; i < 2; i++)
-        {
-            property = {};
-            temp = propertiesText[i].split(":");
-            key = temp[0].replace("\r", "");
-            label = temp[1].replace("\r", "");
-            
-            property['key'] = key;
-            property['label'] = label;
-            properties['property'].push(property);
-        }
-        return properties;
-        */
     }
     else if (promptType == "timestamp") {
         // doing nothing

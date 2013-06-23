@@ -7,7 +7,7 @@
 ?>
 <html>
     <head>
-        <title>Create Surveys</title>
+        <title>Edit Surveys</title>
         <meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
         <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>
@@ -20,7 +20,7 @@
         <script type="text/javascript" src="js/navbar.js"></script>
         <script type="text/javascript" src="js/alerts.js"></script>
         <script type="text/javascript" src="js/menu.js"></script>
-        <script type="text/javascript" src="js/survey.js"></script>
+        <script type="text/javascript" src="js/survey-edit.js"></script>
         <script type="text/javascript" src="js/help-icon.js"></script>
         <script type="text/javascript" src="js/json2xml.js"></script>
         <script type="text/javascript" src="js/campaign-editor.js"></script>
@@ -28,7 +28,7 @@
         <script type="text/javascript" src="js/vkbeautify.0.99.00.beta.js"></script>
     </head>
     <body>
-		<?php
+        <?php
             include('navbar.php');
         ?>
         <div class="container">
@@ -41,24 +41,6 @@
             <div class="row">
                 <div class="span3">
                     <div class="boxRounded boxDark" id="campaignMenu">
-                        <!--
-                        <div class="center">
-                            <h5></h5>
-                            <button type="button" class="btn btn-block" id="createNewSurvey">Create New Survey</button>
-                            <div class="btn-group btn-block">
-                                <button class="btn btn-block dropdown-toggle" data-toggle="dropdown" id="editExistingSurvey">Edit Existing Survey  <span class="caret"></span></button>
-                                <ul class="dropdown-menu" id="existingSurveys">
-                                  <li><a href="#">Action</a></li>-->
-                            <!--      
-                                </ul>
-                            </div>
-                            <?php
-                            //include('promptModals/viewXmlModal.php');
-                            ?>      
-                            <button type="button" class="btn btn-block" id="viewSurveyXML">View Campaign XML</button>
-                            <button type="button" class="btn btn-info btn-block" id="submitCampaign">Submit Campaign to Server</button>
-                        </div>
-                        -->
                         <div class="center">
                             <h5></h5>
                             <button type="button" class="btn btn-block" id="editCampaign">Edit Campaign Info</button>
@@ -71,21 +53,13 @@
                             include('promptModals/viewXmlModal.php');
                         ?>
                     </div>
-                    <!--
-                     <div class="boxRounded boxDark">
-                        <?php
-                            //include('promptModals/viewXmlModal.php');
-                        ?>      
-                        <button type="button" class="btn btn-primary btn-block" id="viewSurveyXML">View Campaign XML</button>
-                    </div>
-                    -->
                 </div>
                 <div class="span9 content">
                     <div class="boxRounded boxDark">
-                        <h5 class="">Create New Survey <small>Please input survey info</small></h5>
+                        <h5 class="">Edit Survey <small>Please input survey info</small></h5>
                         <div class="newSurvey">
                             <hr>
-                            <form class="form-horizontal" id="surveyForm" action="prompt.php">
+                            <form class="form-horizontal" id="surveyForm" action="existing-surveys.php">
                                 <div class="control-group">
                                     <label class="control-label" for="surveyId">Survey Id <span class="red">*</span></label>
                                     <div class="controls">
@@ -145,15 +119,13 @@
                                 </div>                          
                                 <div class="control-group">
                                     <div class="controls">
-                                        <button type="submit" class="btn">Create Survey</button>
+                                        <button type="submit" class="btn">Finish Editing</button>
                                     </div>
                                 </div>
                             </form>
                         </div>
                         <span class="red">*</span> <small>Required Fields</small>
                         <hr>
-                        <!--<p><h2 class="centered">Finished editing this campaign?</h2></p>-->
-                        <!--<button type="button" class="btn btn-primary btn-block" id="submitCampaign"><h3>Submit Campaign to Ohmage Server</h3></button>-->
                     </div>
                 </div>
             </div>
