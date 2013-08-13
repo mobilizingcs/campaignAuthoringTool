@@ -5,6 +5,7 @@ $(function() {
             $.post("https://test.ohmage.org/app/user/logout", { client: "campaign-webapp", auth_token: $.cookie('authToken')});
             $.removeCookie('authToken');
             $.removeCookie('username');
+            window.location.replace('survey.php');
         } else {
             e.preventDefault();
         }

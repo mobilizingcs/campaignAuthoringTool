@@ -5,10 +5,10 @@ $(function() {
         $this = $(this);
         var changeConfirm = true;
         if ($('#addedPrompt').val() != "") {
-            var text = "WARNING: Choosing new prompt type will clear all the data of old prompt type\n Proceed ?"
+            var text = "WARNING: Choosing new prompt type will clear all the options/keys/values.. associate with current prompt type\n Proceed ?"
             changeConfirm = confirm(text);
         } else {
-            var text = "WARNING: Choosing new prompt type will clear all the data in the current prompt type\n Proceed ?"
+            var text = "WARNING: Choosing new prompt type will clear all the options/keys/values.. associate with current prompt type\n Proceed ?"
             changeConfirm = confirm(text);
         }
 
@@ -16,6 +16,11 @@ $(function() {
             $('#addedPrompt').val(""); // clear text box
             $('#promptData').empty();
             switch ($this.val()) {
+                case 'audio':
+                    $.get("promptModals/aufioModal.html", function(data){
+                        $("#promptData").append(data);
+                    });
+                    break;
                 case 'multi_choice':
                 case 'multi_choice_custom':
                     $.get("promptModals/multiChoiceModal.html", function(data){

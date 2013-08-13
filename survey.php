@@ -17,6 +17,8 @@
         <script type="text/javascript" src="js/jquery.min.js"></script>
         <script type="text/javascript" src="js/jquery-cookie.js"></script>
         <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/Constant.js"></script>
+        <script type="text/javascript" src="js/configuration.js"></script>
         <script type="text/javascript" src="js/navbar.js"></script>
         <script type="text/javascript" src="js/alerts.js"></script>
         <script type="text/javascript" src="js/menu.js"></script>
@@ -32,12 +34,14 @@
             include('navbar.php');
         ?>
         <div class="container">
+            <!--
             <div class="breadcrumbsNav">
                 <ul class="breadcrumb">
                     <li id="homeBreadcrumb"><i class="icon-home"></i> <a href="campaign.php">Home</a> <span class="divider"><i class="icon-chevron-right"></i></span></li>
                     <li class="active" id="campaignBreadcrumb"></li>
                 </ul>
             </div>
+        -->
             <div class="row">
                 <div class="span3">
                     <div class="boxRounded boxDark" id="campaignMenu">
@@ -70,6 +74,39 @@
                         <?php
                             include('promptModals/viewXmlModal.php');
                         ?>
+
+                        <div id="loginModal" class="modal hide fade" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+                            <div class="modal-header centered">
+                               Time Out. Please relogin
+                            </div>
+                            <div class="modal-body centered">
+                                <div class="">
+                                    <form class="form-horizontal" id="login-form">
+                                        <div class="control-group centered">
+                                            <label class="control-label" for="inputUsername">Username</label>
+                                            <div class="controls">
+                                                <input type="text" class="span3" id="inputUsername" placeholder="Username">
+                                            </div>
+                                        </div>
+                                        <div class="control-group centered">
+                                            <label class="control-label" for="inputPassword">Password</label>
+                                            <div class="controls">
+                                                <input type="password" class="span3" id="inputPassword" placeholder="Password">
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <div class="controls">
+                                                <button type="submit" class="btn btn-info">Login</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer">   
+                            </div>
+                        </div>
+
+
                     </div>
                     <!--
                      <div class="boxRounded boxDark">
@@ -87,7 +124,7 @@
                             <hr>
                             <form class="form-horizontal" id="surveyForm" action="prompt.php">
                                 <div class="control-group">
-                                    <label class="control-label" for="surveyId">Survey Id <span class="red">*</span></label>
+                                    <label class="control-label" for="surveyId">Survey ID <span class="red">*</span></label>
                                     <div class="controls">
                                         <input class="span5" type="text" id="surveyId" />
                                         <i class="help-icon icon-question-sign" data-original-title="A unique identifier for this survey." rel="tooltip" data-placement="right"></i>
@@ -146,6 +183,7 @@
                                 <div class="control-group">
                                     <div class="controls">
                                         <button type="submit" class="btn">Create Survey</button>
+                                        <button type="button" class="btn" id="surveyCancel">Cancel</button>
                                     </div>
                                 </div>
                             </form>

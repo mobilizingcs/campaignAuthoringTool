@@ -85,6 +85,7 @@ $(function() {
 		$this.parents("tr:first").find(".conditionValue").val('');
 
 		switch (promptType) {
+            case 'audio':
             case 'photo':
             case 'remote_activity':
             case 'timestamp':
@@ -474,6 +475,7 @@ $(function() {
         if ($('#conditionType').val() == 'simple') { // simple condition
         	var validate = submitValidationSimple();
         	var source = $('#conditionSource').val();
+            console.log(source);
         	if (validate) {
         		var output = "";
         		$('#simpleConditionTbl tr:not(:first-child)').each(function()
@@ -493,39 +495,63 @@ $(function() {
 		        });
 		        switch (source) {
                 case 'message':
-                    $('#messageCondition').val(output);
+                    console.log('condition' + output);
+                    
+                    if (editObj == null)
+                        $('#messageCondition').val(output);
+                    else 
+                        editObj.find('.editPromptDetails').find('.messageCondition').val(output);
+                    //$('.messageCondition').val(output);
+                    //console.log($('#messageCondition').val());
                     break;
                 case 'prompt':
-                    $('#promptCondition').val(output);
+                    if (editObj == null)
+                        $('#promptCondition').val(output);
+                    else 
+                        editObj.find('.editPromptDetails').find('.promptCondition').val(output);
                     break;
                 default:
                     break;
                 }
+                console.log($('#messageCondition').val());
         		$('#conditionModal').modal('hide');	
         	}	     
         }
         else if ($('#conditionType').val() == 'advanced') { //advance condition
             var source = $('#conditionSource').val();
-            var text = $('#advancedCondition').val();
+            var text = $('.advancedCondition').val();
             switch (source) {
                 case 'message':
-                    $('#messageCondition').val(text);
+                    if (editObj == null)
+                        $('#messageCondition').val(text);
+                    else
+                        editObj.find('.editPromptDetails').find('.messageCondition').val(text);
                     break;
                 case 'prompt':
-                    $('#promptCondition').val(text);
+                    if (editObj == null)
+                        $('#promptCondition').val(text);
+                    else
+                        editObj.find('.editPromptDetails').find('.promptCondition').val(text);
                     break;
                 default:
                     break;
             }
+            console.log($('#messageCondition').val());
             $('#conditionModal').modal('hide');
         } else {
         	var source = $('#conditionSource').val();
         	switch (source) {
                 case 'message':
-                    $('#messageCondition').val("");
+                    if (editObj == null)
+                        $('#messageCondition').val("");
+                    else
+                        editObj.find('.editPromptDetails').find('.messageCondition').val("");
                     break;
                 case 'prompt':
-                    $('#promptCondition').val("");
+                    if (editObj == null)
+                        $('#promptCondition').val("");
+                    else
+                        editObj.find('.editPromptDetails').find('.promptCondition').val("");
                     break;
                 default:
                     break;

@@ -10,7 +10,7 @@
 
 #surveyXml {
     margin: auto;
-    width: 80%;
+    width: 90%;
     height: 380px;
     text-align: left;
 }
@@ -162,11 +162,12 @@ table {
     border: 1px solid #f00 !important;
 }
 
+/*
 .tooltip-inner {
     white-space:pre;
     max-width:none;
 }
-
+*/
 .conditionTooltip {
     white-space:pre;
     max-width: none !important;

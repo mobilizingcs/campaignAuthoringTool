@@ -10,6 +10,7 @@ $(function() {
         $survey.html('<strong>Survey: </strong>' + campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['title']);
     }
 
+    /*
     $('#campaignBreadcrumb a').click(function(e) {
         if (!confirm('All additions and changes to this survey will be lost, are you sure?')) {
             e.preventDefault();
@@ -21,4 +22,5 @@ $(function() {
             e.preventDefault();
         }
     })
+    */
 });

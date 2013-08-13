@@ -260,6 +260,16 @@ function addProperties(input, promptType) {
         property['label'] = key;
         properties['property'].push(property);
         return properties;
+    } else if (promptType == "audio") {
+        propertiesText = text.split("\n");
+        temp = propertiesText[0].split(":");
+        key = temp[1];
+        var maxSeconds = $('#maxAudioLength').val()
+        property = {};
+        property['key'] = 'max_milliseconds';
+        property['label'] = key;
+        properties['property'].push(property);
+        return properties;
     }
     else {
         // invalid

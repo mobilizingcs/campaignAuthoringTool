@@ -49,4 +49,17 @@ body {
     color: red;
 }
 
+p.tab{
+    padding: 0 40px; /* Or desired space*/
+}
 
+#xmlModal {
+    width: 80% !important;
+    left: 35% !important;
+
+
+    .modal-body {
+        max-height: none;
+        text-align: center;
+    }
+}

@@ -6,6 +6,7 @@
             <span class="centered">Choose a prompt type from the dropdown list: </span>
             <select id="groupPromptType" class="promptType">
                 <option value="">Please choose a prompt type</option>
+                <option value="audio">Audio</option>
                 <option value="multi_choice">Multiple Choice</option>
                 <option value="multi_choice_custom">Multiple Choice Custom</option>
                 <option value="number">Number</option>
@@ -26,6 +27,22 @@
 
                 </div>
                 <div class="controls" id="promptData">
+                    <div class="audioModal hide">
+                        <div class="modal-body centered">
+                            <p>What is the maximum length of the audio the user can upload?</p>
+                            <table id="audioTable" align="center">
+                                <tr>
+                                    <th>Key</th>
+                                    <th>Label</th>
+                                </tr>
+                                <tr>
+                                    <td><span>Maximum Length</span></td>
+                                    <td><input type="text" class="maxAudioLength" id="maxAudioLength" value="180"/></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
                     <div class="multiChoiceModal hide">
                         <div class="centered">
                             <input type="hidden" id="multiCounter" value="1"/>

@@ -18,6 +18,8 @@
         <script type="text/javascript" src="js/jquery-cookie.js"></script>
         <script type="text/javascript" src="js/jquery-ui-1.9.0.min.js"></script>
         <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/configuration.js"></script>
+        <script type="text/javascript" src="js/Constant.js"></script>
         <script type="text/javascript" src="js/menu.js"></script>
         <script type="text/javascript" src="js/surveyDisplay.js"></script>
         <script type="text/javascript" src="js/existing-surveys.js"></script>
@@ -35,12 +37,14 @@
             include('navbar.php');
         ?>
         <div class="container">
+            <!--
             <div class="breadcrumbsNav">
                 <ul class="breadcrumb">
                     <li id="homeBreadcrumb"><i class="icon-home"></i> <a href="campaign.php">Home</a> <span class="divider"><i class="icon-chevron-right"></i></span></li>
                     <li class="active" id="campaignBreadcrumb"></li>
                 </ul>
             </div>
+        -->
             <div class="row">
                 <div class="span3">
                     <div class="boxRounded boxDark" id="campaignMenu">
@@ -55,6 +59,38 @@
                         <?php
                             include('promptModals/viewXmlModal.php');
                         ?>
+
+                        <div id="loginModal" class="modal hide fade" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+                            <div class="modal-header centered">
+                               Time Out. Please relogin
+                            </div>
+                            <div class="modal-body centered">
+                                <div class="">
+                                    <form class="form-horizontal" id="login-form">
+                                        <div class="control-group centered">
+                                            <label class="control-label" for="inputUsername">Username</label>
+                                            <div class="controls">
+                                                <input type="text" class="span3" id="inputUsername" placeholder="Username">
+                                            </div>
+                                        </div>
+                                        <div class="control-group centered">
+                                            <label class="control-label" for="inputPassword">Password</label>
+                                            <div class="controls">
+                                                <input type="password" class="span3" id="inputPassword" placeholder="Password">
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <div class="controls">
+                                                <button type="submit" class="btn btn-info">Login</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer">   
+                            </div>
+                        </div>
+
                     </div>
                 </div>
                 <div class="span9 content">

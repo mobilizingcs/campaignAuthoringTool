@@ -1,4 +1,16 @@
 $(function() {
+    function displayAudioValues() {
+        if ($('#maxAudioLength').val()== null || $('#maxAudioLength').val() == "") $('#maxAudioLength').val(180);
+        var length = $('#maxAudioLength').val();
+
+        var properties = "max_milliseconds:" + length;
+
+        if (editObj == null)
+            $('#addedPrompt').val(properties);
+        else
+            editObj.find('.editPromptDetails').find('.addedPrompt').val(properties);
+    }
+
     function displayMultiChoiceValues() {
         var defaultValue = $('#multiChoiceDefault').val();
         //console.log(defaultValue);
@@ -7,7 +19,7 @@ $(function() {
         var tmp = ""; // default value
 
         if (defaultText == 'None' || defaultText == "") {
-            if (!isEditing)
+            if (editObj == null)
                 $('#default').val("");
             else {
                 editObj.find('.editPromptDetails').find('.default').val("");
@@ -21,7 +33,7 @@ $(function() {
                 $('#multiChoiceTable tr').eq(child).find('.isDefault').val(1);    
             });
             //console.log(tmp);
-            if (!isEditing)
+            if (editObj == null)
                 $('#default').val(tmp.slice(0,-1));
             else
                 editObj.find('.editPromptDetails').find('.default').val(tmp.slice(0,-1));
@@ -43,7 +55,7 @@ $(function() {
             key++;
         });
 
-        if (!isEditing)
+        if (editObj == null)
             $('#addedPrompt').val(properties);
         else
             editObj.find('.editPromptDetails').find('.addedPrompt').val(properties);
@@ -78,7 +90,7 @@ $(function() {
             defaultCheck = option + ': ' + label;
 
             if (defaultCheck === defaultText) { 
-                if (!isEditing)
+                if (editObj == null)
                     $('#default').val(key);
                 else {
                     editObj.find('.editPromptDetails').find('.default').val(key);
@@ -87,13 +99,13 @@ $(function() {
             key++;
         });
         if (defaultText == 'None') {
-            if (!isEditing)
+            if (editObj == null)
                 $('#default').val("");
             else {
                 editObj.find('.editPromptDetails').find('.default').val("");
             }
         }
-        if (!isEditing)
+        if (editObj == null)
             $('#addedPrompt').val(properties);
         else {
             editObj.find('.editPromptDetails').find('.addedPrompt').val(properties);
@@ -111,28 +123,30 @@ $(function() {
         var properties = "min:" + minNum + "\n" + "max:" + maxNum;
 
         if (defaultValue != "") {
-            if (!isEditing)
+            if (editObj == null)
                 $('#default').val(defaultValue);
             else {
                 editObj.find('.editPromptDetails').find('.default').val(defaultValue);
             }
         } else {
-            if (!isEditing)
+            if (editObj == null)
                 $('#default').val("");
             else
                 editObj.find('.editPromptDetails').find('.default').val("");
         }
-        if (!isEditing)
+        if (editObj == null) {
             $('#addedPrompt').val(properties + '\n' + defaultText);
-        else
+        }
+        else {
             editObj.find('.editPromptDetails').find('.addedPrompt').val(properties + '\n' + defaultText);
+        }
     }
 
     function displayPhotoValues() {
         var resolution = $('#maxRes').val();
         var properties = "resolution:" + resolution;
 
-        if (!isEditing)
+        if (editObj == null)
             $('#addedPrompt').val(properties);
         else
             editObj.find('.editPromptDetails').find('.addedPrompt').val(properties);
@@ -146,12 +160,12 @@ $(function() {
         var properties = "min:" + min + "\n" + "max:" + max;
 
         if (defaultValue != "") {
-            if (!isEditing)
+            if (editObj == null)
                 $('#default').val(defaultValue);
             else
                 editObj.find('.editPromptDetails').find('.default').val(defaultValue);
         }
-        if (!isEditing)
+        if (editObj == null)
             $('#addedPrompt').val(properties + '\n' + defaultText);
         else
             editObj.find('.editPromptDetails').find('.addedPrompt').val(properties + '\n' + defaultText);
@@ -173,7 +187,7 @@ $(function() {
                       + "Min run:" + min + "\n"
                       + "Input:" + input + "\n"  
 
-        if (!isEditing)
+        if (editObj == null)
             $('#addedPrompt').val(properties);
         else
             editObj.find('.editPromptDetails').find('.addedPrompt').val(properties);
@@ -185,7 +199,7 @@ $(function() {
 
         var properties = "max_seconds:" + length;
 
-        if (!isEditing)
+        if (editObj == null)
             $('#addedPrompt').val(properties);
         else
             editObj.find('.editPromptDetails').find('.addedPrompt').val(properties);
@@ -314,19 +328,35 @@ $(function() {
     }
 
     $('#promptTypeSubmit').click(function() {
-        if (!isEditing) {
+        if (editObj == null) {
             var type = jQuery("#groupPromptType").val();
             $('#choosePromptType').val(type);
         } else {
             var type = editObj.find('.editPromptDetails').find('.choosePromptType').val();
+            //var type = jQuery("#groupPromptType").val();
+            $("#groupPromptType").val(type);
+            editObj.find('.editPromptDetails').find('.choosePromptType').val(type);
             console.log(type);
         }
         switch (type) {
+        case 'audio':
+            $('#promptTypeText').val("Audio");
+            var len = $('#maxAudioLength').val();
+
+            if (len == "") alert('Audio length must not be empty');
+            else if (!isNumber(len)) alert('Audio length must be a number');
+            else if (Number(len) < AudioPrompt['min_value']) alert('Audio length must at least be ' + AudioPrompt['min_value'] + ' miliseconds');
+            else if (Number(len) > AudioPrompt['max_value']) alert('Audio length must not exceed ' + AudioPrompt['max_value'] + ' miliseconds');
+            else {
+                 displayAudioValues();
+                $('#promptTypeModal').modal('hide');
+            }
+            break;      
         case 'multi_choice':
             var validate = validateMultiChoice();
             if (validate == true) {
                 $('#promptTypeText').val("Multiple Choice");
-                displayMultiChoiceValues(editObj);
+                displayMultiChoiceValues();
                 $('#promptTypeModal').modal('hide');
             }
             break;
@@ -505,6 +535,6 @@ $(function() {
             break;
         }
 
-        $('#promptType').val(type);
+        //editObj.find('.editPromptDetails').find('.choosePromptType').val(type);
     });
 });

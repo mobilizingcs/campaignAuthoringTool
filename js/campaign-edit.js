@@ -4,6 +4,8 @@ $(function() {
 
     $('#authors').val($.cookie('username'));
 
+    // relogin
+
     // Get existing campaigns
     $.post("https://test.ohmage.org/app/user_info/read", { auth_token: $.cookie('authToken'), client: "campaign-webapp" },
         function(response) {
@@ -21,6 +23,10 @@ $(function() {
                 if(campaignCount === 0) {
                     $('.existing-campaigns').remove();
                 }
+            } else {
+                // relogin
+                //alert("Time Out")
+                $('#loginModal').modal('show');
             }
         }, "json");
 
@@ -37,30 +43,47 @@ $(function() {
     }
 
     populateCampaignData();
-
-
-    // Privacy State Button
-    $('#runningStateBtn').click(function(e) {
-        var $this = $(this);
-        //$this.toggleClass('btn-success btn-danger');
-        if ($this.html() === 'Running') {
-            $this.html('Stopped');
-        } else {
-            $this.html('Running')
-        }
-        e.preventDefault();
+    $("#test").click(function() {
+        $('#loginModal').modal('show');
     });
 
-    // Running State Button
-    $('#privacyStateBtn').click(function(button) {
+    $("#login-form").submit(function(e) {
         var $this = $(this);
-        //$this.toggleClass('btn-success btn-danger');
-        if ($this.html() === 'Shared') {
-            $this.html('Private');
-        } else {
-            $this.html('Shared')
-        }
-        button.preventDefault();
+        var inputUsername = $this.find("#inputUsername").val();
+        var inputPassword = $this.find("#inputPassword").val();
+        $.post("https://test.ohmage.org/app/user/auth_token", { user: inputUsername, password: inputPassword, client: "campaign-webapp" }, function(response) {
+            if (response.result === "success") {
+                $.cookie("authToken", response.token, { expires: 1 });
+                $.cookie("username", inputUsername, { expires: 1 });
+
+                $.post("https://test.ohmage.org/app/user_info/read", { auth_token: $.cookie('authToken'), client: "campaign-webapp" },
+                    function(response) {
+                        if(response.result === "success"){
+                            var campaignCount = 0;
+                            var classes = Object.keys(response['data'][$.cookie('username')]['classes']).join();
+                            console.log(classes);
+                            $.each(response.data[$.cookie('username')]['classes'], function(index, val) {
+                                $('.classes').append('<option value="' + index + '">' + val + "</option>");
+                            });
+                            $.each(response.data[$.cookie('username')].campaigns, function(index, val) {
+                                $('.campaign-select').append('<option value="' + index + '">' + val + "</option>");
+                                campaignCount++;
+                            });
+                            if(campaignCount === 0) {
+                                $('.existing-campaigns').remove();
+                            }
+                        } else {
+                            // relogin
+                            alert("Unknow error")
+                        }
+                    }, "json");
+                $('#loginModal').modal('hide');
+            }
+            else {
+                alert("Incorrect username or password")
+            }
+        }, "json");
+        e.preventDefault();
     });
 
     // Create Campaign Button
@@ -97,8 +120,8 @@ $(function() {
                 'campaign': campaignEditor.createCampaign(title, urn)
             };
             */
-            campaignWrapper['privacyState'] = $('#privacyStateBtn').html().toLowerCase();
-            campaignWrapper['runningState'] = $('#runningStateBtn').html().toLowerCase();
+            campaignWrapper['privacyState'] = $('#privacyStateBtn').val();
+            campaignWrapper['runningState'] = $('#runningStateBtn').val();
             campaignWrapper['description'] = description;
             campaignWrapper['classes'] = $('.classes').val();
             campaignWrapper['campaign']['campaignUrn'] = urn;

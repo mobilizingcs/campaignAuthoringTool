@@ -14,7 +14,7 @@
                 <div class="control-group">
                     <label class="control-label" for="promptId">Prompt ID: <span class="red">*</span></label>
                     <div class="controls">
-                        <input type="text" class="span5" name="id" id="promptId" placeholder="A unique identifier for the prompt." />
+                        <input type="text" class="span4" name="id" id="promptId" placeholder="A unique identifier for the prompt." />
                         <i class="help-icon icon-question-sign" data-original-title="A unique identifier for the prompt." rel="tooltip" data-placement="right"></i>
                     </div>
                 </div>
@@ -22,7 +22,7 @@
                 <div class="control-group">
                     <label class="control-label" for="displayLabel">Display Label: <span class="red">*</span></label>
                     <div class="controls">
-                        <input type="text" class="span5" name="displayLabel" id="displayLabel" placeholder="Display Label" />
+                        <input type="text" class="span4" name="displayLabel" id="displayLabel" placeholder="Display Label" />
                         <i class="help-icon icon-question-sign" data-original-title="The user-friendly name of this prompt used in visualizations." rel="tooltip" data-placement="right"></i>
                     </div>
                 </div>
@@ -30,7 +30,7 @@
                 <div class="control-group">
                     <label class="control-label" for="promptText">Prompt Text: <span class="red">*</span></label>
                     <div class="controls">
-                        <textarea type="text" class="span5" name="promptText" id="promptText" placeholder="Prompt Text"></textarea>
+                        <textarea type="text" class="span4" name="promptText" id="promptText" placeholder="Prompt Text"></textarea>
                         <i class="help-icon icon-question-sign" data-original-title="The text to display to the user when prompting them to respond." rel="tooltip" data-placement="right"></i>
                     </div>
                 </div>
@@ -39,8 +39,9 @@
                     <label class="control-label" for="promptType">Prompt Type: <span class="red">*</span></label>
                     
                     <div class="controls">
-                        <select id="choosePromptType" name="promptType" class="promptType span5">
+                        <select id="choosePromptType" name="promptType" class="promptType span4">
                             <option value="">Please choose a prompt type</option>
+                            <option value="audio">Audio</option>
                             <option value="multi_choice">Multiple Choice</option>
                             <option value="multi_choice_custom">Multiple Choice Custom</option>
                             <option value="number">Number</option>
@@ -60,7 +61,7 @@
                     <label class="control-label" for="addedPrompt">Prompt Details:</label>
                     <div class="controls">  
                         <div>
-                            <textarea name="properties" class="span5" id="addedPrompt" readonly></textarea>
+                            <textarea name="properties" class="span4" id="addedPrompt" readonly></textarea>
                             <button type="button" class="btn btn-link" id="promptTypeBtn">Edit Prompt Detail</button>
                         </div>
                     </div>
@@ -75,7 +76,7 @@
                         <label class="control-label" for="condition">Condition:</label>
                         <div class="controls">
                             <div class="input-append">
-                                <textarea name="promptCondition"  class="span5" id="promptCondition" placeholder="None." disabled></textarea>
+                                <textarea name="promptCondition"  class="span4" id="promptCondition" placeholder="None." disabled></textarea>
                                 <button type="button" class="btn btn-link" id="promptConditionBtn">Edit Condition <i class="help-icon icon-question-sign" data-original-title="The condition which determines if the prompt is displayed or not." rel="tooltip" data-placement="top"></i></button>
                             </div>
                         </div>
@@ -85,7 +86,7 @@
                         <div class="controls"> 
                             <label class="checkbox">
                                 <input type="checkbox" name="skippable" id="skippable">
-                                Can this survey be skippable?
+                                Is this prompt skippable?
                             </label>
                         </div>
                     </div> 
@@ -93,7 +94,7 @@
                     <div class="control-group">
                         <label class="control-label" for="skipLabel">Skip Label:</label>
                         <div class="controls">
-                            <input type="text" class="span5" name="skipLabel" id="skipLabel" placeholder="Skip" disabled/>
+                            <input type="text" class="span4" name="skipLabel" id="skipLabel" placeholder="Skip" disabled/>
                             <i class="help-icon icon-question-sign" data-original-title="If skippable, this is the text of the button to use to skip the label." rel="tooltip" data-placement="right"></i>
                         </div> 
                     </div>   
@@ -102,8 +103,7 @@
                 <div class="control-group">
                     <div class="controls">
                         <button type="submit" class="btn" id="addPrompt">Add Prompt</button>
-                        <button type="button" class="btn hide" id="editPrompt">Edit</button>
-                        <button type="button" class="btn hide" id="cancelPromptEdit">Cancel</button>
+                        <button type="button" class="btn" id="cancelPrompt">Cancel</button>
                     </div>
                 </div>
             </form>

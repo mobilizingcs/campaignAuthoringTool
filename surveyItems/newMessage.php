@@ -29,7 +29,7 @@
                     <label class="control-label" for="condition">Condition: </label>
                     <div class="controls">
                         <div class="input-append">
-                            <textarea name="messageCondition" id="messageCondition" placeholder="None." disabled></textarea>
+                            <textarea name="messageCondition" class="span5 messageCondition" id="messageCondition" placeholder="None." disabled></textarea>
                             <button type="button" class="btn btn-link" id="messageConditionBtn">Edit Condition <i class="help-icon icon-question-sign" data-original-title="The condition which determines if the message is displayed or not." rel="tooltip" data-placement="top"></i></button>
                         </div>
                     </div>
@@ -37,8 +37,7 @@
                 <div class="control-group">
                     <div class="controls">
                         <button type="submit" class="btn" id="createMessage">Create Message</button>
-                        <button type="button" class="btn hide" id="editMessage">Edit Message</button>
-                        <button type="button" class="btn hide" id="cancelMessageEdit">Cancel</button>
+                        <button type="button" class="btn cancel" id="cancelMessage">Cancel</button>
                     </div>
                 </div>
             </form>

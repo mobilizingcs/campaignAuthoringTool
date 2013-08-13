@@ -4,19 +4,34 @@ var isEditing = false;
 
 $(function() {
 
+    function checkDirty() {
+        if($('.surveyItem').find('.collapse-group2').find('.dirtyFlag').val() == 1) {
+            return true;
+        } 
+
+    }
     // overide menu buttons
     $('#editCampaign').unbind('click').click(function(){
-        if(isEditing) {
-            alert('Please finish editing or cancel before closing this');
+        if($('.surveyItem').find('.collapse-group2').find('.in').length > 0 && checkDirty()) {
+            if (confirm('Are you sure you want to navigate away from this page? \nThere is one or more unfinished editing survey(s)')) {
+                localStorage['campaignWrapper'] = JSON.stringify(campaignWrapper);
+                console.log($('.surveyItem').find('.collapse-group2').find('.in').length);
+                window.location.replace('campaign-edit.php');
+            }
         } else {
             localStorage['campaignWrapper'] = JSON.stringify(campaignWrapper);
+            //console.log($('.surveyItem').find('.collapse-group2').find('.in').length);
             window.location.replace('campaign-edit.php');
         }
     });
     // create new survey button
     $('#createNewSurvey').unbind('click').click(function() {
-        if(isEditing) {
-            alert('Please finish editing or cancel before closing this');
+        if($('.surveyItem').find('.collapse-group2').find('.in').length > 0 && checkDirty()) {
+            if (confirm('Are you sure you want to navigate away from this page? \nThere is one or more unfinished editing survey(s)')) {
+                localStorage['campaignWrapper'] = JSON.stringify(campaignWrapper);
+                console.log($('.surveyItem').find('.collapse-group2').find('.in').length);
+                window.location.replace('survey.php');
+            }
         } else {
             localStorage['campaignWrapper'] = JSON.stringify(campaignWrapper);
             window.location.replace('survey.php');
@@ -25,8 +40,12 @@ $(function() {
 
     // edit existing survey button
     $('#editExistingSurvey').unbind('click').click(function() {
-        if(isEditing) {
-            alert('Please finish editing or cancel before closing this');
+        if($('.surveyItem').find('.collapse-group2').find('.in').length > 0 && checkDirty()) {
+            if (confirm('Are you sure you want to navigate away from this page? \nThere is one or more unfinished editing survey(s)')) {
+                localStorage['campaignWrapper'] = JSON.stringify(campaignWrapper);
+                console.log($('.surveyItem').find('.collapse-group2').find('.in').length);
+                window.location.replace('existing-surveys.php');
+            }
         } else {
             localStorage['campaignWrapper'] = JSON.stringify(campaignWrapper);
             window.location.replace('existing-surveys.php');
@@ -59,10 +78,19 @@ $(function() {
         }
     });//.disableSelection();
 
+    // view survey click event
+    $('#existingSurveysSortable').on('click', 'button.viewSurvey', function(e) {   
+        $parent = $(this).parent();
+        if (($parent).find('.collapse-group2').find('.in').length > 0) {
+            $parent.find('.surveyEdit').collapse('hide');
+        }
+        
+    });
+
     // edit prompts click event
     $('#existingSurveysSortable').on('click', 'button.editPrompts', function(e) {
-        if(isEditing) {
-            alert('Please finish editing or cancel before closing this');
+        if($('.surveyItem').find('.collapse-group2').find('.in').length > 0 && checkDirty()) {
+                alert('Please finish editing or cancel before closing this');
         } else {
             e.stopPropagation();
             $parent = $(this).parent();
@@ -116,6 +144,17 @@ $(function() {
             e.stopPropagation(); 
             alert('Please finish editing or cancel before closing this');
         }
+    });
+
+    $('#existingSurveysSortable').on('change', 'input', function() {
+        $parent = $(this).closest('.surveyItem');
+        $this = $(this);
+
+        $edit = $parent.find('.group1');
+        var index = $('#existingSurveysSortable li').index($parent);
+        $edit.find('.editSurveyDetails').find('.dirtyFlag').val('1');
+
+        //alert("Flag is " + $edit.find('.editSurveyDetails').find('.dirtyFlag').val());
     });
 
 	// edit survey click event
@@ -189,6 +228,12 @@ $(function() {
             //$('#newMessage').collapse('hide');
             //setTimeout(updateSurveyList, 150);
             //location.reload();
+
+            // reset dirty flag
+            $edit.find('.editSurveyDetails').find('.dirtyFlag').val('0');
+            //if ($edit.find('.editSurveyDetails').find('.dirtyFlag').val() == 0)
+            //    alert("Flag is " + $edit.find('.editSurveyDetails').find('.dirtyFlag').val());            
+
         }
         //var $collapse = $(this).closest('.collapse-group').find('.collapse');
     	//$collapse.collapse('toggle');
@@ -207,6 +252,7 @@ $(function() {
         if (confirm('Are you sure ? All unsaved data will be lost')) {
             //isEditing = false;
             //location.reload();
+            alert('yo');
             $parent.find('.group1').collapse('hide');
             $parent.find('.surveyDetails').collapse('show');
         }

@@ -29,6 +29,12 @@ $(function() {
         $('.editableSummaryInput').slideToggle('slow');
     });
 
+    $('#surveyCancel').click(function(e) {
+        if (confirm('Are you sure ? All unsaved data will be lost')) {
+            window.location.replace('existing-surveys.php');
+        }
+    });
+
     $('#surveyForm').submit(function(e) {
         var surveyData = {};
 

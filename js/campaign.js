@@ -23,6 +23,7 @@ $(function() {
             }
         }, "json");
 
+    /*
     // Privacy State Button
     $('#runningStateBtn').click(function(e) {
         var $this = $(this);
@@ -46,7 +47,7 @@ $(function() {
         }
         button.preventDefault();
     });
-
+    */
     // Create Campaign Button
     $('#create-campaign').click(function(e) {
         var title = $('#campaignTitle').val();
@@ -73,8 +74,10 @@ $(function() {
             e.preventDefault();
         } else {
             var campaignWrapper = {
-                'privacyState': $('#privacyStateBtn').html().toLowerCase(),
-                'runningState': $('#runningStateBtn').html().toLowerCase(),
+                //'privacyState': $('#privacyStateBtn').html().toLowerCase(),
+                //'runningState': $('#runningStateBtn').html().toLowerCase(),
+                'privacyState': $('#privacyStateBtn').val(),
+                'runningState': $('#runningStateBtn').val(),
                 'description': description,
                 'classes': $('.classes').val(),
                 'campaign': campaignEditor.createCampaign(title, urn)
@@ -102,8 +105,8 @@ $(function() {
 
         // campaign
         var campaignWrapper = {
-            'privacyState': $('#privacyStateBtn').html().toLowerCase(),
-            'runningState': $('#runningStateBtn').html().toLowerCase(),
+            'privacyState': $('#privacyStateBtn').val(),
+            'runningState': $('#runningStateBtn').val(),
             'classes': $('.classes').val(),
             'campaign': campaignEditor.createCampaign(title, urn)
         };

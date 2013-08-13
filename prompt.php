@@ -20,6 +20,7 @@
         <script type="text/javascript" src="js/jquery-cookie.js"></script>
         <script type="text/javascript" src="js/jquery-ui-1.9.0.min.js"></script>
         <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/configuration.js"></script>
         <script type="text/javascript" src="js/Constant.js"></script>
         <script type="text/javascript" src="js/promptUtil.js"></script>
         
@@ -48,6 +49,7 @@
             require_once('authorize.php');
         ?>
         <div class="container">
+            <!--
             <div class="breadcrumbsNav">
                 <ul class="breadcrumb">
                     <li id="homeBreadcrumb"><i class="icon-home"></i> <a href="campaign.php">Campaigns</a> <span class="divider"><i class="icon-chevron-right"></i></span></li>
@@ -55,6 +57,7 @@
                     <li id="surveyBreadcrumb" class="active"></li>
                 </ul>
             </div>
+            -->
             <div class="row">
                 <div class="span3">
                     <div class="boxDark boxRounded" id="campaignMenu">
@@ -69,20 +72,53 @@
                         <?php
                             include('promptModals/viewXmlModal.php');
                         ?>
+
+                        <div id="loginModal" class="modal hide fade" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+                            <div class="modal-header centered">
+                               Time Out. Please relogin
+                            </div>
+                            <div class="modal-body centered">
+                                <div class="">
+                                    <form class="form-horizontal" id="login-form">
+                                        <div class="control-group centered">
+                                            <label class="control-label" for="inputUsername">Username</label>
+                                            <div class="controls">
+                                                <input type="text" class="span3" id="inputUsername" placeholder="Username">
+                                            </div>
+                                        </div>
+                                        <div class="control-group centered">
+                                            <label class="control-label" for="inputPassword">Password</label>
+                                            <div class="controls">
+                                                <input type="password" class="span3" id="inputPassword" placeholder="Password">
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <div class="controls">
+                                                <button type="submit" class="btn btn-info">Login</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer">   
+                            </div>
+                        </div>
+
                     </div>
                 </div>
                 <div class="span9">
                     <div class="boxRounded boxDark content">
+                        <h5>Survey Items</h5>
                         <div class="accordion-heading">
-                            <a class="btn btn-link left textLink accordion-toggle createItem pull-left" data-toggle="collapse" data-parent="#addNewItemAccordion" href="#newMessage">
-                                <small>Create a new message.</small>
+                            <a class="left btn btn-link textLink accordion-toggle createItem createMessage pull-left" data-toggle="collapse" data-parent="#addNewItemAccordion" href="#newMessage">
+                                <small><i class="icon-comment"></i> Create a new message.</small>
                             </a>
-                            <a class="btn btn-link left textLink accordion-toggle createItem" data-toggle="collapse" data-parent="#addNewItemAccordion" href="#newPrompt">
-                                <small>Create a new prompt.</small>
+                            <a class="left btn btn-link textLink accordion-toggle createItem createPrompt" data-toggle="collapse" data-parent="#addNewItemAccordion" href="#newPrompt">
+                                <small><i class="icon-ok-circle"></i> Create a new prompt.</small>
                             </a>
                         </div>
                         <h6 class="left">
-                            Existing Survey Items
+                            Existing Items
                             <small>(Prompt count: <span id="numQuestion">0</span>)</small>
                             <small>Reorder survey items by dragging!</small>
                         </h6>
@@ -98,7 +134,7 @@
                         <a href="survey.php" class="btn" id="saveSurvey">Add These Prompts to Survey</a>
                         -->
                         <div class="addNewItem">
-                            <h6 class="left">New Survey Item</h6>
+                            <h6 class="left">New Item</h6>
                             <div class="accordion" id="addNewItemAccordion">
                                 <?php
                                     include('promptModals/promptTypeModal.php');

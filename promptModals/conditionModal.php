@@ -153,7 +153,7 @@
                         </table>
                         -->
                         <p>Current condition rule :</p>
-                        <textarea class="advancedCondition" id="advancedCondition"></textarea>
+                        <textarea class="advancedCondition span10" id="advancedConditionText"></textarea>
                     </div>
                 </div>   
             </div>    

@@ -3,7 +3,7 @@ $(function() {
         var $this = $(this);
         var inputUsername = $this.find("#inputUsername").val();
         var inputPassword = $this.find("#inputPassword").val();
-        $.post("https://test.ohmage.org/app/user/auth_token", { user: inputUsername, password: inputPassword, client: "campaign-webapp" }, function(response) {
+        $.post(SERVER + "app/user/auth_token", { user: inputUsername, password: inputPassword, client: "campaign-webapp" }, function(response) {
             if (response.result === "success") {
                 $.cookie("authToken", response.token, { expires: 1 });
                 $.cookie("username", inputUsername, { expires: 1 });

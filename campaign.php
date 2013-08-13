@@ -30,15 +30,17 @@
             include('navbar.php');
         ?>
         <div class="container">
+            <!--
             <div class="breadcrumbsNav">
                 <ul class="breadcrumb">
                     <li class="active" id="homeBreadcrumb"><i class="icon-home"></i> Home</li>
                 </ul>
             </div>
+            -->
             <div class="row">
                 <div class="span12 content">
                     <div class="boxRounded boxDark">
-                        <h4>Campaign Editor <small>Create a new campaign, or edit an existing one.</small></h4>
+                        <h4>Campaign Editor <small>Create a new campaign info, or edit an existing one.</small></h4>
                         <!--
                         <div class="existing-campaigns">
                             <hr>
@@ -59,12 +61,12 @@
                         </div>
                         -->
                         <div class="new-campaign">
-                            <form class="form-horizontal" id="campaign-form" action="existing-surveys.php">
-                                <h5>Create a New Campaign</h5>
+                            <form class="form-horizontal" id="campaign-form" action="survey.php">
+                                <h5>Campaign Info </h5>
                                 <div class="control-group">
                                     <label class="control-label" for="campaignTitle">Campaign Name <span class="red">*</span></label>
                                     <div class="controls">
-                                        <input type="text" class="span5" id="campaignTitle" placeholder="Campaign Title" />
+                                        <input type="text" class="span5" id="campaignTitle" placeholder="Campaign Name" />
                                         <i class="help-icon icon-question-sign" data-original-title="A name to be displayed to the user for this campaign." rel="tooltip" data-placement="right"></i>
                                     </div>
                                 </div>
@@ -78,7 +80,7 @@
                                 <div class="control-group">
                                     <label class="control-label" for="campaignDescription">Description</label>
                                     <div class="controls">
-                                        <input type="text" class="span5" id="campaignDescription" placeholder="Description" />
+                                        <textarea type="text" class="span5" id="campaignDescription" placeholder="Description"> </textarea>
                                         <i class="help-icon icon-question-sign" data-original-title="Optional campaign description that can be viewed through Ohmage main page" rel="tooltip" data-placement="right"></i>
                                     </div>
                                 </div>
@@ -101,20 +103,28 @@
                                 <div class="control-group">
                                     <label class="control-label" for="privacyState">Privacy State <span class="red">*</span></label>
                                     <div class="controls">
-                                        <button type="button" class="btn btn-info" id="privacyStateBtn">Shared</button>
+                                        <!--<button type="button" class="btn btn-info" id="privacyStateBtn">Shared</button>-->
+                                        <select id="privacyStateBtn" name="privacyStateBtn" class="privacyStateBtn">
+                                            <option value="shared">Shared</option>
+                                            <option value="private">Private</option>
+                                        </select>
                                         <i class="help-icon icon-question-sign" data-original-title="In private mode, individual responses cannot be viewed." rel="tooltip" data-placement="right"></i>
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <label class="control-label" for="runningState">Running State <span class="red">*</span></label>
                                     <div class="controls">
-                                        <button type="button" class="btn btn-info" id="runningStateBtn">Running</button>
+                                        <!--<button type="button" class="btn btn-info" id="runningStateBtn">Running</button>-->
+                                        <select id="runningStateBtn" name="runningStateBtn" class="runningStateBtn">
+                                            <option value="running">Running</option>
+                                            <option value="stopped">Stopped</option>
+                                        </select>
                                         <i class="help-icon icon-question-sign" data-original-title="Users can only upload responses on running campaigns. This can be updated once you submit your campaign." rel="tooltip" data-placement="right"></i>
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <div class="controls">
-                                        <button type="submit" id="create-campaign" class="btn">Create Campaign <i class="icon-plus icon-black"></i></button>
+                                        <button type="submit" id="create-campaign" class="btn"><i class="icon-plus icon-black"></i> Create Campaign </button>
                                     </div>
                                 </div>
                             </form>

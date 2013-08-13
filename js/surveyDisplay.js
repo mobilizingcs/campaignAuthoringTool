@@ -1,6 +1,7 @@
 
 //jQuery.noConflict();
 
+/*
 // this function create an unique ID
 function uniqueid(){
     // always start with a letter (for DOM friendlyness)
@@ -16,7 +17,7 @@ function uniqueid(){
 
     return (idstr);
 }
-
+*/
 function addSurveyToPage(index) {
     var survey = campaignWrapper['campaign']['surveys']['survey'][index];
     
@@ -29,30 +30,30 @@ function addSurveyToPage(index) {
         '<button type="button" class="btn btn-link pull-right deleteSurvey"><i class="icon-trash icon-black"></i><small> Delete</small></button>' +
         '<button type="button" class="btn btn-link pull-right editPrompts"><i class="icon-edit icon-black"></i><small> Edit Survey Items</small></button>' +
         //'<button type="button" class="btn btn-link pull-right editSurvey"><i class="icon-pencil icon-black"></i> Edit Survey</button>' +
-        '<button type="button" class="btn btn-link pull-right editSurvey" data-toggle="collapse" data-target="#edit' + target + '"><i class="icon-pencil icon-black"></i> <small>Edit Survey Data</small></button>' +
+        '<button type="button" class="btn btn-link pull-right editSurvey" data-toggle="collapse" data-target="#edit' + target + '"><i class="icon-pencil icon-black"></i> <small>Edit Survey Info</small></button>' +
 
         
 
         //'<i class="icon-pencil help-hover" data-original-title="Click to edit survey details" rel="tooltip" data-placement="right" data-toggle="collapse" data-target="#edit' + target + '"></i>' + Edit Survey +  
-        '<i class="icon-plus"></i> <button type="button" class="btn btn-link help-hover" data-original-title="Click to view survey details" rel="tooltip" data-placement="top" data-toggle="collapse" href="#' + target + '"><u><strong class="detailsID">' + survey['id'] + '</strong></u></button><br>' + 
+        '<i class="icon-list-alt"></i> <button type="button" class="btn btn-link help-hover viewSurvey" data-original-title="Click to view survey details" rel="tooltip" data-placement="top" data-toggle="collapse" data-target="#' + target + '"><u><strong class="detailsID">' + survey['id'] + '</strong></u></button><br>' + 
         
         // survey details
         '<div class="collapse-group1">' + 
             '<div id="' + target + '" class="collapse surveyDetails out">'+
                 '<div class="accordion-inner">'+
-                    '<p class="viewDetailsID"><strong>ID: </strong>' + survey['id'] + '</p>' + 
-                    '<p class="viewDetailsTitle"><strong>Title: </strong>' + survey['title'] + '</p>' + 
-                    '<p class="viewDetailsDesc"><strong>Description: </strong>' + description + '</p>' + 
-                    '<p class="viewDetailsIntroText"><strong>Introduction Text: </strong>' + introText + '</p>' + 
-                    '<p class="viewDetailsSubmitText"><strong>Submit Text: </strong>' + survey['submitText'] + '</p>' +
-                    '<p class="viewDetailsAnytime"><strong>Anytime: </strong>' + survey['anytime'] + '</p>' +
+                    '<p class="viewDetailsID">ID: ' + survey['id'] + '</p>' + 
+                    '<p class="viewDetailsTitle">Title: ' + survey['title'] + '</p>' + 
+                    '<p class="viewDetailsDesc">Description: ' + description + '</p>' + 
+                    '<p class="viewDetailsIntroText">Introduction Text: ' + introText + '</p>' + 
+                    '<p class="viewDetailsSubmitText">Submit Text: ' + survey['submitText'] + '</p>' +
+                    '<p class="viewDetailsAnytime">Anytime: ' + survey['anytime'] + '</p>' +
                 '</div>' +
             '</div>'+
         '</div>'+
 
             // survey edit
         '<div class="collapse-group2">' + 
-            '<div id="edit' + target + '" class="collapse group1">'+
+            '<div id="edit' + target + '" class="collapse surveyEdit group1">'+
                 '<hr>' + 
                 '<div class="accordion-inner editSurveyDetails">'+
                     '<div class="control-group">' +
@@ -113,6 +114,7 @@ function addSurveyToPage(index) {
                     '</div>' +                          
                     '<div class="control-group">' +
                         '<div class="controls">' +
+                            '<input type="hidden" class="dirtyFlag" value="0">' + 
                             '<button type="button" class="btn save">Save</button>' +
                             '<button type="button" class="btn cancel">Cancel</button>' +
                         '</div>' +

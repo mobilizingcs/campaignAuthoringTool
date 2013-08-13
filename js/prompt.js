@@ -17,16 +17,20 @@ $(function() {
     updateNumQuestion();
     isEditing = false;
     
+    // tootltip setting
+    $("[rel=tooltip]").tooltip({
+        container: 'body'    
+    });
     function savePrompts() {
         if (campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''].length != 0) {// survey need at least 1 prompt
             deleteEditField(campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList']['']);
             //console.log(campaignWrapper);
             localStorage['campaignWrapper'] = JSON.stringify(campaignWrapper);
-            return true;
+            return true; // WARNING
         } else {
             //alert("Survey needs at least one prompt.\nEmpty survey won't be accepted by the Ohmage server");
             //e.preventDefault();
-            return false;
+            return true;
         }
     }
 
@@ -34,6 +38,16 @@ $(function() {
     $('#editCampaign').unbind('click').click(function(){
         if(!savePrompts()) {
             alert("Empty survey won't be accepted by the Ohmage server");
+        } else if ($('.previousItem').find('.collapse-group2').find('.in').length > 0) {
+            if (confirm('Are you sure you want to navigate away from this page? \nThere is one or more unfinished editing prompt(s)')) {
+                localStorage['campaignWrapper'] = JSON.stringify(campaignWrapper);
+                window.location.replace('campaign-edit.php');
+            }
+        } else if ($('.accordion-group').find('.in').length > 0) {
+            if (confirm('Are you sure you want to navigate away from this page? \nYou are creating a message or prompt')) {
+                localStorage['campaignWrapper'] = JSON.stringify(campaignWrapper);
+                window.location.replace('campaign-edit.php');
+            }
         } else {
             window.location = ('campaign-edit.php');
         }
@@ -42,6 +56,17 @@ $(function() {
     $('#createNewSurvey').unbind('click').click(function() {
         if(!savePrompts()) {
             alert("Empty survey won't be accepted by the Ohmage server");
+        } else if ($('.previousItem').find('.collapse-group2').find('.in').length > 0) {
+            if (confirm('Are you sure you want to navigate away from this page? \nThere is one or more unfinished editing prompt(s)')) {
+                localStorage['campaignWrapper'] = JSON.stringify(campaignWrapper);
+                console.log($('.previousItem').find('.collapse-group2').find('.in').length);
+                window.location.replace('survey.php');
+            }
+        } else if ($('.accordion-group').find('.in').length > 0) {
+            if (confirm('Are you sure you want to navigate away from this page? \nYou are creating a message or prompt')) {
+                localStorage['campaignWrapper'] = JSON.stringify(campaignWrapper);
+                window.location.replace('survey.php');
+            }
         } else {
             window.location.replace('survey.php');
         }
@@ -51,6 +76,17 @@ $(function() {
     $('#editExistingSurvey').unbind('click').click(function() {
         if(!savePrompts()) {
             alert("Empty survey won't be accepted by the Ohmage server");
+        } else if ($('.previousItem').find('.collapse-group2').find('.in').length > 0) {
+            if (confirm('Are you sure you want to navigate away from this page? \nThere is one or more unfinished editing prompt(s)')) {
+                localStorage['campaignWrapper'] = JSON.stringify(campaignWrapper);
+                console.log($('.previousItem').find('.collapse-group2').find('.in').length);
+                window.location.replace('existing-surveys.php');
+            }
+        } else if ($('.accordion-group').find('.in').length > 0) {
+            if (confirm('Are you sure you want to navigate away from this page? \nYou are creating a message or prompt')) {
+                localStorage['campaignWrapper'] = JSON.stringify(campaignWrapper);
+                window.location.replace('existing-surveys.php');
+            }
         } else {
             window.location.replace('existing-surveys.php');
         }
@@ -64,6 +100,9 @@ $(function() {
             addMessageToPrevItems(i);
         } else if (campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''][i]['prompt']) {
             switch (campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''][i]['prompt']['promptType']) {
+                case 'audio':
+                    addAudioToPrevItem(i);
+                    break;
                 case 'multi_choice':
                 case 'multi_choice_custom':
                     addMultipleChoiceToPrevItem(i);
@@ -96,6 +135,18 @@ $(function() {
         }
     }
 
+    $('.createPrompt').click(function() {
+
+        $('html,body').animate({scrollTop: $('#newPrompt').offset().top - 100});
+        setTimeout(formCallback($('#promptForm'), 150));
+        //$('#promptId').focus();
+    });
+    $('.createMessage').click(function() {
+        $('html,body').animate({scrollTop: $('#newMessage').offset().top - 100});
+        setTimeout(formCallback($('#messageForm'), 150));
+        //$('#promptId').focus();
+    });
+
     var skipLabel = $('#skipLabelLabel').text();
     $('#skippable').change(function() { 
         if (this.checked) {
@@ -108,10 +159,16 @@ $(function() {
         }
     });
 
-    function showNewModal() {
-        var prevValue = jQuery("#choosePromptType").val();
+    function showNewModal(prevValue) {
+        //var prevValue = jQuery("#choosePromptType").val();
+        $('#groupPromptType').val(prevValue);  
         $('#promptData').empty();
         switch (prevValue) {
+            case 'audio':
+                $.get("promptModals/audioModal.html", function(data){
+                    $("#promptData").append(data);
+                });
+                break;
             case 'multi_choice':
             case 'multi_choice_custom':
                 $.get("promptModals/multiChoiceModal.html", function(data){
@@ -170,6 +227,9 @@ $(function() {
         });
     }
     $('#promptTypeBtn').click(function() {
+        editObj = null;
+        var prevValue = jQuery("#choosePromptType").val();
+        showNewModal(prevValue);
         $('#promptTypeModal').modal('show');
         $('#promptTypeModal').modal({
             backdrop: true,
@@ -183,20 +243,6 @@ $(function() {
         //showModal();
     });
     
-    $(".promptTypeBtn").on("click", function(event){
-      $('#promptTypeModal').modal('show');
-        $('#promptTypeModal').modal({
-            backdrop: true,
-            keyboard: true
-        }).css({
-            width: 'auto',
-            'margin-left': function () {
-                return -($(this).width() / 2);
-            }
-        });
-        //showModal();
-    });
-
     $('#previousItemsSortable').sortable({
         start: function(event, ui) {
             $(ui.item).data('startIndex', ui.item.index());
@@ -222,8 +268,10 @@ $(function() {
     }) 
 
     jQuery("#choosePromptType").change(function(){
+        editObj = null;
+        //showNewModal();
         $this = $(this);
-        $('.promptType').val($this.val());
+        $('#groupPromptType').val($this.val());
     });
 
     function clearTableData() {
@@ -257,7 +305,8 @@ $(function() {
     }
 
     // Edit condition button
-    $('#messageConditionBtn, .messageConditionBtn').click(function() {
+    $('#messageConditionBtn').click(function() {
+        editObj = null;
         $('#conditionSource').val('message');
         $('#advancedCondition').val($(this).prev().val());
         if($('#messageCondition').val().trim() == "") setUpConditionPromptList();
@@ -273,7 +322,53 @@ $(function() {
         });
     });
 
+    // condtition button when editing
+    $('#previousItemsSortable').on('click', 'button.conditionBtn', function() {
+        if (!isEditing) {
+            //isEditing = true;
+            $parent = $(this).closest('.previousItem');
+            
+            var currentSurvey = campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')];
+            var index = $('#previousItemsSortable li').index($parent);
+            var item = currentSurvey['contentList'][''][index];
+            $edit = $parent.find('.group2');
+            editObj = $edit;
+
+            if (item['message']) {
+                $('#conditionSource').val('message');
+                console.log(item['message']['condition']);
+                $('.advancedCondition').val(item['message']['condition']);
+            } else if (item['prompt']) {
+                $('#conditionSource').val('prompt');
+                $('.advancedCondition').val(item['prompt']['condition']);
+            } else if (item['repeatableSet']) {
+                // todo
+            } else {
+                // nothing
+            }
+
+            $("#simpleCondition").hide();
+            $("#advancedCondition").show();
+            $('#conditionType').val('advanced');
+            $('#conditionModal').modal('show');
+            $('#conditionModal').modal({
+                backdrop: true,
+                keyboard: true
+            }).css({
+                width: 'auto',
+                'margin-left': function () {
+                    return -($(this).width() / 2);
+                }
+            });
+        } else {
+            e.stopPropagation(); 
+            alert('Please finish editing or cancel before closing this');
+        }
+        //alert("Not Implemented yet");
+    });
+
     $('#promptConditionBtn').click(function() {
+        editObj = null;
         $('#conditionSource').val('prompt');
         $('#advancedCondition').val($(this).prev().val());
         if($('#promptCondition').val().trim() == "") {
@@ -293,6 +388,7 @@ $(function() {
         });
     });
 
+    /*
     $('.promptConditionBtn').click(function() {
         $('#conditionSource').val('prompt');
         $('#advancedCondition').val($(this).prev().val());
@@ -312,7 +408,7 @@ $(function() {
             }
         });
     });
-
+    */
     // delete prompt
     $('#previousItemsSortable').on('click', 'button.deleteItem', function() {
         if(isEditing) {
@@ -333,8 +429,11 @@ $(function() {
     // edit survey item
     $('#previousItemsSortable').on('click', 'button.editItem', function(e) {
         if (!isEditing) {
-            isEditing = true;
+            //isEditing = true;
             $parent = $(this).parent();
+            if (($parent).find('.collapse-group1').find('.in').length > 0) {
+                $parent.find('.itemDetails').collapse('hide');
+            }
             var currentSurvey = campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')];
             var index = $('#previousItemsSortable li').index($parent);
             var item = currentSurvey['contentList'][''][index];
@@ -364,12 +463,13 @@ $(function() {
         var index = $('#previousItemsSortable li').index($parent);
         var item = currentSurvey['contentList'][''][index];
         $edit = $parent.find('.group2');
+        //console.log($edit);
 
         if (item['message']) {
             var messageData = {};
-            messageData['id'] = $edit.find('.editPromptDetails').find('#messageId').val();
-            messageData['messageText'] = $edit.find('.editPromptDetails').find('#messageText').val();
-            if ($edit.find('.editPromptDetails').find('#messageCondition').val().trim() != "") messageData['condition'] = $edit.find('.editPromptDetails').find('#messageCondition').val();
+            messageData['id'] = $edit.find('.editPromptDetails').find('.messageId').val();
+            messageData['messageText'] = $edit.find('.editPromptDetails').find('.messageText').val();
+            if ($edit.find('.editPromptDetails').find('.messageCondition').val().trim() != "") messageData['condition'] = $edit.find('.editPromptDetails').find('#messageCondition').val();
 
             var result = campaignEditor.editMessage(messageData, index);
 
@@ -377,8 +477,21 @@ $(function() {
                 alert('Some required fields are missing!')
             } else {
                 //editIndex = -1;
-                isEditing = false;
-                location.reload();
+                //isEditing = false;
+                //location.reload();
+                currentSurvey = campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')];
+                index = $('#previousItemsSortable li').index($parent);
+                message = item['message'];
+                var condition;
+                if (!message['condition']) condition = "None";
+                else condition = message['condition'];
+                $parent.find('.detailsID').html(message['id']);
+                $parent.find('.viewDetailsMessageID').html('<strong>Message ID: </strong>' + message['id']);
+                $parent.find('.viewDetailsMessageText').html('<strong>Message Text: </strong>' + message['messageText']);
+                $parent.find('.viewDetailsMessageCond').html('<strong>Condition: </strong>' + condition);
+
+                $parent.find('.itemEdit').collapse('hide');
+                $parent.find('.itemDetails').collapse('show');
             }
         } else if (item['prompt']) {
             //var itemId = $('#editPromptId').val();
@@ -428,9 +541,44 @@ $(function() {
             if (result == false) {
                 alert('Some required fields are missing!')
             } else {
-                isEditing = false;
+                //isEditing = false;
                 //editIndex = -1;
-                location.reload();
+                //location.reload();
+                currentSurvey = campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')];
+                index = $('#previousItemsSortable li').index($parent);
+                prompt = item['prompt'];
+
+                var propertiesText = "";
+                if (prompt['properties']) {
+                    var data = eval(prompt['properties']['property']);
+                    
+                    for (var key in data) {
+                        if (data.hasOwnProperty(key)) {
+                            propertiesText += '<p>' + data[key]['key'] + ': ' + data[key]['label'] + '</p>';
+                        }
+                    }
+                }
+                if (!prompt['condition']) condition = "None";
+                else condition = prompt['condition'];
+                if (!prompt['skippable']) skipLabel = "None";
+                else skipLabel = prompt['skipLabel'];
+                if (!prompt['default']) defaultValue = "None";
+                else defaultValue = prompt['default'];
+
+                
+                $parent.find('.detailsID').html(prompt['id']);
+                $parent.find('.viewDetailsPromptID').html('<strong>Prompt ID: </strong>' + prompt['id']);
+                $parent.find('.viewDetailsPromptText').html('<strong>Prompt Text: </strong>' + prompt['promptText']);
+                $parent.find('.viewDetailsPromptDisplayLabel').html('<strong>Display Label: </strong>' + prompt['displayLabel']);
+                $parent.find('.viewDetailsPromptType').html('<strong>Display Label: </strong>' + prompt['promptType']);
+                $parent.find('.detailList').html(propertiesText);
+                $parent.find('.viewDetailsPromptDefault').html('<strong>Default: </strong>' + defaultValue);
+                $parent.find('.viewDetailsPromptCond').html('<strong>Condition: </strong>' + condition);
+                $parent.find('.viewDetailsPromptSkippable').html('<strong>Skippable: </strong>' + prompt['skippable']);
+                $parent.find('.viewDetailsPromptSkipLabel').html('<strong>Skip Label: </strong>' + skipLabel);
+
+                $parent.find('.itemEdit').collapse('hide');
+                $parent.find('.itemDetails').collapse('show');
             }
         } else if (item['repeatableSet']) {
 
@@ -442,9 +590,278 @@ $(function() {
     // cancel edit survey click event
     $('#previousItemsSortable').on('click', 'button.cancel', function() {
         if (confirm('Are you sure ? All unsaved data will be lost')) {
-            isEditing = false;
-            location.reload();
+            $parent.find('.itemEdit').collapse('hide');
+            $parent.find('.itemDetails').collapse('show');
         }
+    });
+
+    $('#previousItemsSortable').on('change', 'select.choosePromptType', function(e) {
+        e.preventDefault();
+        $parent = $(this).closest('.previousItem');
+        var currItem = $parent.find('.group2');
+        
+        //currItem.find('button.promptTypeBtn').trigger('click');
+        var changeConfirm = false;
+       
+        var text = "WARNING: Choosing new prompt type will clear all the options/keys/values.. associate with current prompt type\n Proceed ?"
+        changeConfirm = confirm(text);
+
+        if (changeConfirm) {
+            editObj = currItem;
+            currItem.find('.editPromptDetails').find('.addedPrompt').val(""); // clear text box 
+            var prevValue = currItem.find('.editPromptDetails').find(".choosePromptType").val();
+            showNewModal(prevValue);
+        }
+    });
+    
+    $('#previousItemsSortable').on('mousedown', 'select.choosePromptType option', function(e) {
+        e.preventDefault();
+        $parent = $(this).closest('.previousItem');
+        var currItem = $parent.find('.group2');
+        editObj = currItem;
+
+        var currentSurvey = campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')];
+        var index = $('#previousItemsSortable li').index($parent);
+        var item = currentSurvey['contentList'][''][index];
+        var prompt = item['prompt'];
+
+        alert($(this).val());
+        if (prompt['promptType'] == $(this).val()) {
+            currItem.find('button.promptTypeBtn').trigger('click');
+        }
+    });
+    
+    // cancel edit survey click event
+    $('#previousItemsSortable').on('click', 'button.promptTypeBtn', function() {
+        $('#promptData').empty();
+        
+        $parent = $(this).closest('.previousItem');
+        var currentSurvey = campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')];
+        var index = $('#previousItemsSortable li').index($parent);
+        var item = currentSurvey['contentList'][''][index];
+        var prompt = item['prompt'];
+        var currItem = $parent.find('.group2');
+        editObj = currItem;
+        //currItem.find('.editPromptDetails').find('.addedPrompt').val("");
+
+        console.log('prompt: ' + editObj);
+        console.log('promptType: ' + prompt['promptType']);
+        $("#groupPromptType").val(prompt['promptType']);
+        switch(prompt['promptType']) {
+            case 'audio':
+                var maxLength = prompt['properties']['property'][0]['label'];
+                //var properties = "max_seconds:" + maxLength;
+                $('#promptData').load("promptModals/audioModal.html", function() {
+                    $('#audioTable', this).find('#maxAudioLength').val(maxLength);
+                });
+                break;
+            case 'multi_choice':
+            case 'multi_choice_custom':
+                $('#promptData').load("promptModals/multiChoiceModal.html", function() {
+                    var defaultList;
+                    if (prompt['default']) { 
+                        currItem.find('.editPromptDetails').find('.default').val(prompt['default'])
+                        defaultList = prompt['default'].split(",");
+                    }
+                    var size = prompt['properties']['property'].length;
+
+                    //var properties = "";
+                    for (var i = 0; i < size; i++) {
+                        label = prompt['properties']['property'][i]['label'];
+                        if (prompt['properties']['property'][i]['value']) value = prompt['properties']['property'][i]['value'];
+                        else value = "";
+                        //var tmp = label + ':' + value;
+                        //if (prompt['default']) {
+                        //    for (j = 0; j < defaultList.length; j++){
+                        //         if (i == defaultList[i]) {
+                        //            tmp += " (default)"
+                        //            break;
+                        //        }
+                        //    }
+                        //}
+                        //properties += tmp + '\n';
+
+                        if (i == 0) {
+                            $('#multiChoiceTable tr:nth-child(2)').find(".multiOptionNum").val(i);
+                            $('#multiChoiceTable tr:nth-child(2)').find(".multiLabel").val(label);
+                            $('#multiChoiceTable tr:nth-child(2)').find(".multiValue").val(value);
+                        } else {
+                            // add row to table
+                            $row = $('#multiChoiceTable tr:nth-child(2)').clone();
+                            $('#multiChoiceTable tr:last').after($row);
+                            $('#multiChoiceTable tr:last').find(".multiOptionNum").val(i);
+                            $('#multiChoiceTable tr:last').find(".multiLabel").val(label);
+                            $('#multiChoiceTable tr:last').find(".multiValue").val(value);
+                        }
+                    }
+
+                    // update default box
+                    $('#multiChoiceDefault').empty();
+                    var key = 0;
+                    $('#multiChoiceTable tr:not(:first-child)').each(function()
+                    {
+                        $this = $(this);
+                        var optionNum = $this.find(".multiOptionNum").val();
+                        var label = $this.find(".multiLabel").val();
+                        $('#multiChoiceDefault')
+                         .append($("<option></option>")
+                         .attr("value",key++)
+                         .text(optionNum + ': ' + label)); 
+                    });
+                    $('#multiChoiceDefault').val(defaultList);
+                        
+                    //currItem.find('.editPromptDetails').find('.addedPrompt').val(properties);
+                });
+                break;
+            case "single_choice":
+            case "single_choice_custom":
+                $('#promptData').load("promptModals/singleChoiceModal.html", function() {
+                    var size = prompt['properties']['property'].length;
+                    if (prompt['default']) { 
+                        currItem.find('.editPromptDetails').find('.default').val(prompt['default'])
+                    }
+                    //var properties = "";
+                    for (var i = 0; i < size; ++i) {
+                        label = prompt['properties']['property'][i]['label'];
+                        if (prompt['properties']['property'][i]['value']) value = prompt['properties']['property'][i]['value'];
+                        else value = "";
+                        /*
+                        var tmp = label + ':' + value;
+                        if (prompt['default']) {
+                            if (i == prompt['default']) tmp += " (default)"
+                        }
+                        properties += tmp + '\n';
+                        */
+                        if (i == 0) {
+                            $('#singleChoiceTable tr:nth-child(2)').find(".singleOptionNum").val(i);
+                            $('#singleChoiceTable tr:nth-child(2)').find(".singleLabel").val(label);
+                            $('#singleChoiceTable tr:nth-child(2)').find(".singleValue").val(value);
+                        } else {
+                            // add row to table
+                            $row = $('#singleChoiceTable tr:nth-child(2)').clone();
+                            $('#singleChoiceTable tr:last').after($row);
+                            $('#singleChoiceTable tr:last').find(".singleOptionNum").val(i);
+                            $('#singleChoiceTable tr:last').find(".singleLabel").val(label);
+                            $('#singleChoiceTable tr:last').find(".singleValue").val(value);
+                        }
+                    }
+
+                    // update default box
+                    $('#singleChoiceDefault').empty();
+                    var key = 0;
+                    $('#singleChoiceDefault')
+                        .append($("<option></option>")
+                        .attr("value",-1)
+                        .text("None")); 
+                    $('#singleChoiceTable tr:not(:first-child)').each(function()
+                    {
+                        $this = $(this);
+                        var optionNum = $this.find(".singleOptionNum").val();
+                        var label = $this.find(".singleLabel").val();
+                        $('#singleChoiceDefault')
+                         .append($("<option></option>")
+                         .attr("value",key++)
+                         .text(optionNum + ': ' + label)); 
+                    });
+                    $('#singleChoiceDefault').val(currItem.find('.editPromptDetails').find('.default').val());
+                    //currItem.find('.editPromptDetails').find('.addedPrompt').val(properties);
+                });
+                break;
+            case "number":
+                $('#promptData').load("promptModals/numberModal.html", function() {
+                    var minNum = prompt['properties']['property'][0]['label'];
+                    var maxNum = prompt['properties']['property'][1]['label'];
+                    //var properties = "min:" + minNum + "\n" + "max:" + maxNum;
+                    $('#numberTable').find('#minNumber').val(minNum);
+                    $('#numberTable').find('#maxNumber').val(maxNum);
+                    if (prompt['default']) { 
+                        currItem.find('.editPromptDetails').find('.default').val(prompt['default']);
+                        $('#numberTable').find('#numberDefault').val(prompt['default']);
+                        //properties += "\n" + "Default: " + prompt['default']
+                    } //else properties += "\n" + "Default: ";
+                    //currItem.find('.editPromptDetails').find('.addedPrompt').val(properties);
+                });
+                break;
+            case "text":
+                $('#promptData').load("promptModals/textModal.html", function() {
+                    var minNum = prompt['properties']['property'][0]['label'];
+                    var maxNum = prompt['properties']['property'][1]['label'];
+                    //var properties = "min:" + minNum + "\n" + "max:" + maxNum;
+                    $('#textTable').find('#minTextLength').val(minNum);
+                    $('#textTable').find('#maxTextLength').val(maxNum);
+                    if (prompt['default']) { 
+                        currItem.find('.editPromptDetails').find('.default').val(prompt['default']);
+                        $('#textTable').find('#textDefault').val(prompt['default']);
+                        //properties += "\n" + "Default: " + prompt['default']
+                    } //else properties += "\n" + "Default: ";
+                    //currItem.find('.editPromptDetails').find('.addedPrompt').val(properties);
+                });
+                break;
+            case "photo":
+                $('#promptData').load("promptModals/photoModal.html", function() {
+                    var resolution = prompt['properties']['property'][0]['label'];
+                    //var properties = "resolution:" + resolution;
+                    $('#photoTable').find('#maxRes').val(resolution);
+                    //currItem.find('.editPromptDetails').find('.addedPrompt').val(properties);
+                });
+                break;
+            case "remote_activity":
+                $('#promptData').load("promptModals/remoteActivityModal.html", function() {
+                    var pack = prompt['properties']['property'][0]['label'];
+                    var activity = prompt['properties']['property'][1]['label'];
+                    var action = prompt['properties']['property'][2]['label'];
+                    var auto = prompt['properties']['property'][3]['label'];
+                    var retry = prompt['properties']['property'][4]['label'];
+                    var min = prompt['properties']['property'][5]['label'];
+                    if (prompt['properties']['property'][6]['label'])
+                        var input = prompt['properties']['property'][6]['label'];
+                    else var input = "";
+                    /*
+                    var properties = "Package:" + pack + "\n"
+                                  + "Activity:" + activity + "\n"
+                                  + "Action:" + action + "\n"
+                                  + "Auto:" + auto + "\n"
+                                  + "Retry:" + retry + "\n"
+                                  + "Min run:" + min + "\n"
+                                  + "Input:" + input + "\n"  
+                    */
+                    $('#remoteActivityTable').find('#packageRemote').val(pack);
+                    $('#remoteActivityTable').find('#activityRemote').val(activity);
+                    $('#remoteActivityTable').find('#actionRemote').val(action);
+                    $('#remoteActivityTable').find('#autoLaunch').val(auto);
+                    $('#remoteActivityTable').find('#retriesRemote').val(retry);
+                    $('#remoteActivityTable').find('#minrunRemote').val(min);
+                    if (input != "") $('#remoteActivityTable').find('#inputRemote').val(input);
+
+                    //currItem.find('.editPromptDetails').find('.addedPrompt').val(properties);
+                });
+                break;                            
+            case "timestamp":
+                $('#promptData').load("promptModals/timestampModal.html", function() {
+                });
+                break;
+            case 'video':
+                var maxLength = prompt['properties']['property'][0]['label'];
+                //var properties = "max_seconds:" + maxLength;
+                $('#promptData').load("promptModals/videoModal.html", function() {
+                    alert("call inside load");
+                    $('#videoTable', this).find('#maxVideoLength').val(maxLength);
+                });
+                break;
+
+        }
+        $('#promptTypeModal').modal('show');
+        $('#promptTypeModal').modal({
+            backdrop: true,
+            keyboard: true
+        }).css({
+            width: 'auto',
+            'margin-left': function () {
+                return -($(this).width() / 2);
+            }
+        });
+        // NOTE: this should change to somehow handle the call
+        //showModal();
     });
 
     $('.createItem').on('click', function(e) {
@@ -457,10 +874,10 @@ $(function() {
     function setupEditMessage (currItem, message, itemId) {
         //var itemId = message['editId'];
         //console.log(currItem);
-        currItem.find('.editPromptDetails').find('#editMessageId').val(itemId);
-        currItem.find('.editPromptDetails').find('#messageText').val(message['messageText']);
-        currItem.find('.editPromptDetails').find('#messageId').val(message['id']);
-        if (message['condition']) currItem.find('.editPromptDetails').find('#messageCondition').val(message['condition']);
+        currItem.find('.editPromptDetails').find('.editMessageId').val(itemId);
+        currItem.find('.editPromptDetails').find('.messageText').val(message['messageText']);
+        currItem.find('.editPromptDetails').find('.messageId').val(message['id']);
+        if (message['condition']) currItem.find('.editPromptDetails').find('.messageCondition').val(message['condition']);
 
         //$('#createMessage').toggle();
         //$('#editMessage').toggle();
@@ -472,6 +889,7 @@ $(function() {
         //$('#newMessage').collapse('show');
     }
 
+    /*
     $('#editMessage').live('click',function() {
         var itemId = $('#editMessageId').val();
         var messageData = {};
@@ -490,14 +908,22 @@ $(function() {
             //$('#cancelMessageEdit').toggle();
         }
     });
-
-    $('#cancelMessageEdit').live('click',function() {
-        if (confirm("Are you sure you want to Cancel ?\n All unchanged save will be lost"))
-            location.reload();
+    */
+    $('#cancelMessage').live('click',function() {
+        if (confirm("Are you sure you want to Cancel ?\n All unchanged save will be lost")) {
+            //$('.createItemError').slideToggle('slow',function() { $(this).alert('close')});
+            $this = $(this)
+            $('#newMessage').collapse('hide');
+            setTimeout(formCallback($this), 150);
+        }
     });
-    $('#cancelPromptEdit').live('click',function() {
-        if (confirm("Are you sure you want to Cancel ?\n All unchanged save will be lost"))
-            location.reload();
+    $('#cancelPrompt').live('click',function() {
+        if (confirm("Are you sure you want to Cancel ?\n All unchanged save will be lost")) {
+            //$('.createItemError').slideToggle('slow',function() { $(this).alert('close')});
+            $this = $(this);
+            $('#newPrompt').collapse('hide');
+            setTimeout(formCallback($this), 150);
+        }
     });
 
     function setupEditPrompt (currItem, prompt, itemId) {
@@ -516,9 +942,16 @@ $(function() {
         
 
         switch (prompt['promptType']) {
+            case "audio":
+                // TODO
+                var maxLength = prompt['properties']['property'][0]['label'];
+                var properties = "max_milliseconds:" + maxLength;
+                //$('#videoTable').find('.maxVideoLength').val(maxLength);
+                currItem.find('.editPromptDetails').find('.addedPrompt').val(properties);
+                break;
             case "multi_choice":
             case "multi_choice_custom":
-                $(".multiChoiceModal").toggle();
+                //$(".multiChoiceModal").toggle();
                 var defaultList;
                 if (prompt['default']) { 
                     currItem.find('.editPromptDetails').find('.default').val(prompt['default'])
@@ -534,48 +967,19 @@ $(function() {
                     var tmp = label + ':' + value;
                     if (prompt['default']) {
                         for (j = 0; j < defaultList.length; j++){
-                             if (i == defaultList[i]) {
+                             if (i == defaultList[j]) {
                                 tmp += " (default)"
                                 break;
                             }
                         }
                     }
                     properties += tmp + '\n';
-
-                    if (i == 0) {
-                        $('#multiChoiceTable tr:nth-child(2)').find(".multiOptionNum").val(i);
-                        $('#multiChoiceTable tr:nth-child(2)').find(".multiLabel").val(label);
-                        $('#multiChoiceTable tr:nth-child(2)').find(".multiValue").val(value);
-                    } else {
-                        // add row to table
-                        $row = $('#multiChoiceTable tr:nth-child(2)').clone();
-                        $('#multiChoiceTable tr:last').after($row);
-                        $('#multiChoiceTable tr:last').find(".multiOptionNum").val(i);
-                        $('#multiChoiceTable tr:last').find(".multiLabel").val(label);
-                        $('#multiChoiceTable tr:last').find(".multiValue").val(value);
-                    }
                 }
-
-                // update default box
-                $('#multiChoiceDefault').empty();
-                var key = 0;
-                $('#multiChoiceTable tr:not(:first-child)').each(function()
-                {
-                    $this = $(this);
-                    var optionNum = $this.find(".multiOptionNum").val();
-                    var label = $this.find(".multiLabel").val();
-                    $('#multiChoiceDefault')
-                     .append($("<option></option>")
-                     .attr("value",key++)
-                     .text(optionNum + ': ' + label)); 
-                });
-                $('#multiChoiceDefault').val(defaultList);
-                    
                 currItem.find('.editPromptDetails').find('.addedPrompt').val(properties);
                 break;
             case "single_choice":
             case "single_choice_custom":
-                $(".singleChoiceModal").toggle();
+                //$(".singleChoiceModal").toggle();
                 var size = prompt['properties']['property'].length;
                 if (prompt['default']) { 
                     currItem.find('.editPromptDetails').find('.default').val(prompt['default'])
@@ -591,6 +995,7 @@ $(function() {
                     }
                     properties += tmp + '\n';
 
+                    /*
                     if (i == 0) {
                         $('#singleChoiceTable tr:nth-child(2)').find(".singleOptionNum").val(i);
                         $('#singleChoiceTable tr:nth-child(2)').find(".singleLabel").val(label);
@@ -603,9 +1008,11 @@ $(function() {
                         $('#singleChoiceTable tr:last').find(".singleLabel").val(label);
                         $('#singleChoiceTable tr:last').find(".singleValue").val(value);
                     }
+                    */
                 }
 
                 // update default box
+                /*
                 $('#singleChoiceDefault').empty();
                 var key = 0;
                 $('#singleChoiceDefault')
@@ -623,45 +1030,46 @@ $(function() {
                      .text(optionNum + ': ' + label)); 
                 });
                 $('#singleChoiceDefault').val(currItem.find('.editPromptDetails').find('.default').val());
+                */
                 currItem.find('.editPromptDetails').find('.addedPrompt').val(properties);
                 break;
             case "number":
-                $(".numberModal").toggle();
+                //$(".numberModal").toggle();
                 var minNum = prompt['properties']['property'][0]['label'];
                 var maxNum = prompt['properties']['property'][1]['label'];
                 var properties = "min:" + minNum + "\n" + "max:" + maxNum;
-                $('#numberTable').find('.minNum').val(minNum);
-                $('#numberTable').find('.maxNum').val(maxNum);
+                //$('#numberTable').find('.minNum').val(minNum);
+                //$('#numberTable').find('.maxNum').val(maxNum);
                 if (prompt['default']) { 
-                    currItem.find('.editPromptDetails').find('.default').val(prompt['default']);
-                    $('#numberTable').find('.numberDefault').val(prompt['default']);
+                    //currItem.find('.editPromptDetails').find('.default').val(prompt['default']);
+                    //$('#numberTable').find('.numberDefault').val(prompt['default']);
                     properties += "\n" + "Default: " + prompt['default']
                 } else properties += "\n" + "Default: ";
                 currItem.find('.editPromptDetails').find('.addedPrompt').val(properties);
                 break;
             case "text":
-                $(".textModal").toggle();
+                //$(".textModal").toggle();
                 var minNum = prompt['properties']['property'][0]['label'];
                 var maxNum = prompt['properties']['property'][1]['label'];
                 var properties = "min:" + minNum + "\n" + "max:" + maxNum;
-                $('#textTable').find('.minTextLength').val(minNum);
-                $('#textTable').find('.maxTextLength').val(maxNum);
+                //$('#textTable').find('.minTextLength').val(minNum);
+                //$('#textTable').find('.maxTextLength').val(maxNum);
                 if (prompt['default']) { 
-                    currItem.find('.editPromptDetails').find('.default').val(prompt['default']);
-                    $('#textTable').find('.textDefault').val(prompt['default']);
+                    //currItem.find('.editPromptDetails').find('.default').val(prompt['default']);
+                    //$('#textTable').find('.textDefault').val(prompt['default']);
                     properties += "\n" + "Default: " + prompt['default']
                 } else properties += "\n" + "Default: ";
                 currItem.find('.editPromptDetails').find('.addedPrompt').val(properties);
                 break;
             case "photo":
-                $(".photoModal").toggle();
+                //$(".photoModal").toggle();
                 var resolution = prompt['properties']['property'][0]['label'];
                 var properties = "resolution:" + resolution;
-                $('#photoTable').find('.maxRes').val(resolution);
+                //$('#photoTable').find('.maxRes').val(resolution);
                 currItem.find('.editPromptDetails').find('.addedPrompt').val(properties);
                 break;
             case "remote_activity":
-                $(".remoteModal").toggle();
+                //$(".remoteModal").toggle();
                 var pack = prompt['properties']['property'][0]['label'];
                 var activity = prompt['properties']['property'][1]['label'];
                 var action = prompt['properties']['property'][2]['label'];
@@ -678,24 +1086,29 @@ $(function() {
                               + "Retry:" + retry + "\n"
                               + "Min run:" + min + "\n"
                               + "Input:" + input + "\n"  
-                $('#remoteActivityTable').find('.packageRemote').val(pack);
-                $('#remoteActivityTable').find('.activityRemote').val(activity);
-                $('#remoteActivityTable').find('.actionRemote').val(action);
-                $('#remoteActivityTable').find('.autoLaunch').val(auto);
-                $('#remoteActivityTable').find('.retriesRemote').val(retry);
-                $('#remoteActivityTable').find('.minrunRemote').val(min);
-                if (input != "") $('#remoteActivityTable').find('.inputRemote').val(input);
+                //$('#remoteActivityTable').find('.packageRemote').val(pack);
+                //$('#remoteActivityTable').find('.activityRemote').val(activity);
+                //$('#remoteActivityTable').find('.actionRemote').val(action);
+                //$('#remoteActivityTable').find('.autoLaunch').val(auto);
+                //$('#remoteActivityTable').find('.retriesRemote').val(retry);
+                //$('#remoteActivityTable').find('.minrunRemote').val(min);
+                //if (input != "") $('#remoteActivityTable').find('.inputRemote').val(input);
 
                 currItem.find('.editPromptDetails').find('.addedPrompt').val(properties);
                 break;                            
             case "timestamp":
-                $(".timeStampModal").toggle();
+                //$(".timeStampModal").toggle();
                 break;
             case "video":
-                $(".videoModal").toggle();
+                //$(".videoModal").toggle();
+                //$('#promptData').empty();
+                //$.get("promptModals/videoModal.html", function(data){
+                //    $("#promptData").append(data);
+                //});
+                //$('#promptData').load("promptModals/videoModal.html");
                 var maxLength = prompt['properties']['property'][0]['label'];
                 var properties = "max_seconds:" + maxLength;
-                $('#videoTable').find('.maxVideoLength').val(maxLength);
+                //$('#videoTable').find('.maxVideoLength').val(maxLength);
                 currItem.find('.editPromptDetails').find('.addedPrompt').val(properties);
                 break;
             default:
@@ -801,6 +1214,7 @@ $(function() {
     $('#messageForm').submit(function(event) {
         var $this = $(this);
 
+        console.log($('#messageCondition').val());
         // get form data
         // Find disabled inputs, and remove the "disabled" attribute
         var disabled = $this.find(':input:disabled').removeAttr('disabled');
@@ -904,8 +1318,10 @@ $(function() {
             event.preventDefault();
             return;
         } else {
-            /*
             switch (promptType) {
+                case "audio":
+                    addAudioToPrevItem(itemIndex);
+                    break;
                 case "multi_choice":
                 case "multi_choice_custom":
                     addMultipleChoiceToPrevItem(itemIndex);
@@ -936,7 +1352,6 @@ $(function() {
                     console.log('Error, unknown prompt type found.');
                     break;
             }
-            */
             updateNumQuestion();
         }
 
@@ -944,11 +1359,11 @@ $(function() {
         $('#editPromptId').val('');
         $('#createPrompt').text('Create Prompt');
         $('#cancelPromptEdit').hide();
-        //$('.createItemError').slideToggle('slow',function() { $(this).alert('close')});
-        //$('#newPrompt').collapse('hide');
-        //setTimeout(formCallback($this), 150);
-        //event.preventDefault();
-        location.reload();
+        $('.createItemError').slideToggle('slow',function() { $(this).alert('close')});
+        $('#newPrompt').collapse('hide');
+        setTimeout(formCallback($this), 150);
+        event.preventDefault();
+        //location.reload();
 	});
 
     function updateNumQuestion() {
@@ -1015,16 +1430,17 @@ $(function() {
         $this = $(this);
         var changeConfirm = true;
         if ($('#addedPrompt').val() != "") {
-            var text = "WARNING: Choosing new prompt type will clear all the data of old prompt type\n Proceed ?"
+            var text = "WARNING: Choosing new prompt type will clear all the options/keys/values.. associate with current prompt type\n Proceed ?"
             changeConfirm = confirm(text);
         } else {
-            var text = "WARNING: Choosing new prompt type will clear all the data in the current prompt type\n Proceed ?"
-            changeConfirm = confirm(text);
+            //var text = "Empty! YO"
+            //changeConfirm = confirm(text);
         }
 
         if (changeConfirm) {
-            $('#addedPrompt').val(""); // clear text box   
-            showNewModal();
+            $('#addedPrompt').val(""); // clear text box 
+            var prevValue = jQuery("#choosePromptType").val();  
+            showNewModal(prevValue);
         } else {
             $this.val(prevValue);
             prevValue = $this.val();

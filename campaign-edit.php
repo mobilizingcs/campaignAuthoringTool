@@ -17,6 +17,7 @@
         <script type="text/javascript" src="js/jquery.min.js"></script>
         <script type="text/javascript" src="js/jquery-cookie.js"></script>
         <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/configuration.js"></script>
         <script type="text/javascript" src="js/json2xml.js"></script>
         <script type="text/javascript" src="js/jquery.xml2json.js"></script>
         <script type="text/javascript" src="js/menu.js"></script>
@@ -31,11 +32,13 @@
             include('navbar.php');
         ?>
         <div class="container">
+            <!--
             <div class="breadcrumbsNav">
                 <ul class="breadcrumb">
                     <li class="active" id="homeBreadcrumb"><i class="icon-home"></i> Home</li>
                 </ul>
             </div>
+            -->
             <div class="row">
                 <div class="span3">
                     <div class="boxRounded boxDark" id="campaignMenu">
@@ -54,7 +57,41 @@
                 </div>
                 <div class="span9 content">
                     <div class="boxRounded boxDark">
+
+                        <div id="loginModal" class="modal hide fade" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+                            <div class="modal-header centered">
+                               Time Out. Please relogin
+                            </div>
+                            <div class="modal-body centered">
+                                <div class="">
+                                    <form class="form-horizontal" id="login-form">
+                                        <div class="control-group centered">
+                                            <label class="control-label" for="inputUsername">Username</label>
+                                            <div class="controls">
+                                                <input type="text" class="span3" id="inputUsername" placeholder="Username">
+                                            </div>
+                                        </div>
+                                        <div class="control-group centered">
+                                            <label class="control-label" for="inputPassword">Password</label>
+                                            <div class="controls">
+                                                <input type="password" class="span3" id="inputPassword" placeholder="Password">
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <div class="controls">
+                                                <button type="submit" class="btn btn-info">Login</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                
+                            </div>
+                        </div>
+
                         <h5>Edit Campaign</h5>
+                        <!--<div class="panel panel-info">Edit Campaign</div>-->
                         <div class="new-campaign">
                             <form class="form-horizontal" id="campaign-form" action="existing-surveys.php">
                                 <div class="control-group">
@@ -74,7 +111,7 @@
                                 <div class="control-group">
                                     <label class="control-label" for="campaignDescription">Description</label>
                                     <div class="controls">
-                                        <input type="text" class="span5" id="campaignDescription" placeholder="Description" />
+                                        <textarea type="text" class="span5" id="campaignDescription" placeholder="Description"> </textarea>
                                         <i class="help-icon icon-question-sign" data-original-title="Optional campaign description that can be viewed through Ohmage main page" rel="tooltip" data-placement="right"></i>
                                     </div>
                                 </div>
@@ -93,20 +130,29 @@
                                 <div class="control-group">
                                     <label class="control-label" for="privacyState">Privacy State <span class="red">*</span></label>
                                     <div class="controls">
-                                        <button type="button" class="btn btn-info" id="privacyStateBtn">Shared</button>
+                                        <!--<button type="button" class="btn btn-info" id="privacyStateBtn">Shared</button>-->
+                                        <select id="privacyStateBtn" name="privacyStateBtn" class="privacyStateBtn">
+                                            <option value="shared">Shared</option>
+                                            <option value="private">Private</option>
+                                        </select>
                                         <i class="help-icon icon-question-sign" data-original-title="In private mode, individual responses cannot be viewed." rel="tooltip" data-placement="right"></i>
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <label class="control-label" for="runningState">Running State <span class="red">*</span></label>
                                     <div class="controls">
-                                        <button type="button" class="btn btn-info" id="runningStateBtn">Running</button>
+                                        <!--<button type="button" class="btn btn-info" id="runningStateBtn">Running</button>-->
+                                        <select id="runningStateBtn" name="runningStateBtn" class="runningStateBtn">
+                                            <option value="running">Running</option>
+                                            <option value="stopped">Stopped</option>
+                                        </select>
                                         <i class="help-icon icon-question-sign" data-original-title="Users can only upload responses on running campaigns. This can be updated once you submit your campaign." rel="tooltip" data-placement="right"></i>
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <div class="controls">
-                                        <button type="submit" id="edit-campaign" class="btn">Edit Campaign <i class="icon-plus icon-black"></i></button>
+                                        <button type="submit" id="edit-campaign" class="btn">Edit Campaign Info</button>
+                                        <!--<button type="button" id="test" class="btn">Test</button>-->
                                     </div>
                                 </div>
                             </form>
