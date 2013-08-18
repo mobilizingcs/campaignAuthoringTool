@@ -46,6 +46,11 @@ $.fn.clearForm = function() {
     else if (tag == 'select')
       this.selectedIndex = -1;
     //special cases
+    $('#default').val("");
+    $('#conditionType').val("");
+    $("#simpleCondition").hide();
+    $("#advancedCondition").hide();
+    $("#conditionData").empty();
     $('#skipLabel').attr('disabled', 'disabled');
     $('#skipLabelLabel').html(skipLabel);
   });
@@ -143,6 +148,7 @@ function addProperties(input, promptType) {
     var text = input['properties'];
     console.log(text);
     if (promptType == "multi_choice" || promptType == "multi_choice_custom") {
+        
         $('#multiChoiceTable tr:not(:first-child)').each(function()
         {
             property = {};
@@ -158,6 +164,9 @@ function addProperties(input, promptType) {
             // key++;
         });
         return properties;
+        
+        //var jsonString = $('#jsonText').val();
+        //return JSON.parse(jsonString); 
     }
     else if (promptType == "single_choice" || promptType == "single_choice_custom") {
         $('#singleChoiceTable tr:not(:first-child)').each(function()

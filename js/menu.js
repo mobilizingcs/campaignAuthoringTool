@@ -21,7 +21,7 @@ $(function() {
 
     // view campaign xml button
     $('#viewSurveyXML').click(function() {
-        //deleteEditField(campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList']['']);
+        deleteEditField(campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList']['']);
         var xml = '<?xml version="1.0" encoding="UTF-8"?>' + json2xml({'campaign': campaignWrapper['campaign']});
         $('#surveyXml').text(vkbeautify.xml(xml));
         $('#xmlModal').modal('show');

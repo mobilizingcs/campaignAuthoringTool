@@ -147,19 +147,19 @@ $(function() {
         //$('#promptId').focus();
     });
 
-    var skipLabel = $('#skipLabelLabel').text();
+    var skipLabel = $('.skipLabelText').text();
     $('#skippable').change(function() { 
         if (this.checked) {
             $('#skipLabel').removeAttr('disabled');
-            $('#skipLabelLabel').append('<span class="label label-info">Required</span>');
+            $('.skipLabelText').append('<span class="red">*</span>');
         }
         else {
             $('#skipLabel').attr('disabled', 'disabled');
-            $('#skipLabelLabel').html(skipLabel);
+            $('.skipLabelText').html(skipLabel);
         }
     });
 
-    function showNewModal(prevValue) {
+    function showNewModal(prevValue, promptValue) {
         //var prevValue = jQuery("#choosePromptType").val();
         $('#groupPromptType').val(prevValue);  
         $('#promptData').empty();
@@ -167,6 +167,7 @@ $(function() {
             case 'audio':
                 $.get("promptModals/audioModal.html", function(data){
                     $("#promptData").append(data);
+                    //$("#maxAudioLength").val(promptValue.maxAudioLength);
                 });
                 break;
             case 'multi_choice':
@@ -203,8 +204,8 @@ $(function() {
                 break;
             case 'timestamp':
                 $.get("promptModals/timestamp.html", function(data){
-                            $("#promptData").append(data);
-                        });
+                    $("#promptData").append(data);
+                });
                 break;
             case 'video':
                 $.get("promptModals/videoModal.html", function(data){
@@ -226,6 +227,7 @@ $(function() {
             }
         });
     }
+
     $('#promptTypeBtn').click(function() {
         editObj = null;
         var prevValue = jQuery("#choosePromptType").val();
@@ -310,6 +312,11 @@ $(function() {
         $('#conditionSource').val('message');
         $('#advancedCondition').val($(this).prev().val());
         if($('#messageCondition').val().trim() == "") setUpConditionPromptList();
+        $('#conditionType').val("");
+        
+        $("#conditionData").empty();
+        $("#simpleCondition").hide();
+        $("#advancedCondition").hide();
         $('#conditionModal').modal('show');
         $('#conditionModal').modal({
             backdrop: true,
@@ -320,6 +327,8 @@ $(function() {
                 return -($(this).width() / 2);
             }
         });
+
+        //showConditionModal()
     });
 
     // condtition button when editing
@@ -376,6 +385,7 @@ $(function() {
             clearTableData();
             setUpConditionPromptList();
         }
+        //$('#conditionType').val("");
         $('#conditionModal').modal('show');
         $('#conditionModal').modal({
             backdrop: true,
@@ -625,9 +635,18 @@ $(function() {
         var item = currentSurvey['contentList'][''][index];
         var prompt = item['prompt'];
 
-        alert($(this).val());
         if (prompt['promptType'] == $(this).val()) {
             currItem.find('button.promptTypeBtn').trigger('click');
+        } else {
+            //currItem.find('select.choosePromptType').trigger('change');
+            var changeConfirm = false;
+       
+            var text = "WARNING: Choosing new prompt type will clear all the options/keys/values.. associate with current prompt type\n Proceed ?"
+            changeConfirm = confirm(text);
+
+            if (changeConfirm) {
+                showNewModal($(this).val());
+            }
         }
     });
     
@@ -862,6 +881,27 @@ $(function() {
         });
         // NOTE: this should change to somehow handle the call
         //showModal();
+    });
+
+
+    // skipable click event
+    $('#previousItemsSortable').on('click', '.skippable', function() {
+        $parent = $(this).closest('.previousItem');
+        var currentSurvey = campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')];
+        var index = $('#previousItemsSortable li').index($parent);
+        var item = currentSurvey['contentList'][''][index];
+        $edit = $parent.find('.group2');
+
+        $edit.find('.editPromptDetails').find('.skipLabel').val();
+
+        if (this.checked) {
+            $edit.find('.editPromptDetails').find('.skipLabel').removeAttr('disabled');
+            $edit.find('.editPromptDetails').find('.skipLabelText').append('<span class="red">*</span>');
+        }
+        else {
+            $edit.find('.editPromptDetails').find('.skipLabel').attr('disabled', 'disabled');
+            $edit.find('.editPromptDetails').find('.skipLabelText').html("Skip Label: ");
+        }
     });
 
     $('.createItem').on('click', function(e) {

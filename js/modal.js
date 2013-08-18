@@ -17,7 +17,7 @@ $(function() {
             $('#promptData').empty();
             switch ($this.val()) {
                 case 'audio':
-                    $.get("promptModals/aufioModal.html", function(data){
+                    $.get("promptModals/audioModal.html", function(data){
                         $("#promptData").append(data);
                     });
                     break;

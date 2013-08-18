@@ -55,6 +55,7 @@ $(function() {
             		break
             	case 'advanced':
 					$("#simpleCondition").hide();
+                    //$('.advancedCondition').val("");
 					$("#advancedCondition").show();
 					$('#conditionType').val('advanced');
             		break
@@ -505,8 +506,9 @@ $(function() {
                     //console.log($('#messageCondition').val());
                     break;
                 case 'prompt':
-                    if (editObj == null)
+                    if (editObj == null) {
                         $('#promptCondition').val(output);
+                    }
                     else 
                         editObj.find('.editPromptDetails').find('.promptCondition').val(output);
                     break;

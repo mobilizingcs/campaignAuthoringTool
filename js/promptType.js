@@ -5,10 +5,14 @@ $(function() {
 
         var properties = "max_milliseconds:" + length;
 
-        if (editObj == null)
+        if (editObj == null) {
             $('#addedPrompt').val(properties);
-        else
+            $('#jsonText').val('{"max_milliseconds":' + length + '}');
+        }
+        else {
             editObj.find('.editPromptDetails').find('.addedPrompt').val(properties);
+            editObj.find('.editPromptDetails').find('.jsonText').val('{"max_milliseconds":' + length + '}');
+        }
     }
 
     function displayMultiChoiceValues() {
@@ -39,8 +43,10 @@ $(function() {
                 editObj.find('.editPromptDetails').find('.default').val(tmp.slice(0,-1));
         }
 
+        // process key and value pair
         var key = 0;
-        var properties = "";
+        var properties = ""
+        jsonOption = {'property':[]};
         $('#multiChoiceTable tr:not(:first-child)').each(function()
         {
             $this = $(this);
@@ -49,16 +55,33 @@ $(function() {
             var value = $this.find(".multiValue").val();
             var vDefault = $this.find(".isDefault").val();
     
+            // save as a json
+            property = {};
+            property['key'] = Number(option);
+            property['label'] = label;
+            if (value != "") property['value'] = value; 
+            jsonOption['property'].push(property);
+
             if (vDefault == '1') properties += label + ":" + value + "\t (Default)\n";
             else properties += label + ":" + value + "\n";
             
             key++;
         });
 
-        if (editObj == null)
+        //console.log(jsonOption);
+        //console.log(JSON.stringify(jsonOption));
+        //j = JSON.stringify(jsonOption);
+        //var t = JSON.parse(j);
+        //console.log(t[0]);
+
+        if (editObj == null) {
             $('#addedPrompt').val(properties);
-        else
+            $('#jsonText').val(JSON.stringify(jsonOption));
+        }
+        else {
             editObj.find('.editPromptDetails').find('.addedPrompt').val(properties);
+            editObj.find('.editPromptDetails').find('.jsonText').val(JSON.stringify(jsonOption));
+        }
     }
 
     function displaySingleChoiceValues() {
@@ -78,6 +101,7 @@ $(function() {
         }
         var key = 0;
         var properties = "";
+        jsonOption = {'property':[]};
         $('#singleChoiceTable tr:not(:first-child)').each(function()
         {
             $this = $(this);
@@ -88,6 +112,13 @@ $(function() {
             if (vDefault == '1') properties += label + ":" + value + "\t(Default)\n";
             else properties += label + ":" + value + "\n";
             defaultCheck = option + ': ' + label;
+
+            // save as a json
+            property = {};
+            property['key'] = Number(option);
+            property['label'] = label;
+            if (value != "") property['value'] = value; 
+            jsonOption['property'].push(property);
 
             if (defaultCheck === defaultText) { 
                 if (editObj == null)
@@ -105,10 +136,13 @@ $(function() {
                 editObj.find('.editPromptDetails').find('.default').val("");
             }
         }
-        if (editObj == null)
+        if (editObj == null) {
             $('#addedPrompt').val(properties);
+            $('#jsonText').val(JSON.stringify(jsonOption));
+        }
         else {
             editObj.find('.editPromptDetails').find('.addedPrompt').val(properties);
+            editObj.find('.editPromptDetails').find('.jsonText').val(JSON.stringify(jsonOption));
         }
 
 
@@ -136,9 +170,18 @@ $(function() {
         }
         if (editObj == null) {
             $('#addedPrompt').val(properties + '\n' + defaultText);
+            var minText = '"min":' + minNum;
+            var maxText = '"max":' + maxNum;
+            $('#jsonText').val('{'+ minText + ',' + maxText + '}');
+            console.log($('#jsonText').val());
+            var j = JSON.parse($('#jsonText').val());
+            console.log(j.min + ' ' + j.max);
         }
         else {
             editObj.find('.editPromptDetails').find('.addedPrompt').val(properties + '\n' + defaultText);
+            var minText = '"min":' + minNum;
+            var maxText = '"max":' + maxNum;
+            editObj.find('.editPromptDetails').find('.jsonText').val('{'+ minText + ',' + maxText + '}');
         }
     }
 
@@ -146,10 +189,14 @@ $(function() {
         var resolution = $('#maxRes').val();
         var properties = "resolution:" + resolution;
 
-        if (editObj == null)
+        if (editObj == null) {
             $('#addedPrompt').val(properties);
-        else
+            $('#jsonText').val('{"resolution":' + resolution + '}');
+        }
+        else {
             editObj.find('.editPromptDetails').find('.addedPrompt').val(properties);
+            editObj.find('.editPromptDetails').find('.jsonText').val('{"resolution":' + resolution + '}');
+        }
     }
 
     function displayTextValues() {
@@ -165,10 +212,21 @@ $(function() {
             else
                 editObj.find('.editPromptDetails').find('.default').val(defaultValue);
         }
-        if (editObj == null)
+        if (editObj == null) {
             $('#addedPrompt').val(properties + '\n' + defaultText);
-        else
+            var minText = '"min":' + min;
+            var maxText = '"max":' + max;
+            $('#jsonText').val('{'+ minText + ',' + maxText + '}');
+            console.log($('#jsonText').val());
+            var j = JSON.parse($('#jsonText').val());
+            console.log(j.min + ' ' + j.max);
+        }
+        else {
             editObj.find('.editPromptDetails').find('.addedPrompt').val(properties + '\n' + defaultText);
+            var minText = '"min":' + min;
+            var maxText = '"max":' + max;
+            editObj.find('.editPromptDetails').find('.jsonText').val('{'+ minText + ',' + maxText + '}');
+        }
     }
 
     function displayRemoveActivityValues() {
@@ -187,10 +245,22 @@ $(function() {
                       + "Min run:" + min + "\n"
                       + "Input:" + input + "\n"  
 
-        if (editObj == null)
+        var jsonPack = '"package:"' + pack;
+        var jsonActivity = '"activity:"' + activity;
+        var jsonAction = '"action:"' + action;
+        var jsonAuto = '"auto:"' + auto;
+        var jsonRetry = '"retry:"' + retry;
+        var jsonMinRun = '"min_run:"' + min;
+        var jsonInput = '"input:"' + input
+
+        if (editObj == null) {
             $('#addedPrompt').val(properties);
-        else
+            $('#jsonText').val('{'+ jsonPack + ',' + jsonActivity + ',' + jsonAction + ',' + jsonAuto + ',' + jsonRetry + ',' + jsonMinRun + ',' + jsonInput + '}');
+        }
+        else {
             editObj.find('.editPromptDetails').find('.addedPrompt').val(properties);
+            editObj.find('.editPromptDetails').find('.jsonText').val('{'+ jsonPack + ',' + jsonActivity + ',' + jsonAction + ',' + jsonAuto + ',' + jsonRetry + ',' + jsonMinRun + ',' + jsonInput + '}');
+        }
     }
 
     function displayVideoValues() {
@@ -199,10 +269,14 @@ $(function() {
 
         var properties = "max_seconds:" + length;
 
-        if (editObj == null)
+        if (editObj == null) {
             $('#addedPrompt').val(properties);
-        else
+            $('#jsonText').val('{"max_seconds":' + length + '}');
+        }
+        else {
             editObj.find('.editPromptDetails').find('.addedPrompt').val(properties);
+            editObj.find('.editPromptDetails').find('.jsonText').val('{"max_seconds":' + length + '}');
+        }
     }
 
     function validateSingleChoice() {
@@ -485,6 +559,7 @@ $(function() {
         case 'text':
             $('#promptTypeText').val("Text");
             var min = $('#minTextLength').val();
+            var defaultValue = $('#textDefault').val();
             var max = $('#maxTextLength').val();
             var errorMessage = "Error:";
             var minError = false, maxError = false;
@@ -508,8 +583,17 @@ $(function() {
             else {
                 if (Number(max) < Number(min)) alert('Max value must be greater than or equal min value');
                 else {
-                    displayTextValues();
-                    $('#promptTypeModal').modal('hide');
+                    // add check for default here
+                    if (defaultValue == "") {
+                        displayTextValues();
+                        $('#promptTypeModal').modal('hide');
+                    } else if (defaultValue.length > Number(max) || defaultValue.length < Number(min)) {
+                        alert('Length of default value text must be between Min and Max');
+                    }
+                    else {
+                        displayTextValues();
+                        $('#promptTypeModal').modal('hide');
+                    }
                 }
 
             }

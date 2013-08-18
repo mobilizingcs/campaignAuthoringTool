@@ -2,8 +2,8 @@
 <?php
     session_start(); 
     include('notice.php');
-    require_once('authorize.php');
-    authorizeUser();
+    //require_once('authorize.php');
+    //authorizeUser();
 ?>
 <html>
     <head>

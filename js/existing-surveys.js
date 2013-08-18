@@ -252,7 +252,6 @@ $(function() {
         if (confirm('Are you sure ? All unsaved data will be lost')) {
             //isEditing = false;
             //location.reload();
-            alert('yo');
             $parent.find('.group1').collapse('hide');
             $parent.find('.surveyDetails').collapse('show');
         }

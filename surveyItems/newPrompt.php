@@ -69,6 +69,7 @@
                         <!--<label type="hiden" class="control-label" for="default">Default</label>-->
                         <div class="controls">
                             <input type="hidden" name="default" id="default" placeholder="Default" />
+                            <input type="hidden" class="jsonText" id="jsonText" />
                             <!--<i class="help-icon icon-question-sign" data-original-title="The default value for this prompt. This is type-dependent." rel="tooltip" data-placement="right"></i>-->
                         </div>
                     </div>
@@ -92,9 +93,9 @@
                     </div> 
                     
                     <div class="control-group">
-                        <label class="control-label" for="skipLabel">Skip Label:</label>
+                        <label class="control-label skipLabelText" for="skipLabel">Skip Label: </label>
                         <div class="controls">
-                            <input type="text" class="span4" name="skipLabel" id="skipLabel" placeholder="Skip" disabled/>
+                            <input type="text" class="span4" name="skipLabel" id="skipLabel" value="Skip" disabled/>
                             <i class="help-icon icon-question-sign" data-original-title="If skippable, this is the text of the button to use to skip the label." rel="tooltip" data-placement="right"></i>
                         </div> 
                     </div>   

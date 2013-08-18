@@ -260,6 +260,6 @@
     </div>
     <div class="modal-footer">
         <button class="btn btn-primary submit" id="promptTypeSubmit">Save changes</button>
-        <!--<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>-->
+        <button class="btn btn-primary cancelBtn" data-dismiss="modal" aria-hidden="true">Cancel</button>
     </div>
 </div>

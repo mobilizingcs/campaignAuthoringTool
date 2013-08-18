@@ -73,17 +73,17 @@ var editPrompt = '<hr>' +
                         //'</div>'+
                     '</div>'+
                     '<div class="control-group">'+
-                        '<label class="control-label inline-label" for="skippable">Skip Option:</label>'+
+                        '<label class="control-label inline-label skippable" for="skippable">Skip Option:</label>'+
                         //'<div class="controls"> '+
                             //'<label class="checkbox">'+
                                 '<input type="checkbox" name="skippable" class="skippable" >'+
-                                'Can this survey be skippable?'+
+                                '  Is this prompt skippable?'+
                             //'</label>'+
                         //'</div>'+
                     '</div> '+
                     
                     '<div class="control-group">'+
-                        '<label class="control-label inline-label" for="skipLabel">Skip Label:</label>'+
+                        '<label class="control-label inline-label skipLabelText" for="skipLabel">Skip Label:</label>'+
                         //'<div class="controls">'+
                             '<input type="text" class="span4 skipLabel" name="skipLabel" placeholder="Skip" disabled/>'+
                             '<i class="help-icon icon-question-sign" data-original-title="If skippable, this is the text of the button to use to skip the label." rel="tooltip" data-placement="right"></i>'+
