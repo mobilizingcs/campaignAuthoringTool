@@ -5,13 +5,21 @@ $(function() {
 
         var properties = "max_milliseconds:" + length;
 
+        jsonOption = {'property':[]};
+        property = {};
+        property['key'] = 'max_milliseconds';
+        property['label'] = length;
+        jsonOption['property'].push(property);
         if (editObj == null) {
             $('#addedPrompt').val(properties);
-            $('#jsonText').val('{"max_milliseconds":' + length + '}');
+            $('#jsonText').val(JSON.stringify(jsonOption));
+
+            t = JSON.parse($('#jsonText').val());
+            //console.log(t['property'][0]['key']);
         }
         else {
             editObj.find('.editPromptDetails').find('.addedPrompt').val(properties);
-            editObj.find('.editPromptDetails').find('.jsonText').val('{"max_milliseconds":' + length + '}');
+            editObj.find('.editPromptDetails').find('.jsonText').val(JSON.stringify(jsonOption));
         }
     }
 
@@ -71,12 +79,13 @@ $(function() {
         //console.log(jsonOption);
         //console.log(JSON.stringify(jsonOption));
         //j = JSON.stringify(jsonOption);
-        //var t = JSON.parse(j);
-        //console.log(t[0]);
+        
 
         if (editObj == null) {
             $('#addedPrompt').val(properties);
             $('#jsonText').val(JSON.stringify(jsonOption));
+            //var t = JSON.parse($('#jsonText').val());
+            //console.log(t['property'][1]['label']);
         }
         else {
             editObj.find('.editPromptDetails').find('.addedPrompt').val(properties);
@@ -86,7 +95,7 @@ $(function() {
 
     function displaySingleChoiceValues() {
         var defaultValue = $('#singleChoiceDefault').val();
-        console.log(defaultValue);
+        
         var child = Number(defaultValue) + 1;
         $('#singleChoiceTable tr').eq(child).find('.isDefault').val(1);    
         var defaultText = $('#singleChoiceDefault option:selected').text();
@@ -139,6 +148,8 @@ $(function() {
         if (editObj == null) {
             $('#addedPrompt').val(properties);
             $('#jsonText').val(JSON.stringify(jsonOption));
+            //var t = JSON.parse($('#jsonText').val());
+            //console.log(t['property'][1]['label']);
         }
         else {
             editObj.find('.editPromptDetails').find('.addedPrompt').val(properties);
@@ -168,20 +179,27 @@ $(function() {
             else
                 editObj.find('.editPromptDetails').find('.default').val("");
         }
+
+        jsonOption = {'property':[]};
+        property = {};
+        property['key'] = 'min';
+        property['label'] = minNum;
+        jsonOption['property'].push(property);
+        property = {};
+        property['key'] = 'max';
+        property['label'] = maxNum;
+        jsonOption['property'].push(property);
+
         if (editObj == null) {
             $('#addedPrompt').val(properties + '\n' + defaultText);
-            var minText = '"min":' + minNum;
-            var maxText = '"max":' + maxNum;
-            $('#jsonText').val('{'+ minText + ',' + maxText + '}');
-            console.log($('#jsonText').val());
-            var j = JSON.parse($('#jsonText').val());
-            console.log(j.min + ' ' + j.max);
+            $('#jsonText').val(JSON.stringify(jsonOption));
+
+            //var t = JSON.parse($('#jsonText').val());
+            //console.log(t['property'][1]['label']);           
         }
         else {
             editObj.find('.editPromptDetails').find('.addedPrompt').val(properties + '\n' + defaultText);
-            var minText = '"min":' + minNum;
-            var maxText = '"max":' + maxNum;
-            editObj.find('.editPromptDetails').find('.jsonText').val('{'+ minText + ',' + maxText + '}');
+            editObj.find('.editPromptDetails').find('.jsonText').val(JSON.stringify(jsonOption));
         }
     }
 
@@ -189,13 +207,22 @@ $(function() {
         var resolution = $('#maxRes').val();
         var properties = "resolution:" + resolution;
 
+        jsonOption = {'property':[]};
+        property = {};
+        property['key'] = 'maxDimension';
+        property['label'] = resolution;
+        jsonOption['property'].push(property);
+
         if (editObj == null) {
             $('#addedPrompt').val(properties);
-            $('#jsonText').val('{"resolution":' + resolution + '}');
+            $('#jsonText').val(JSON.stringify(jsonOption));
+
+            //var t = JSON.parse($('#jsonText').val());
+            //console.log(t['property'][0]['label']);
         }
         else {
             editObj.find('.editPromptDetails').find('.addedPrompt').val(properties);
-            editObj.find('.editPromptDetails').find('.jsonText').val('{"resolution":' + resolution + '}');
+            editObj.find('.editPromptDetails').find('.jsonText').val(JSON.stringify(jsonOption));
         }
     }
 
@@ -212,20 +239,27 @@ $(function() {
             else
                 editObj.find('.editPromptDetails').find('.default').val(defaultValue);
         }
+
+        jsonOption = {'property':[]};
+        property = {};
+        property['key'] = 'min';
+        property['label'] = min;
+        jsonOption['property'].push(property);
+        property = {};
+        property['key'] = 'max';
+        property['label'] = max;
+        jsonOption['property'].push(property);
+
         if (editObj == null) {
             $('#addedPrompt').val(properties + '\n' + defaultText);
-            var minText = '"min":' + min;
-            var maxText = '"max":' + max;
-            $('#jsonText').val('{'+ minText + ',' + maxText + '}');
-            console.log($('#jsonText').val());
-            var j = JSON.parse($('#jsonText').val());
-            console.log(j.min + ' ' + j.max);
+            $('#jsonText').val(JSON.stringify(jsonOption));
+
+            //var t = JSON.parse($('#jsonText').val());
+            //console.log(t['property'][0]['label']);
         }
         else {
             editObj.find('.editPromptDetails').find('.addedPrompt').val(properties + '\n' + defaultText);
-            var minText = '"min":' + min;
-            var maxText = '"max":' + max;
-            editObj.find('.editPromptDetails').find('.jsonText').val('{'+ minText + ',' + maxText + '}');
+            editObj.find('.editPromptDetails').find('.jsonText').val(JSON.stringify(jsonOption));
         }
     }
 
@@ -240,26 +274,51 @@ $(function() {
         var properties = "Package:" + pack + "\n"
                       + "Activity:" + activity + "\n"
                       + "Action:" + action + "\n"
-                      + "Auto:" + auto + "\n"
-                      + "Retry:" + retry + "\n"
-                      + "Min run:" + min + "\n"
+                      + "autolaunch:" + auto + "\n"
+                      + "Retries:" + retry + "\n"
+                      + "Min_runs:" + min + "\n"
                       + "Input:" + input + "\n"  
 
-        var jsonPack = '"package:"' + pack;
-        var jsonActivity = '"activity:"' + activity;
-        var jsonAction = '"action:"' + action;
-        var jsonAuto = '"auto:"' + auto;
-        var jsonRetry = '"retry:"' + retry;
-        var jsonMinRun = '"min_run:"' + min;
-        var jsonInput = '"input:"' + input
+        jsonOption = {'property':[]};
+        property = {};
+        property['key'] = 'package';
+        property['label'] = pack;
+        jsonOption['property'].push(property);
+        property = {};
+        property['key'] = 'activity';
+        property['label'] = activity;
+        jsonOption['property'].push(property);     
+        property = {};
+        property['key'] = 'action';
+        property['label'] = action;
+        jsonOption['property'].push(property);
+        property = {};
+        property['key'] = 'autolaunch';
+        property['label'] = auto;
+        jsonOption['property'].push(property);
+        property = {};
+        property['key'] = 'retries';
+        property['label'] = retry;
+        jsonOption['property'].push(property);
+        property = {};
+        property['key'] = 'min_runs';
+        property['label'] = min;
+        jsonOption['property'].push(property);
+        property = {};
+        property['key'] = 'input';
+        property['label'] = input;
+        jsonOption['property'].push(property);          
 
         if (editObj == null) {
             $('#addedPrompt').val(properties);
-            $('#jsonText').val('{'+ jsonPack + ',' + jsonActivity + ',' + jsonAction + ',' + jsonAuto + ',' + jsonRetry + ',' + jsonMinRun + ',' + jsonInput + '}');
+            $('#jsonText').val(JSON.stringify(jsonOption));
+
+            //var t = JSON.parse($('#jsonText').val());
+            //console.log(t['property'][0]['label']);
         }
         else {
             editObj.find('.editPromptDetails').find('.addedPrompt').val(properties);
-            editObj.find('.editPromptDetails').find('.jsonText').val('{'+ jsonPack + ',' + jsonActivity + ',' + jsonAction + ',' + jsonAuto + ',' + jsonRetry + ',' + jsonMinRun + ',' + jsonInput + '}');
+            editObj.find('.editPromptDetails').find('.jsonText').val(JSON.stringify(jsonOption));
         }
     }
 
@@ -269,13 +328,19 @@ $(function() {
 
         var properties = "max_seconds:" + length;
 
+        jsonOption = {'property':[]};
+        property = {};
+        property['key'] = 'max_seconds';
+        property['label'] = length;
+        jsonOption['property'].push(property);
+
         if (editObj == null) {
             $('#addedPrompt').val(properties);
-            $('#jsonText').val('{"max_seconds":' + length + '}');
+            $('#jsonText').val(JSON.stringify(jsonOption));
         }
         else {
             editObj.find('.editPromptDetails').find('.addedPrompt').val(properties);
-            editObj.find('.editPromptDetails').find('.jsonText').val('{"max_seconds":' + length + '}');
+            editObj.find('.editPromptDetails').find('.jsonText').val(JSON.stringify(jsonOption));
         }
     }
 
@@ -402,15 +467,15 @@ $(function() {
     }
 
     $('#promptTypeSubmit').click(function() {
+        var type;
         if (editObj == null) {
-            var type = jQuery("#groupPromptType").val();
+            type = jQuery("#groupPromptType").val();
             $('#choosePromptType').val(type);
         } else {
-            var type = editObj.find('.editPromptDetails').find('.choosePromptType').val();
-            //var type = jQuery("#groupPromptType").val();
-            $("#groupPromptType").val(type);
+            //type = editObj.find('.editPromptDetails').find('.choosePromptType').val();
+            var type = jQuery("#groupPromptType").val();
+            //$("#groupPromptType").val(type);
             editObj.find('.editPromptDetails').find('.choosePromptType').val(type);
-            console.log(type);
         }
         switch (type) {
         case 'audio':

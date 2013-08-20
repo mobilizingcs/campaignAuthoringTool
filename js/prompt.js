@@ -159,7 +159,7 @@ $(function() {
         }
     });
 
-    function showNewModal(prevValue, promptValue) {
+    function showNewModal(prevValue) {
         //var prevValue = jQuery("#choosePromptType").val();
         $('#groupPromptType').val(prevValue);  
         $('#promptData').empty();
@@ -231,7 +231,191 @@ $(function() {
     $('#promptTypeBtn').click(function() {
         editObj = null;
         var prevValue = jQuery("#choosePromptType").val();
-        showNewModal(prevValue);
+        var jsonString = $('#jsonText').val();
+        if (jsonString == "") {
+            showNewModal(prevValue);
+        } else {
+            var json = JSON.parse($('#jsonText').val());
+            switch(prevValue) {
+                case 'audio':
+                    var maxLength = json['property'][0]['label'];
+                    //var properties = "max_seconds:" + maxLength;
+                    $('#promptData').load("promptModals/audioModal.html", function() {
+                        $('#audioTable', this).find('#maxAudioLength').val(maxLength);
+                    });
+                    break;
+                case 'multi_choice':
+                case 'multi_choice_custom':
+                    $('#promptData').load("promptModals/multiChoiceModal.html", function() {
+                        /*
+                        var defaultList;
+                        if (prompt['default']) { 
+                            currItem.find('.editPromptDetails').find('.default').val(prompt['default'])
+                            defaultList = prompt['default'].split(",");
+                        }
+                        */
+                        var size = json['property'].length;
+
+                        //var properties = "";
+                        for (var i = 0; i < size; i++) {
+                            label = json['property'][i]['label'];
+                            if (json['property'][i]['value']) value = json['property'][i]['value'];
+                            else value = "";
+
+                            if (i == 0) {
+                                $('#multiChoiceTable tr:nth-child(2)').find(".multiOptionNum").val(i);
+                                $('#multiChoiceTable tr:nth-child(2)').find(".multiLabel").val(label);
+                                $('#multiChoiceTable tr:nth-child(2)').find(".multiValue").val(value);
+                            } else {
+                                // add row to table
+                                $row = $('#multiChoiceTable tr:nth-child(2)').clone();
+                                $('#multiChoiceTable tr:last').after($row);
+                                $('#multiChoiceTable tr:last').find(".multiOptionNum").val(i);
+                                $('#multiChoiceTable tr:last').find(".multiLabel").val(label);
+                                $('#multiChoiceTable tr:last').find(".multiValue").val(value);
+                            }
+                        }
+
+                        // update default box
+                        $('#multiChoiceDefault').empty();
+                        var key = 0;
+                        $('#multiChoiceTable tr:not(:first-child)').each(function()
+                        {
+                            $this = $(this);
+                            var optionNum = $this.find(".multiOptionNum").val();
+                            var label = $this.find(".multiLabel").val();
+                            $('#multiChoiceDefault')
+                             .append($("<option></option>")
+                             .attr("value",key++)
+                             .text(optionNum + ': ' + label)); 
+                        });
+                        //$('#multiChoiceDefault').val(defaultList);
+                            
+                        //currItem.find('.editPromptDetails').find('.addedPrompt').val(properties);
+                    });
+                    break;
+                case "single_choice":
+                case "single_choice_custom":
+                    $('#promptData').load("promptModals/singleChoiceModal.html", function() {
+                        var size = json['property'].length;
+                        /*
+                        if (prompt['default']) { 
+                            currItem.find('.editPromptDetails').find('.default').val(prompt['default'])
+                        }
+                        */
+                        //var properties = "";
+                        for (var i = 0; i < size; ++i) {
+                            label = json['property'][i]['label'];
+                            if (json['property'][i]['value']) value = json['property'][i]['value'];
+                            else value = "";
+                            
+                            if (i == 0) {
+                                $('#singleChoiceTable tr:nth-child(2)').find(".singleOptionNum").val(i);
+                                $('#singleChoiceTable tr:nth-child(2)').find(".singleLabel").val(label);
+                                $('#singleChoiceTable tr:nth-child(2)').find(".singleValue").val(value);
+                            } else {
+                                // add row to table
+                                $row = $('#singleChoiceTable tr:nth-child(2)').clone();
+                                $('#singleChoiceTable tr:last').after($row);
+                                $('#singleChoiceTable tr:last').find(".singleOptionNum").val(i);
+                                $('#singleChoiceTable tr:last').find(".singleLabel").val(label);
+                                $('#singleChoiceTable tr:last').find(".singleValue").val(value);
+                            }
+                        }
+
+                        // update default box
+                        $('#singleChoiceDefault').empty();
+                        var key = 0;
+                        $('#singleChoiceDefault')
+                            .append($("<option></option>")
+                            .attr("value",-1)
+                            .text("None")); 
+                        $('#singleChoiceTable tr:not(:first-child)').each(function()
+                        {
+                            $this = $(this);
+                            var optionNum = $this.find(".singleOptionNum").val();
+                            var label = $this.find(".singleLabel").val();
+                            $('#singleChoiceDefault')
+                             .append($("<option></option>")
+                             .attr("value",key++)
+                             .text(optionNum + ': ' + label)); 
+                        });
+                        $('#singleChoiceDefault').val($('#default').val());
+                        //currItem.find('.editPromptDetails').find('.addedPrompt').val(properties);
+                    });
+                    break;
+                case "number":
+                    $('#promptData').load("promptModals/numberModal.html", function() {
+                        var minNum = json['property'][0]['label'];
+                        var maxNum = json['property'][1]['label'];
+                        //var properties = "min:" + minNum + "\n" + "max:" + maxNum;
+                        $('#numberTable').find('#minNumber').val(minNum);
+                        $('#numberTable').find('#maxNumber').val(maxNum);
+                        if ($('#default').val()) { 
+                            //currItem.find('.editPromptDetails').find('.default').val(prompt['default']);
+                            $('#numberTable').find('#numberDefault').val($('#default').val());
+                            //properties += "\n" + "Default: " + prompt['default']
+                        } //else properties += "\n" + "Default: ";
+                        //currItem.find('.editPromptDetails').find('.addedPrompt').val(properties);
+                    });
+                    break;
+                case "text":
+                    $('#promptData').load("promptModals/textModal.html", function() {
+                        var minNum = json['property'][0]['label'];
+                        var maxNum = json['property'][1]['label'];
+                        //var properties = "min:" + minNum + "\n" + "max:" + maxNum;
+                        $('#textTable').find('#minTextLength').val(minNum);
+                        $('#textTable').find('#maxTextLength').val(maxNum);
+                        if ($('#default').val()) { 
+                            //currItem.find('.editPromptDetails').find('.default').val(prompt['default']);
+                            $('#textTable').find('#textDefault').val($('#default').val());
+                            //properties += "\n" + "Default: " + prompt['default']
+                        } 
+                    });
+                    break;
+                case "photo":
+                    $('#promptData').load("promptModals/photoModal.html", function() {
+                        var resolution = json['property'][0]['label'];
+                        //var properties = "resolution:" + resolution;
+                        $('#photoTable').find('#maxRes').val(resolution);
+                        //currItem.find('.editPromptDetails').find('.addedPrompt').val(properties);
+                    });
+                    break;
+                case "remote_activity":
+                    $('#promptData').load("promptModals/remoteActivityModal.html", function() {
+                        var pack = json['property'][0]['label'];
+                        var activity = json['property'][1]['label'];
+                        var action = json['property'][2]['label'];
+                        var auto = json['property'][3]['label'];
+                        var retry = json['property'][4]['label'];
+                        var min = json['property'][5]['label'];
+                        if (json['property'][6]['label'])
+                            var input = json['property'][6]['label'];
+                        else var input = "";
+                    
+                        $('#remoteActivityTable').find('#packageRemote').val(pack);
+                        $('#remoteActivityTable').find('#activityRemote').val(activity);
+                        $('#remoteActivityTable').find('#actionRemote').val(action);
+                        $('#remoteActivityTable').find('#autoLaunch').val(auto);
+                        $('#remoteActivityTable').find('#retriesRemote').val(retry);
+                        $('#remoteActivityTable').find('#minrunRemote').val(min);
+                        if (input != "") $('#remoteActivityTable').find('#inputRemote').val(input);
+
+                    });
+                    break;                            
+                case "timestamp":
+                    $('#promptData').load("promptModals/timestampModal.html", function() {
+                    });
+                    break;
+                case 'video':
+                    var maxLength = json['property'][0]['label'];
+                    
+                    $('#promptData').load("promptModals/videoModal.html", function() {
+                        $('#videoTable', this).find('#maxVideoLength').val(maxLength);
+                    });
+                    break;
+            }
+        }
         $('#promptTypeModal').modal('show');
         $('#promptTypeModal').modal({
             backdrop: true,
@@ -532,7 +716,9 @@ $(function() {
                 if (promptData['skipLabel']) delete promptData.skipLabel;
             }
             promptData['properties'] = $edit.find('.editPromptDetails').find('.addedPrompt').val();
-            properties = addProperties(promptData, promptData['promptType']);
+            //properties = addProperties(promptData, promptData['promptType']);
+            var jsonString = $edit.find('.editPromptDetails').find('.jsonText').val();
+            properties = JSON.parse(jsonString); 
 
             result = campaignEditor.editPrompt(
                     campaignWrapper['campaign'], 
@@ -601,7 +787,7 @@ $(function() {
     $('#previousItemsSortable').on('click', 'button.cancel', function() {
         if (confirm('Are you sure ? All unsaved data will be lost')) {
             $parent.find('.itemEdit').collapse('hide');
-            $parent.find('.itemDetails').collapse('show');
+            //$parent.find('.itemDetails').collapse('show');
         }
     });
 
@@ -660,15 +846,19 @@ $(function() {
         var item = currentSurvey['contentList'][''][index];
         var prompt = item['prompt'];
         var currItem = $parent.find('.group2');
+        var promptType = currItem.find('.editPromptDetails').find('.choosePromptType').val(); 
         editObj = currItem;
         //currItem.find('.editPromptDetails').find('.addedPrompt').val("");
 
         console.log('prompt: ' + editObj);
         console.log('promptType: ' + prompt['promptType']);
-        $("#groupPromptType").val(prompt['promptType']);
-        switch(prompt['promptType']) {
+        // $("#groupPromptType").val(prompt['promptType']);
+        //currItem.find('.editPromptDetails').find('.jsonText').val(JSON.stringify(prompt['properties']));   
+        var jsonText = currItem.find('.editPromptDetails').find('.jsonText').val();   
+        var json = JSON.parse(jsonText);
+        switch(promptType) {
             case 'audio':
-                var maxLength = prompt['properties']['property'][0]['label'];
+                var maxLength = json['property'][0]['label'];
                 //var properties = "max_seconds:" + maxLength;
                 $('#promptData').load("promptModals/audioModal.html", function() {
                     $('#audioTable', this).find('#maxAudioLength').val(maxLength);
@@ -677,28 +867,20 @@ $(function() {
             case 'multi_choice':
             case 'multi_choice_custom':
                 $('#promptData').load("promptModals/multiChoiceModal.html", function() {
+                    /*
                     var defaultList;
                     if (prompt['default']) { 
                         currItem.find('.editPromptDetails').find('.default').val(prompt['default'])
                         defaultList = prompt['default'].split(",");
                     }
-                    var size = prompt['properties']['property'].length;
+                    */
+                    var size = json['property'].length;
 
-                    //var properties = "";
                     for (var i = 0; i < size; i++) {
-                        label = prompt['properties']['property'][i]['label'];
-                        if (prompt['properties']['property'][i]['value']) value = prompt['properties']['property'][i]['value'];
+                        label = json['property'][i]['label'];
+                        if (json['property'][i]['value']) value = json['property'][i]['value'];
                         else value = "";
-                        //var tmp = label + ':' + value;
-                        //if (prompt['default']) {
-                        //    for (j = 0; j < defaultList.length; j++){
-                        //         if (i == defaultList[i]) {
-                        //            tmp += " (default)"
-                        //            break;
-                        //        }
-                        //    }
-                        //}
-                        //properties += tmp + '\n';
+                        
 
                         if (i == 0) {
                             $('#multiChoiceTable tr:nth-child(2)').find(".multiOptionNum").val(i);
@@ -727,7 +909,7 @@ $(function() {
                          .attr("value",key++)
                          .text(optionNum + ': ' + label)); 
                     });
-                    $('#multiChoiceDefault').val(defaultList);
+                    //$('#multiChoiceDefault').val(defaultList);
                         
                     //currItem.find('.editPromptDetails').find('.addedPrompt').val(properties);
                 });
@@ -735,22 +917,16 @@ $(function() {
             case "single_choice":
             case "single_choice_custom":
                 $('#promptData').load("promptModals/singleChoiceModal.html", function() {
-                    var size = prompt['properties']['property'].length;
+                    var size = json['property'].length;
                     if (prompt['default']) { 
                         currItem.find('.editPromptDetails').find('.default').val(prompt['default'])
                     }
                     //var properties = "";
                     for (var i = 0; i < size; ++i) {
-                        label = prompt['properties']['property'][i]['label'];
-                        if (prompt['properties']['property'][i]['value']) value = prompt['properties']['property'][i]['value'];
+                        label = json['property'][i]['label'];
+                        if (json['property'][i]['value']) value = json['property'][i]['value'];
                         else value = "";
-                        /*
-                        var tmp = label + ':' + value;
-                        if (prompt['default']) {
-                            if (i == prompt['default']) tmp += " (default)"
-                        }
-                        properties += tmp + '\n';
-                        */
+                        
                         if (i == 0) {
                             $('#singleChoiceTable tr:nth-child(2)').find(".singleOptionNum").val(i);
                             $('#singleChoiceTable tr:nth-child(2)').find(".singleLabel").val(label);
@@ -788,62 +964,49 @@ $(function() {
                 break;
             case "number":
                 $('#promptData').load("promptModals/numberModal.html", function() {
-                    var minNum = prompt['properties']['property'][0]['label'];
-                    var maxNum = prompt['properties']['property'][1]['label'];
-                    //var properties = "min:" + minNum + "\n" + "max:" + maxNum;
+                    var minNum = json['property'][0]['label'];
+                    var maxNum = json['property'][1]['label'];
+                    
                     $('#numberTable').find('#minNumber').val(minNum);
                     $('#numberTable').find('#maxNumber').val(maxNum);
                     if (prompt['default']) { 
                         currItem.find('.editPromptDetails').find('.default').val(prompt['default']);
                         $('#numberTable').find('#numberDefault').val(prompt['default']);
-                        //properties += "\n" + "Default: " + prompt['default']
-                    } //else properties += "\n" + "Default: ";
-                    //currItem.find('.editPromptDetails').find('.addedPrompt').val(properties);
+                        
+                    } 
                 });
                 break;
             case "text":
                 $('#promptData').load("promptModals/textModal.html", function() {
-                    var minNum = prompt['properties']['property'][0]['label'];
-                    var maxNum = prompt['properties']['property'][1]['label'];
-                    //var properties = "min:" + minNum + "\n" + "max:" + maxNum;
+                    var minNum = json['property'][0]['label'];
+                    var maxNum = json['property'][1]['label'];
+                    
                     $('#textTable').find('#minTextLength').val(minNum);
                     $('#textTable').find('#maxTextLength').val(maxNum);
                     if (prompt['default']) { 
                         currItem.find('.editPromptDetails').find('.default').val(prompt['default']);
-                        $('#textTable').find('#textDefault').val(prompt['default']);
-                        //properties += "\n" + "Default: " + prompt['default']
-                    } //else properties += "\n" + "Default: ";
-                    //currItem.find('.editPromptDetails').find('.addedPrompt').val(properties);
+                        $('#textTable').find('#textDefault').val(prompt['default']);  
+                    } 
                 });
                 break;
             case "photo":
                 $('#promptData').load("promptModals/photoModal.html", function() {
-                    var resolution = prompt['properties']['property'][0]['label'];
-                    //var properties = "resolution:" + resolution;
+                    var resolution = json['property'][0]['label'];
                     $('#photoTable').find('#maxRes').val(resolution);
-                    //currItem.find('.editPromptDetails').find('.addedPrompt').val(properties);
                 });
                 break;
             case "remote_activity":
                 $('#promptData').load("promptModals/remoteActivityModal.html", function() {
-                    var pack = prompt['properties']['property'][0]['label'];
-                    var activity = prompt['properties']['property'][1]['label'];
-                    var action = prompt['properties']['property'][2]['label'];
-                    var auto = prompt['properties']['property'][3]['label'];
-                    var retry = prompt['properties']['property'][4]['label'];
-                    var min = prompt['properties']['property'][5]['label'];
-                    if (prompt['properties']['property'][6]['label'])
-                        var input = prompt['properties']['property'][6]['label'];
+                    var pack = json['property'][0]['label'];
+                    var activity = json['property'][1]['label'];
+                    var action = json['property'][2]['label'];
+                    var auto = json['property'][3]['label'];
+                    var retry = json['property'][4]['label'];
+                    var min = json['property'][5]['label'];
+                    if (json['property'][6]['label'])
+                        var input = json['property'][6]['label'];
                     else var input = "";
-                    /*
-                    var properties = "Package:" + pack + "\n"
-                                  + "Activity:" + activity + "\n"
-                                  + "Action:" + action + "\n"
-                                  + "Auto:" + auto + "\n"
-                                  + "Retry:" + retry + "\n"
-                                  + "Min run:" + min + "\n"
-                                  + "Input:" + input + "\n"  
-                    */
+                    
                     $('#remoteActivityTable').find('#packageRemote').val(pack);
                     $('#remoteActivityTable').find('#activityRemote').val(activity);
                     $('#remoteActivityTable').find('#actionRemote').val(action);
@@ -852,7 +1015,7 @@ $(function() {
                     $('#remoteActivityTable').find('#minrunRemote').val(min);
                     if (input != "") $('#remoteActivityTable').find('#inputRemote').val(input);
 
-                    //currItem.find('.editPromptDetails').find('.addedPrompt').val(properties);
+                    
                 });
                 break;                            
             case "timestamp":
@@ -860,10 +1023,9 @@ $(function() {
                 });
                 break;
             case 'video':
-                var maxLength = prompt['properties']['property'][0]['label'];
-                //var properties = "max_seconds:" + maxLength;
+                var maxLength = json['property'][0]['label'];
+                
                 $('#promptData').load("promptModals/videoModal.html", function() {
-                    alert("call inside load");
                     $('#videoTable', this).find('#maxVideoLength').val(maxLength);
                 });
                 break;
@@ -979,7 +1141,8 @@ $(function() {
         $('#groupPromptType').val(prompt['promptType']);
         currItem.find('.editPromptDetails').find('.choosePromptType').val(prompt['promptType']);
         currItem.find('.editPromptDetails').find('.promptType').val(prompt['promptType']);
-        
+        //var string = 
+        currItem.find('.editPromptDetails').find('.jsonText').val(JSON.stringify(prompt['properties']));        
 
         switch (prompt['promptType']) {
             case "audio":
@@ -1311,7 +1474,9 @@ $(function() {
         var promptType = promptData['promptType'];
         console.log(promptType);
         var itemIndex;
-        properties = addProperties(promptData, promptType);
+        //properties = addProperties(promptData, promptType);
+        var jsonString = $('#jsonText').val();
+        properties = JSON.parse(jsonString); 
         /*
         if (promptData['editPromptId']) {
             event.preventDefault();

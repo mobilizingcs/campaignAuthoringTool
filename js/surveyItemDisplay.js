@@ -60,6 +60,7 @@ var editPrompt = '<hr>' +
                         //<!--<label type="hiden" class="control-label" for="default">Default</label>-->
                         //'<div class="controls">'+
                             '<input type="hidden" name="default" class="default" placeholder="Default" />'+
+                            '<input type="hidden" class="jsonText" />' + 
                             //<!--<i class="help-icon icon-question-sign" data-original-title="The default value for this prompt. This is type-dependent." rel="tooltip" data-placement="right"></i>-->
                         //'</div>'+
                     '</div>'+
