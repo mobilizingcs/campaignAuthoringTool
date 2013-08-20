@@ -176,6 +176,7 @@ $(function() {
                 $.post(SERVER + "app/user_info/read", { auth_token: $.cookie('authToken'), client: "campaign-webapp" },
                     function(response) {
                         if(response.result === "success"){
+                            /*
                             var classes = Object.keys(response['data'][$.cookie('username')]['classes']).join();
                              $.post("submitCampaign.php", { 
                                 auth_token: $.cookie('authToken'), 
@@ -202,6 +203,25 @@ $(function() {
                                     }
                                 }
                             }, "text");
+                            */
+                            var req = oh.call("/campaign/create", {
+                                xml : xmlFile,
+                                privacy_state : campaignWrapper['privacyState'],
+                                running_state : campaignWrapper['runningState'],
+                                campaign_urn : campaignWrapper['campaign']['campaignUrn'],    
+                                description : campaignWrapper['description'],
+                                class_urn_list : campaignWrapper['classes']      
+                            }, function(response) {
+                                    //var jsonStart = response.indexOf('{');
+                                    //var json = response.substring(jsonStart, response.length);
+                                    //var responseJSON = JSON.parse(json);
+                                    //if (responseJSON['result'] === 'success') {
+                                    alert("Campaign submitted successfully!");
+                                    window.location.replace('success.php');
+                                    //} else {
+                                    //    alert("Error: " + responseJSON['errors'][0]['text']);
+                                    //}
+                            });
                         } else {
                             // relogin
                             alert("Unknow error")
