@@ -170,7 +170,9 @@ var campaignEditor = {
         contentList[index]['message']['id'] = messageData['id'];
         contentList[index]['message']['messageText'] = messageData['messageText'];
         
-        if (messageData['messageCondition']) contentList[index]['message']['condition'] = messageData['messageCondition'];
+        if (messageData['messageCondition']) {
+            contentList[index]['message']['condition'] = messageData['messageCondition'];
+        }
         
         return true;
     },
@@ -202,7 +204,7 @@ var campaignEditor = {
         // Check if all required components are present
         if (!campaign || !surveyIndex || !id || !displayLabel ||
             !promptText || !promptType ||
-            (skippable && !skipLabel) || !properties) {
+            (skippable && !skipLabel)) {
             return false;
         }
 
@@ -233,8 +235,10 @@ var campaignEditor = {
         if (skippable) {
             if (skipLabel) promptItem['skipLabel'] = skipLabel;
         }
-        promptItem['properties'] = properties;
-
+        if (promptType != 'timestamp') {
+            promptItem['properties'] = properties;
+        } 
+            
         promptItem['editId'] = typeof(savedId) === "undefined" ? campaignEditor.maxItemIndex(contentList) + 1 : savedId;
         contentList.splice(index, 0, {'prompt': promptItem});
         //console.log(contentList);
@@ -267,7 +271,7 @@ var campaignEditor = {
         // Check if all required components are present
         if (!campaign || !surveyIndex || !id || !displayLabel ||
             !promptText || !promptType ||
-            (skippable && !skipLabel) || !properties) {
+            (skippable && !skipLabel)) {
             if (!campaign) alert('campaign');
             else if (!surveyIndex) alert('survey');
             else if (!id) alert('id');
@@ -304,7 +308,12 @@ var campaignEditor = {
         } else { 
             if (contentList[index]['prompt']['skipLabel']) delete contentList[index]['prompt'].skipLabel;
         }
-        contentList[index]['prompt']['properties'] = properties;
+
+        if (promptType != 'timestamp') {
+            contentList[index]['prompt']['properties'] = properties;
+        } else {
+            delete contentList[index]['prompt'].properties;
+        }
 
         //console.log(contentList);
         //console.log(index);

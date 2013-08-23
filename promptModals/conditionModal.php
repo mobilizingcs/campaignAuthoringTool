@@ -45,7 +45,7 @@
                         <!--<button class="btn btn-primary addConditionGroup" id="addConditionGroup">Add New Group</button>-->
                         <table class="group1" id="simpleConditionTbl" align="center">
                               <tr>
-                                <th>Group #</th>
+                                <!--<th>Group #</th>-->
                                 <th>Move Up</th>
                                 <th>Move Down</th>
                                 <th>Prompt ID</th>
@@ -57,7 +57,7 @@
                                 <th>Delete</th>
                               </tr>
                               <tr>
-                                <td><input class="conditionGroupNum span1" value="1" disabled/></td>
+                                <!--<td><input class="conditionGroupNum span1" value="1" disabled/></td>-->
                                 <td><button class='btn btn-primary upCondition'><i class="icon-arrow-up icon-white"></i></button></td>
                                 <td><button class='btn btn-primary downCondition'><i class="icon-arrow-down icon-white"></i></button></td>
                                 <td><select class="span2 previousPrompts"></select></td>

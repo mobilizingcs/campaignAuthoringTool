@@ -32,7 +32,7 @@ var RemoteActivityPrompt = {
 
 var RESERVED_KEYWORDS = ["NOT_DISPLAYED","SKIPPED"];
 
-var operator = [ '<option value="==">==</option>',
+var operator2 = [ '<option value="==">==</option>',
                 '<option value="&gt;">&gt;</option>',
                 '<option value="&gt;=">&gt;=</option>',
                 '<option value="&lt;">&lt;</option>',

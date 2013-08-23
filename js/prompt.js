@@ -194,6 +194,7 @@ $(function() {
                 break; 
             case 'remote_activity':
                 $.get("promptModals/remoteActivityModal.html", function(data){
+                    //alert('test!!!!')
                     $("#promptData").append(data);
                 });
                 break;
@@ -203,7 +204,7 @@ $(function() {
                 });
                 break;
             case 'timestamp':
-                $.get("promptModals/timestamp.html", function(data){
+                $.get("promptModals/timestampModal.html", function(data){
                     $("#promptData").append(data);
                 });
                 break;
@@ -235,7 +236,8 @@ $(function() {
         if (jsonString == "") {
             showNewModal(prevValue);
         } else {
-            var json = JSON.parse($('#jsonText').val());
+            if ($('#jsonText').val() != '')
+                var json = JSON.parse($('#jsonText').val());
             switch(prevValue) {
                 case 'audio':
                     var maxLength = json['property'][0]['label'];
@@ -400,6 +402,7 @@ $(function() {
                         $('#remoteActivityTable').find('#retriesRemote').val(retry);
                         $('#remoteActivityTable').find('#minrunRemote').val(min);
                         if (input != "") $('#remoteActivityTable').find('#inputRemote').val(input);
+                        else $('#remoteActivityTable').find('#inputRemote').val('null');
 
                     });
                     break;                            
@@ -490,17 +493,220 @@ $(function() {
         }        
     }
 
+    function updateConditionTable(row, promptType) {
+        $this = row;
+        // update table
+        switch (promptType) {
+            case 'audio':
+            case 'photo':
+            case 'remote_activity':
+            case 'timestamp':
+            case 'video':
+                $this.find(".operator option").remove();
+                $this.find(".operator").append(operator2[0]);
+                $this.find(".operator").append(operator2[5]);
+                $this.find(".conditionValueChoice option").remove();
+                $this.find(".conditionValueChoice").append(conditionValueChoice[0]);
+                $this.find(".conditionValueChoice").append(conditionValueChoice[1]);
+                break;
+            case 'message':
+                $this.find(".operator option").remove();
+                $this.find(".operator").append(operator2[0]);
+                $this.find(".operator").append(operator2[5]);
+                $this.find(".conditionValueChoice option").remove();
+                $this.find(".conditionValueChoice").append(conditionValueChoice[0]);
+                break;
+            case 'text':
+                $this.find(".operator option").remove();
+                $this.find(".operator").append(operator2[0]);
+                $this.find(".operator").append(operator2[5]);
+                $this.find(".conditionValueChoice option").remove();
+                $this.find(".conditionValueChoice").append(conditionValueChoice[0]);
+                $this.find(".conditionValueChoice").append(conditionValueChoice[1]);
+                $this.find(".conditionValueChoice").append(conditionValueChoice[2]);
+                break;
+            case 'multi_choice':
+            case 'multi_choice_custom':
+            case 'single_choice':
+            case 'single_choice_custom':
+            case 'number':
+                $this.find(".operator option").remove();
+                $this.find(".operator").append(operator2[0]);
+                $this.find(".operator").append(operator2[1]);
+                $this.find(".operator").append(operator2[2]);
+                $this.find(".operator").append(operator2[3]);
+                $this.find(".operator").append(operator2[4]);
+                $this.find(".operator").append(operator2[5]);
+                $this.find(".conditionValueChoice option").remove();
+                $this.find(".conditionValueChoice").append(conditionValueChoice[0]);
+                $this.find(".conditionValueChoice").append(conditionValueChoice[1]);
+                $this.find(".conditionValueChoice").append(conditionValueChoice[2]);
+                break;       
+            case '-1':
+                //$this.parents("tr:first").find(".operator option").remove();
+                break;
+            default:
+                break;
+        }
+    }
     // Edit condition button
     $('#messageConditionBtn').click(function() {
         editObj = null;
         $('#conditionSource').val('message');
         $('#advancedCondition').val($(this).prev().val());
-        if($('#messageCondition').val().trim() == "") setUpConditionPromptList();
-        $('#conditionType').val("");
-        
-        $("#conditionData").empty();
-        $("#simpleCondition").hide();
-        $("#advancedCondition").hide();
+        if($('#messageCondition').val().trim() == "") {
+            setUpConditionPromptList(); 
+            $('#conditionType').val("");
+            $("#conditionData").empty();
+            $("#simpleCondition").hide();
+            $("#advancedCondition").hide();
+        } else {
+            setUpConditionPromptList(); 
+            switch ($('#messageConditionType').val()) {
+                case 'simple':
+                    $('#conditionType').val($('#messageConditionType').val());
+                    var jsonText = $('#messageConditionJson').val();
+                    if (jsonText != '') {
+                        json = JSON.parse(jsonText);
+                    }
+                    var size = json['row'].length;
+
+                    for (var i = 0; i < size; i++) {
+                        promptID = json['row'][i]['promptID'];
+                        operator = json['row'][i]['operator'];
+                        value = json['row'][i]['value'];
+                        conjunction = json['row'][i]['conjunction'];
+                        promptType = json['row'][i]['promptType'];
+                        //if (json['property'][i]['value']) value = json['property'][i]['value'];
+                        //else value = "";
+                        
+
+                        if (i == 0) {
+                            updateConditionTable($('#simpleConditionTbl tr:nth-child(2)'), promptType);
+                            //$('#simpleConditionTbl tr:nth-child(2)').find(".previousPrompts option").filter(function () { return $(this).html() == promptID; }).val();
+                            $('#simpleConditionTbl tr:nth-child(2) .previousPrompts option')
+                            .filter(function () { return $(this).html() == promptID; })
+                            .attr('selected',true);
+                            //$('#simpleConditionTbl tr:nth-child(2) .previousPrompts').find('option[text="' + promptID + '"]').val();
+                            $('#simpleConditionTbl tr:nth-child(2)').find(".operator").val(operator);
+                            if (value == 'NOT_DISPLAYED' || value === 'SKIPPED') {
+                                $('#simpleConditionTbl tr:nth-child(2)').find(".conditionValueChoice").val(value);
+                                $('#simpleConditionTbl tr:nth-child(2)').find(".valueRow").empty();
+                            } else {
+                                $('#simpleConditionTbl tr:nth-child(2)').find(".conditionValueChoice").val('USER_INPUT');
+                                $('#simpleConditionTbl tr:nth-child(2)').find(".valueRow").empty();
+                                switch(promptType) {
+                                    case 'multi_choice':
+                                    case 'multi_choice_custom':
+                                    case 'single_choice':
+                                    case 'single_choice_custom':
+                                        var numOption = 0;
+                                        for (i in campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList']['']) {
+                                            if (campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''][i]['prompt']) {
+                                                if (campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''][i]['prompt']['id'] == promptID) {
+                                                    numOption = campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''][i]['prompt']['properties']['property'].length;
+                                                    console.log(numOption);
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                        $('#simpleConditionTbl tr:nth-child(2)').find(".valueRow").append('<select class="conditionValue span1" ></select>');
+                                        for (j=0; j<numOption; j++) {
+                                            var option = '<option value=' + j + '>' + j + '</option>';
+                                            $('#simpleConditionTbl tr:nth-child(2)').find(".conditionValue").append(option);
+                                        }
+                                        $('#simpleConditionTbl tr:nth-child(2)').find(".conditionValue").val(value);
+                                        break;
+                                    case 'number':
+                                    case 'text':
+                                        $('#simpleConditionTbl tr:nth-child(2)').find(".valueRow").append('<input type="text" class="conditionValue span1" value="" disabled/>');
+                                        $('#simpleConditionTbl tr:nth-child(2)').find(".conditionValue").removeAttr('disabled');
+                                        $('#simpleConditionTbl tr:nth-child(2)').find(".conditionValue").val('');
+                                        $('#simpleConditionTbl tr:nth-child(2)').find(".conditionValue").val(value);
+                                        break;
+                                    default:
+                                        // cannot reach here
+                                        alert('Error: Prompt type cannot have an user input value')
+                                        break;
+                                }
+                            }
+                            $('#simpleConditionTbl tr:nth-child(2)').find(".conjunction").val(conjunction);
+                        } else {
+                            // add row to table
+                            
+                            $row = $('#simpleConditionTbl tr:nth-child(2)').clone();
+                            $('#simpleConditionTbl tr:last').after($row);
+
+                            updateConditionTable($('#simpleConditionTbl tr:last'), promptType);
+                            //$('#simpleConditionTbl tr:last').find(".previousPrompts").val(promptID);
+                            $('#simpleConditionTbl tr:last .previousPrompts option')
+                            .filter(function () { return $(this).html() == promptID; })
+                            .attr('selected',true);
+                            $('#simpleConditionTbl tr:last').find(".operator").val(operator);
+                            if (value == 'NOT_DISPLAYED' || value === 'SKIPPED') {
+                                $('#simpleConditionTbl tr:last').find(".conditionValueChoice").val(value);
+                                $('#simpleConditionTbl tr:last').find(".valueRow").empty();
+                            } else {
+                                
+                                $('#simpleConditionTbl tr:last').find(".conditionValueChoice").val('USER_INPUT');
+                                $('#simpleConditionTbl tr:last').find(".valueRow").empty();
+                                switch(promptType) {
+                                    case 'multi_choice':
+                                    case 'multi_choice_custom':
+                                    case 'single_choice':
+                                    case 'single_choice_custom':
+                                        var numOption = 0;
+                                        for (i in campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList']['']) {
+                                            if (campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''][i]['prompt']) {
+                                                if (campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''][i]['prompt']['id'] == promptID) {
+                                                    numOption = campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''][i]['prompt']['properties']['property'].length;
+                                                    console.log(numOption);
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                        $('#simpleConditionTbl tr:last').find(".valueRow").append('<select class="conditionValue span1" ></select>');
+                                        for (j=0; j<numOption; j++) {
+                                            var option = '<option value=' + j + '>' + j + '</option>';
+                                            $('#simpleConditionTbl tr:last').find(".conditionValue").append(option);
+                                        }
+                                        $('#simpleConditionTbl tr:last').find(".conditionValue").val(value);
+                                        break;
+                                    case 'number':
+                                    case 'text':
+                                        $('#simpleConditionTbl tr:last').find(".valueRow").append('<input type="text" class="conditionValue span1" value="" disabled/>');
+                                        $('#simpleConditionTbl tr:last').find(".conditionValue").removeAttr('disabled');
+                                        $('#simpleConditionTbl tr:last').find(".conditionValue").val('');
+                                        $('#simpleConditionTbl tr:last').find(".conditionValue").val(value);
+                                        break;
+                                    default:
+                                        // cannot reach here
+                                        alert('Error: Prompt type cannot have an user input value')
+                                        break;
+                                }
+                            }
+                            $('#simpleConditionTbl tr:last').find(".conjunction").val(conjunction);
+                        }
+                    }
+
+                    $("#simpleCondition").show();
+                    $("#advancedCondition").hide();
+                    break;
+                case 'advanced':
+                    $('#conditionType').val($('#messageConditionType').val());
+                    $("#advancedConditionText").val($('#messageCondition').val().trim());
+                    $("#simpleCondition").hide();
+                    $("#advancedCondition").show();
+                    break;
+                default:
+                    setUpConditionPromptList(); 
+                    $('#conditionType').val("");
+                    $("#conditionData").empty();
+                    $("#simpleCondition").hide();
+                    $("#advancedCondition").hide();
+                    break;
+            }
+        }
         $('#conditionModal').modal('show');
         $('#conditionModal').modal({
             backdrop: true,
@@ -568,6 +774,156 @@ $(function() {
             $('#simpleConditionTbl tr:gt(1)').remove();
             clearTableData();
             setUpConditionPromptList();
+            $('#conditionType').val("");
+            $("#conditionData").empty();
+            $("#simpleCondition").hide();
+            $("#advancedCondition").hide();
+        } else {
+            setUpConditionPromptList();
+            switch ($('#promptConditionType').val()) {
+                case 'simple':
+                    $('#conditionType').val($('#promptConditionType').val());
+                    var jsonText = $('#promptConditionJson').val();
+                    if (jsonText != '') {
+                        json = JSON.parse(jsonText);
+                    }
+                    var size = json['row'].length;
+
+                    for (var i = 0; i < size; i++) {
+                        promptID = json['row'][i]['promptID'];
+                        operator = json['row'][i]['operator'];
+                        value = json['row'][i]['value'];
+                        conjunction = json['row'][i]['conjunction'];
+                        promptType = json['row'][i]['promptType'];
+                        //if (json['property'][i]['value']) value = json['property'][i]['value'];
+                        //else value = "";
+                        
+
+                        if (i == 0) {
+                            updateConditionTable($('#simpleConditionTbl tr:nth-child(2)'), promptType);
+                            //$('#simpleConditionTbl tr:nth-child(2)').find(".previousPrompts option").filter(function () { return $(this).html() == promptID; }).val();
+                            $('#simpleConditionTbl tr:nth-child(2) .previousPrompts option')
+                            .filter(function () { return $(this).html() == promptID; })
+                            .attr('selected',true);
+                            //$('#simpleConditionTbl tr:nth-child(2) .previousPrompts').find('option[text="' + promptID + '"]').val();
+                            $('#simpleConditionTbl tr:nth-child(2)').find(".operator").val(operator);
+                            if (value == 'NOT_DISPLAYED' || value === 'SKIPPED') {
+                                $('#simpleConditionTbl tr:nth-child(2)').find(".conditionValueChoice").val(value);
+                                $('#simpleConditionTbl tr:nth-child(2)').find(".valueRow").empty();
+                            } else {
+                                $('#simpleConditionTbl tr:nth-child(2)').find(".conditionValueChoice").val('USER_INPUT');
+                                $('#simpleConditionTbl tr:nth-child(2)').find(".valueRow").empty();
+                                switch(promptType) {
+                                    case 'multi_choice':
+                                    case 'multi_choice_custom':
+                                    case 'single_choice':
+                                    case 'single_choice_custom':
+                                        var numOption = 0;
+                                        for (i in campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList']['']) {
+                                            if (campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''][i]['prompt']) {
+                                                if (campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''][i]['prompt']['id'] == promptID) {
+                                                    numOption = campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''][i]['prompt']['properties']['property'].length;
+                                                    console.log(numOption);
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                        $('#simpleConditionTbl tr:nth-child(2)').find(".valueRow").append('<select class="conditionValue span1" ></select>');
+                                        for (j=0; j<numOption; j++) {
+                                            var option = '<option value=' + j + '>' + j + '</option>';
+                                            $('#simpleConditionTbl tr:nth-child(2)').find(".conditionValue").append(option);
+                                        }
+                                        $('#simpleConditionTbl tr:nth-child(2)').find(".conditionValue").val(value);
+                                        break;
+                                    case 'number':
+                                    case 'text':
+                                        $('#simpleConditionTbl tr:nth-child(2)').find(".valueRow").append('<input type="text" class="conditionValue span1" value="" disabled/>');
+                                        $('#simpleConditionTbl tr:nth-child(2)').find(".conditionValue").removeAttr('disabled');
+                                        $('#simpleConditionTbl tr:nth-child(2)').find(".conditionValue").val('');
+                                        $('#simpleConditionTbl tr:nth-child(2)').find(".conditionValue").val(value);
+                                        break;
+                                    default:
+                                        // cannot reach here
+                                        alert('Error: Prompt type cannot have an user input value')
+                                        break;
+                                }
+                            }
+                            $('#simpleConditionTbl tr:nth-child(2)').find(".conjunction").val(conjunction);
+                        } else {
+                            // add row to table
+                            
+                            $row = $('#simpleConditionTbl tr:nth-child(2)').clone();
+                            $('#simpleConditionTbl tr:last').after($row);
+
+                            updateConditionTable($('#simpleConditionTbl tr:last'), promptType);
+                            //$('#simpleConditionTbl tr:last').find(".previousPrompts").val(promptID);
+                            $('#simpleConditionTbl tr:last .previousPrompts option')
+                            .filter(function () { return $(this).html() == promptID; })
+                            .attr('selected',true);
+                            $('#simpleConditionTbl tr:last').find(".operator").val(operator);
+                            if (value == 'NOT_DISPLAYED' || value === 'SKIPPED') {
+                                $('#simpleConditionTbl tr:last').find(".conditionValueChoice").val(value);
+                                $('#simpleConditionTbl tr:last').find(".valueRow").empty();
+                            } else {
+                                
+                                $('#simpleConditionTbl tr:last').find(".conditionValueChoice").val('USER_INPUT');
+                                $('#simpleConditionTbl tr:last').find(".valueRow").empty();
+                                switch(promptType) {
+                                    case 'multi_choice':
+                                    case 'multi_choice_custom':
+                                    case 'single_choice':
+                                    case 'single_choice_custom':
+                                        var numOption = 0;
+                                        for (i in campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList']['']) {
+                                            if (campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''][i]['prompt']) {
+                                                if (campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''][i]['prompt']['id'] == promptID) {
+                                                    numOption = campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''][i]['prompt']['properties']['property'].length;
+                                                    console.log(numOption);
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                        $('#simpleConditionTbl tr:last').find(".valueRow").append('<select class="conditionValue span1" ></select>');
+                                        for (j=0; j<numOption; j++) {
+                                            var option = '<option value=' + j + '>' + j + '</option>';
+                                            $('#simpleConditionTbl tr:last').find(".conditionValue").append(option);
+                                        }
+                                        $('#simpleConditionTbl tr:last').find(".conditionValue").val(value);
+                                        break;
+                                    case 'number':
+                                    case 'text':
+                                        $('#simpleConditionTbl tr:last').find(".valueRow").append('<input type="text" class="conditionValue span1" value="" disabled/>');
+                                        $('#simpleConditionTbl tr:last').find(".conditionValue").removeAttr('disabled');
+                                        $('#simpleConditionTbl tr:last').find(".conditionValue").val('');
+                                        $('#simpleConditionTbl tr:last').find(".conditionValue").val(value);
+                                        break;
+                                    default:
+                                        // cannot reach here
+                                        alert('Error: Prompt type cannot have an user input value')
+                                        break;
+                                }
+                            }
+                            $('#simpleConditionTbl tr:last').find(".conjunction").val(conjunction);
+                        }
+                    }
+
+                    $("#simpleCondition").show();
+                    $("#advancedCondition").hide();
+                    break;
+                case 'advanced':
+                    $('#conditionType').val($('#promptConditionType').val());
+                    $("#advancedConditionText").val($('#promptCondition').val().trim());
+                    $("#simpleCondition").hide();
+                    $("#advancedCondition").show();
+                    break;
+                default:
+                    setUpConditionPromptList(); 
+                    $('#conditionType').val("");
+                    $("#conditionData").empty();
+                    $("#simpleCondition").hide();
+                    $("#advancedCondition").hide();
+                    break;
+            }
         }
         //$('#conditionType').val("");
         $('#conditionModal').modal('show');
@@ -582,27 +938,6 @@ $(function() {
         });
     });
 
-    /*
-    $('.promptConditionBtn').click(function() {
-        $('#conditionSource').val('prompt');
-        $('#advancedCondition').val($(this).prev().val());
-        if($('#promptCondition').val().trim() == "") {
-            $('#simpleConditionTbl tr:gt(1)').remove();
-            clearTableData();
-            setUpConditionPromptList();
-        }
-        $('#conditionModal').modal('show');
-        $('#conditionModal').modal({
-            backdrop: true,
-            keyboard: true
-        }).css({
-            width: 'auto',
-            'margin-left': function () {
-                return -($(this).width() / 2);
-            }
-        });
-    });
-    */
     // delete prompt
     $('#previousItemsSortable').on('click', 'button.deleteItem', function() {
         if(isEditing) {
@@ -663,7 +998,9 @@ $(function() {
             var messageData = {};
             messageData['id'] = $edit.find('.editPromptDetails').find('.messageId').val();
             messageData['messageText'] = $edit.find('.editPromptDetails').find('.messageText').val();
-            if ($edit.find('.editPromptDetails').find('.messageCondition').val().trim() != "") messageData['condition'] = $edit.find('.editPromptDetails').find('#messageCondition').val();
+            if ($edit.find('.editPromptDetails').find('.messageCondition').val().trim() != "") {
+                messageData['messageCondition'] = $edit.find('.editPromptDetails').find('.messageCondition').val();
+            }
 
             var result = campaignEditor.editMessage(messageData, index);
 
@@ -703,7 +1040,7 @@ $(function() {
                 //alert(promptData['default'])
             }
 
-            if (condition) promptData['condition'] = $edit.find('.editPromptDetails').find('.promptCondition').val();
+            if ($edit.find('.editPromptDetails').find('.promptCondition').val().trim() != "") promptData['promptCondition'] = $edit.find('.editPromptDetails').find('.promptCondition').val();
             if ($edit.find('.editPromptDetails').find('.skippable').is(':checked')) { 
                 promptData['skippable'] = true;
             } else {
@@ -717,8 +1054,11 @@ $(function() {
             }
             promptData['properties'] = $edit.find('.editPromptDetails').find('.addedPrompt').val();
             //properties = addProperties(promptData, promptData['promptType']);
+            var properties = '';
             var jsonString = $edit.find('.editPromptDetails').find('.jsonText').val();
-            properties = JSON.parse(jsonString); 
+            if (jsonString != '') {
+                properties = JSON.parse(jsonString); 
+            }
 
             result = campaignEditor.editPrompt(
                     campaignWrapper['campaign'], 
@@ -774,7 +1114,7 @@ $(function() {
                 $parent.find('.viewDetailsPromptSkipLabel').html('<strong>Skip Label: </strong>' + skipLabel);
 
                 $parent.find('.itemEdit').collapse('hide');
-                $parent.find('.itemDetails').collapse('show');
+                //$parent.find('.itemDetails').collapse('show');
             }
         } else if (item['repeatableSet']) {
 
@@ -836,7 +1176,7 @@ $(function() {
         }
     });
     
-    // cancel edit survey click event
+    // promptype button on edit items
     $('#previousItemsSortable').on('click', 'button.promptTypeBtn', function() {
         $('#promptData').empty();
         
@@ -854,8 +1194,10 @@ $(function() {
         console.log('promptType: ' + prompt['promptType']);
         // $("#groupPromptType").val(prompt['promptType']);
         //currItem.find('.editPromptDetails').find('.jsonText').val(JSON.stringify(prompt['properties']));   
-        var jsonText = currItem.find('.editPromptDetails').find('.jsonText').val();   
-        var json = JSON.parse(jsonText);
+        var jsonText = currItem.find('.editPromptDetails').find('.jsonText').val();
+        if (jsonText != "")   
+            var json = JSON.parse(jsonText);
+
         switch(promptType) {
             case 'audio':
                 var maxLength = json['property'][0]['label'];
@@ -1044,7 +1386,6 @@ $(function() {
         // NOTE: this should change to somehow handle the call
         //showModal();
     });
-
 
     // skipable click event
     $('#previousItemsSortable').on('click', '.skippable', function() {
@@ -1475,8 +1816,10 @@ $(function() {
         console.log(promptType);
         var itemIndex;
         //properties = addProperties(promptData, promptType);
+        var properties = '';
         var jsonString = $('#jsonText').val();
-        properties = JSON.parse(jsonString); 
+        if (jsonString != '')
+            properties = JSON.parse(jsonString); 
         /*
         if (promptData['editPromptId']) {
             event.preventDefault();

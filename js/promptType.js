@@ -306,7 +306,10 @@ $(function() {
         jsonOption['property'].push(property);
         property = {};
         property['key'] = 'input';
-        property['label'] = input;
+        if (input != '')
+            property['label'] = input;
+        else
+            property['label'] = 'null';
         jsonOption['property'].push(property);          
 
         if (editObj == null) {
@@ -319,6 +322,17 @@ $(function() {
         else {
             editObj.find('.editPromptDetails').find('.addedPrompt').val(properties);
             editObj.find('.editPromptDetails').find('.jsonText').val(JSON.stringify(jsonOption));
+        }
+    }
+
+    function displayTimestampValues() {
+        if (editObj == null) {
+            $('#addedPrompt').val("");
+            $('#jsonText').val("");
+        }
+        else {
+            editObj.find('.editPromptDetails').find('.addedPrompt').val("");
+            editObj.find('.editPromptDetails').find('.jsonText').val("");
         }
     }
 
@@ -665,6 +679,7 @@ $(function() {
             break;
         case 'timestamp':
             $('#promptTypeText').val("Timestamp");
+            displayTimestampValues();
             $('#promptTypeModal').modal('hide');
             break;
         case 'video':

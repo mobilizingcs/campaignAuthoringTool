@@ -100,23 +100,23 @@ $(function() {
                                                                     '<option value="SKIPPED">Skipped</option>');
                 */
                 $this.parents("tr:first").find(".operator option").remove();
-                $this.parents("tr:first").find(".operator").append(operator[0]);
-                $this.parents("tr:first").find(".operator").append(operator[5]);
+                $this.parents("tr:first").find(".operator").append(operator2[0]);
+                $this.parents("tr:first").find(".operator").append(operator2[5]);
                 $this.parents("tr:first").find(".conditionValueChoice option").remove();
                 $this.parents("tr:first").find(".conditionValueChoice").append(conditionValueChoice[0]);
                 $this.parents("tr:first").find(".conditionValueChoice").append(conditionValueChoice[1]);
 				break;
             case 'message':
                 $this.parents("tr:first").find(".operator option").remove();
-                $this.parents("tr:first").find(".operator").append(operator[0]);
-                $this.parents("tr:first").find(".operator").append(operator[5]);
+                $this.parents("tr:first").find(".operator").append(operator2[0]);
+                $this.parents("tr:first").find(".operator").append(operator2[5]);
                 $this.parents("tr:first").find(".conditionValueChoice option").remove();
                 $this.parents("tr:first").find(".conditionValueChoice").append(conditionValueChoice[0]);
                 break;
             case 'text':
                 $this.parents("tr:first").find(".operator option").remove();
-                $this.parents("tr:first").find(".operator").append(operator[0]);
-                $this.parents("tr:first").find(".operator").append(operator[5]);
+                $this.parents("tr:first").find(".operator").append(operator2[0]);
+                $this.parents("tr:first").find(".operator").append(operator2[5]);
                 $this.parents("tr:first").find(".conditionValueChoice option").remove();
                 $this.parents("tr:first").find(".conditionValueChoice").append(conditionValueChoice[0]);
                 $this.parents("tr:first").find(".conditionValueChoice").append(conditionValueChoice[1]);
@@ -128,19 +128,19 @@ $(function() {
             case 'single_choice_custom':
             case 'number':
 				$this.parents("tr:first").find(".operator option").remove();
-                $this.parents("tr:first").find(".operator").append(operator[0]);
-                $this.parents("tr:first").find(".operator").append(operator[1]);
-                $this.parents("tr:first").find(".operator").append(operator[2]);
-                $this.parents("tr:first").find(".operator").append(operator[3]);
-                $this.parents("tr:first").find(".operator").append(operator[4]);
-                $this.parents("tr:first").find(".operator").append(operator[5]);
+                $this.parents("tr:first").find(".operator").append(operator2[0]);
+                $this.parents("tr:first").find(".operator").append(operator2[1]);
+                $this.parents("tr:first").find(".operator").append(operator2[2]);
+                $this.parents("tr:first").find(".operator").append(operator2[3]);
+                $this.parents("tr:first").find(".operator").append(operator2[4]);
+                $this.parents("tr:first").find(".operator").append(operator2[5]);
                 $this.parents("tr:first").find(".conditionValueChoice option").remove();
                 $this.parents("tr:first").find(".conditionValueChoice").append(conditionValueChoice[0]);
                 $this.parents("tr:first").find(".conditionValueChoice").append(conditionValueChoice[1]);
                 $this.parents("tr:first").find(".conditionValueChoice").append(conditionValueChoice[2]);
 				break;       
 			case '-1':
-				$this.parents("tr:first").find(".operator option").remove();
+				//$this.parents("tr:first").find(".operator option").remove();
                 break;
 			default:
 				break;
@@ -479,6 +479,7 @@ $(function() {
             console.log(source);
         	if (validate) {
         		var output = "";
+                var json = {'row':[]};
         		$('#simpleConditionTbl tr:not(:first-child)').each(function()
 		        {
 		            $this = $(this);
@@ -492,30 +493,50 @@ $(function() {
 		            var operator = $this.find(".operator").val();
 		            var conjunction = $this.find(".conjunction").val();
 
-		            output += "(" + promptID + " " + operator + " " + value + ")" + " " + conjunction + " \n"; 
+		            output += "(" + promptID + " " + operator + " " + value + ")" + " " + conjunction + " \n";
+
+                    
+                    var row = {};
+                    row['promptID'] = promptID;
+                    row['promptType'] = $this.find(".previousPrompts option:selected").val();
+                    row['operator'] = operator;
+                    row['value'] = value;
+                    row['conjunction'] = conjunction;
+
+                    json['row'].push(row);
+
 		        });
 		        switch (source) {
                 case 'message':
-                    console.log('condition' + output);
-                    
-                    if (editObj == null)
+                    console.log(JSON.stringify(json));
+                    if (editObj == null) {
                         $('#messageCondition').val(output);
-                    else 
+                        $('#messageConditionType').val('simple');
+                        $('#messageConditionJson').val(JSON.stringify(json));
+                    }
+                    else {
                         editObj.find('.editPromptDetails').find('.messageCondition').val(output);
-                    //$('.messageCondition').val(output);
-                    //console.log($('#messageCondition').val());
+                        editObj.find('.editPromptDetails').find('.messageConditionType').val('simple');
+                        editObj.find('.editPromptDetails').find('.messageConditionJson').val(JSON.stringify(json));
+                    }
+                    
                     break;
                 case 'prompt':
                     if (editObj == null) {
                         $('#promptCondition').val(output);
+                        $('#promptConditionType').val('simple');
+                        $('#promptConditionJson').val(JSON.stringify(json));
                     }
-                    else 
+                    else {
                         editObj.find('.editPromptDetails').find('.promptCondition').val(output);
+                        editObj.find('.editPromptDetails').find('.promptConditionType').val('simple');
+                        editObj.find('.editPromptDetails').find('.promptConditionJson').val(JSON.stringify(json));
+                    }
                     break;
                 default:
                     break;
                 }
-                console.log($('#messageCondition').val());
+                $("#simpleConditionTbl").find("tr:gt(1)").remove();
         		$('#conditionModal').modal('hide');	
         	}	     
         }
@@ -524,16 +545,24 @@ $(function() {
             var text = $('.advancedCondition').val();
             switch (source) {
                 case 'message':
-                    if (editObj == null)
+                    if (editObj == null) {
                         $('#messageCondition').val(text);
-                    else
+                        $('#messageConditionType').val('advanced');
+                    }
+                    else {
                         editObj.find('.editPromptDetails').find('.messageCondition').val(text);
+                        editObj.find('.editPromptDetails').find('.messageConditionType').val('advanced');
+                    }
                     break;
                 case 'prompt':
-                    if (editObj == null)
+                    if (editObj == null) {
                         $('#promptCondition').val(text);
-                    else
+                        $('#promptConditionType').val('advanced');
+                    }
+                    else {
                         editObj.find('.editPromptDetails').find('.promptCondition').val(text);
+                        editObj.find('.editPromptDetails').find('.promptConditionType').val('advanced');
+                    }
                     break;
                 default:
                     break;

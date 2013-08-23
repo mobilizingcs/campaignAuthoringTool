@@ -29,6 +29,8 @@
                     <label class="control-label" for="condition">Condition: </label>
                     <div class="controls">
                         <div class="input-append">
+                            <input type="hidden" class="messageConditionType" id="messageConditionType" />
+                            <input type="hidden" class="messageConditionJson" id="messageConditionJson" />
                             <textarea name="messageCondition" class="span5 messageCondition" id="messageCondition" placeholder="None." disabled></textarea>
                             <button type="button" class="btn btn-link" id="messageConditionBtn">Edit Condition <i class="help-icon icon-question-sign" data-original-title="The condition which determines if the message is displayed or not." rel="tooltip" data-placement="top"></i></button>
                         </div>

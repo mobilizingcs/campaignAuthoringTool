@@ -10,7 +10,7 @@
         <input type="text" id="autolaunchRemote" placeholder="Auto Launch"/>
         <input type="text" id="retriesRemote" placeholder="Retries"/>
         <input type="text" id="minrunRemote" placeholder="Min Run"/>
-        <input type="text" id="inputRemote" placeholder="Input"/>
+        <input type="text" id="inputRemote" placeholder="Null"/>
     </div>
     <div class="modal-footer">
         <button class="btn btn-primary" id="remoteActivitySubmit">Save changes</button>

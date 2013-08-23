@@ -77,6 +77,8 @@
                         <label class="control-label" for="condition">Condition:</label>
                         <div class="controls">
                             <div class="input-append">
+                                <input type="hidden" class="promptConditionType" id="promptConditionType" />
+                                <input type="hidden" class="promptConditionJson" id="promptConditionJson" />
                                 <textarea name="promptCondition"  class="span4" id="promptCondition" placeholder="None." disabled></textarea>
                                 <button type="button" class="btn btn-link" id="promptConditionBtn">Edit Condition <i class="help-icon icon-question-sign" data-original-title="The condition which determines if the prompt is displayed or not." rel="tooltip" data-placement="top"></i></button>
                             </div>
