@@ -2,8 +2,8 @@
 <?php
     session_start(); 
     include('notice.php');
-    //require_once('authorize.php');
-    //authorizeUser();
+    require_once('authorize.php');
+    authorizeUser();
 ?>
 <html>
     <head>
@@ -44,20 +44,21 @@
                
     </head>
     <body>
-        <?php
-            include('navbar.php');
-            require_once('authorize.php');
-        ?>
-        <div class="container">
-            <!--
-            <div class="breadcrumbsNav">
-                <ul class="breadcrumb">
-                    <li id="homeBreadcrumb"><i class="icon-home"></i> <a href="campaign.php">Campaigns</a> <span class="divider"><i class="icon-chevron-right"></i></span></li>
-                    <li id="campaignBreadcrumb"><a href="survey.php"></a> <span class="divider"><i class="icon-chevron-right"></i></span></li>
-                    <li id="surveyBreadcrumb" class="active"></li>
-                </ul>
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="navbar-container">
+                    <a class="brand" href="#"><img src="img/ohmage-logo.png" width="112"></a>
+
+                    <a href="index.php" class="logoutButton pull-right btn btn-info">Log Out</a>
+                    <p class="navbar-text pull-right" id="username"></p>
+                    <!--<a href="#" class="btn btn-link">About</a>-->
+                    <a href="help.php" target="_blank" class="btn btn-link pull-right helpBtn">Help</a>
+                    
+                </div>
             </div>
-            -->
+        </div>
+        
+        <div class="container">
             <div class="row">
                 <div class="span3">
                     <div class="boxDark boxRounded" id="campaignMenu">
@@ -69,6 +70,7 @@
                             <button type="button" class="btn btn-block" id="viewSurveyXML">View Campaign XML</button>
                             <button type="button" class="btn btn-info btn-block" id="submitCampaign">Submit Campaign to Server</button>
                         </div>
+
                         <?php
                             include('promptModals/viewXmlModal.php');
                         ?>
@@ -129,27 +131,17 @@
                                 </ul>
                             </div>
                         </table>
-                        <!--
-                        <p><strong>Finish Editing ?</strong></p>
-                        <a href="survey.php" class="btn" id="saveSurvey">Add These Prompts to Survey</a>
-                        -->
                         <div class="addNewItem">
                             <h6 class="left">New Item</h6>
                             <div class="accordion" id="addNewItemAccordion">
                                 <?php
                                     include('promptModals/promptTypeModal.php');
                                     include('promptModals/conditionModal.php');
-                                    include('promptModals/viewXmlModal.php');
-                                    //include('promptModals/multiChoiceModal.php');
-                                    //include('promptModals/singleChoiceModal.php');
-                                    //include('promptModals/photoModal.php');
-                                    //include('promptModals/numberModal.php');
-                                    //include('promptModals/remoteActivityModal.php');
-                                    //include('promptModals/textModal.php');
-                                    //include('promptModals/videoModal.php');
+                                    //include('promptModals/viewXmlModal.php');
+                                    
                                     include('surveyItems/newMessage.php');
                                     include('surveyItems/newPrompt.php');
-                                    //include('surveyItems/newRepeatableSet.php');
+                                    
                                 ?>                          
                             </div>
                         </div>

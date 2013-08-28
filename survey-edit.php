@@ -29,18 +29,21 @@
         <script type="text/javascript" src="js/vkbeautify.0.99.00.beta.js"></script>
     </head>
     <body>
-        <?php
-            include('navbar.php');
-        ?>
-        <div class="container">
-            <!--
-            <div class="breadcrumbsNav">
-                <ul class="breadcrumb">
-                    <li id="homeBreadcrumb"><i class="icon-home"></i> <a href="campaign.php">Home</a> <span class="divider"><i class="icon-chevron-right"></i></span></li>
-                    <li class="active" id="campaignBreadcrumb"></li>
-                </ul>
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="navbar-container">
+                    <a class="brand" href="#"><img src="img/ohmage-logo.png" width="112"></a>
+
+                    <a href="index.php" class="logoutButton pull-right btn btn-info">Log Out</a>
+                    <p class="navbar-text pull-right" id="username"></p>
+                    <!--<a href="#" class="btn btn-link">About</a>-->
+                    <a href="help.php" target="_blank" class="btn btn-link pull-right helpBtn">Help</a>
+                    
+                </div>
             </div>
-            -->
+        </div>
+
+        <div class="container">
             <div class="row">
                 <div class="span3">
                     <div class="boxRounded boxDark" id="campaignMenu">
@@ -165,8 +168,19 @@
                 </div>
             </div>
         </div>
-        <?php
-            include('footer.php');
-        ?>
+        <!-- footer -->
+        <div id="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="span12">
+                        <hr>
+                        <div class="pull-right">
+                            <a href="#">Back to top</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
     </body>
 </html>

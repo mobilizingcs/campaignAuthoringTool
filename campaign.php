@@ -26,40 +26,27 @@
         <script type="text/javascript" src="js/campaign-editor.js"></script>
     </head>
     <body>
-        <?php
-            include('navbar.php');
-        ?>
-        <div class="container">
-            <!--
-            <div class="breadcrumbsNav">
-                <ul class="breadcrumb">
-                    <li class="active" id="homeBreadcrumb"><i class="icon-home"></i> Home</li>
-                </ul>
+        <!-- navbar -->
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="navbar-container">
+                    <a class="brand" href="#"><img src="img/ohmage-logo.png" width="112"></a>
+
+                    <a href="index.php" class="logoutButton pull-right btn btn-info">Log Out</a>
+                    <p class="navbar-text pull-right" id="username"></p>
+                    <!--<a href="#" class="btn btn-link">About</a>-->
+                    <a href="help.php" target="_blank" class="btn btn-link pull-right helpBtn">Help</a>
+                    
+                </div>
             </div>
-            -->
+        </div>
+
+        <div class="container">
             <div class="row">
                 <div class="span12 content">
                     <div class="boxRounded boxDark">
                         <h4>Campaign Editor <small>Create a new campaign info, or edit an existing one.</small></h4>
-                        <!--
-                        <div class="existing-campaigns">
-                            <hr>
-                            <h3>Edit an Existing Campaign</h3>
-                            <form class="form-horizontal">
-                                <div class="control-group">
-                                    <label class="control-label" for="campaignTitle">Campaign</label>
-                                    <div class="controls">
-                                        <select class="campaign-select"></select>
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <div class="controls">
-                                        <button type="submit" id="edit-campaign" class="btn btn-primary">Edit Campaign <i class="icon-pencil icon-white"></i></button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        -->
+        
                         <div class="new-campaign">
                             <form class="form-horizontal" id="campaign-form" action="survey.php">
                                 <h5>Campaign Info </h5>
@@ -130,44 +117,7 @@
                             </form>
                             <span class="red">*</span> <small>Required Fields</small>
                         </div>
-                        <!--
-                        <div class="existing-campaigns">
-                            <hr>
-                            <h3>Edit an Existing Campaign</h3>
-                            <form class="form-horizontal">
-                                <div class="control-group">
-                                    <label class="control-label" for="campaignTitle">Campaign</label>
-                                    <div class="controls">
-                                        <select class="campaign-select"></select>
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <div class="controls">
-                                        <button type="submit" id="edit-campaign" class="btn">Edit Campaign <i class="icon-pencil icon-white"></i></button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-
-
-                        <div class="testing-campaigns">
-                            <hr>
-                            <h3>Campaign from XML (for testing purpose only)</h3>
-                            <form class="form-horizontal" id="test-campaign" action="survey.php">
-                                <div class="control-group">
-                                    <label class="control-label" for="campaignXml">XML</label>
-                                    <div class="controls">
-                                        <textarea id="campaignXml" class="campaignXml"></textarea>
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <div class="controls">
-                                        <button type="submit" id="test-campaign" class="btn btn-primary">Test Campaign <i class="icon-pencil icon-white"></i></button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        -->
+                        
                     </div>
                 </div>
             </div>

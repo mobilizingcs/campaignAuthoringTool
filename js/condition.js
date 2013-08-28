@@ -54,6 +54,29 @@ $(function() {
 					
             		break
             	case 'advanced':
+                    var validate = submitValidationSimple();
+                    var source = $('#conditionSource').val();
+                    if (validate) {
+                        var output = "";
+                        //var json = {'row':[]};
+                        $('#simpleConditionTbl tr:not(:first-child)').each(function()
+                        {
+                            $this = $(this);
+                            var value ="";
+                            var valueType = $this.find(".conditionValueChoice").val();
+                            if (valueType == 'NOT_DISPLAYED') value = "NOT_DISPLAYED";
+                            else if (valueType == 'SKIPPED') value = "SKIPPED";
+                            else value = $this.find(".conditionValue").val();
+
+                            var promptID = $this.find(".previousPrompts option:selected").text();
+                            var operator = $this.find(".operator").val();
+                            var conjunction = $this.find(".conjunction").val();
+
+                            output += "(" + promptID + " " + operator + " " + value + ")" + " " + conjunction + " \n";
+                        });
+                        $("#simpleConditionTbl").find("tr:gt(1)").remove();
+                    }
+                    $("#advancedConditionText").val(output);        
 					$("#simpleCondition").hide();
                     //$('.advancedCondition').val("");
 					$("#advancedCondition").show();
@@ -91,14 +114,6 @@ $(function() {
             case 'remote_activity':
             case 'timestamp':
             case 'video':
-                /*
-				$this.parents("tr:first").find(".operator option").remove();
-                $this.parents("tr:first").find(".operator").append('<option value="==">is equal to</option>'+
-                                                                    '<option value="!=">is not equal to</option>');
-                $this.parents("tr:first").find(".conditionValueChoice option").remove();
-                $this.parents("tr:first").find(".conditionValueChoice").append('<option value="NOT_DISPLAYED">Not Display</option>'+
-                                                                    '<option value="SKIPPED">Skipped</option>');
-                */
                 $this.parents("tr:first").find(".operator option").remove();
                 $this.parents("tr:first").find(".operator").append(operator2[0]);
                 $this.parents("tr:first").find(".operator").append(operator2[5]);

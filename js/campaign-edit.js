@@ -12,7 +12,6 @@ $(function() {
             if(response.result === "success"){
                 var campaignCount = 0;
                 var classes = Object.keys(response['data'][$.cookie('username')]['classes']).join();
-                console.log(classes);
                 $.each(response.data[$.cookie('username')]['classes'], function(index, val) {
                     $('.classes').append('<option value="' + index + '">' + val + "</option>");
                 });
@@ -23,6 +22,8 @@ $(function() {
                 if(campaignCount === 0) {
                     $('.existing-campaigns').remove();
                 }
+
+                populateCampaignData();
             } else {
                 // relogin
                 //alert("Time Out")
@@ -36,13 +37,13 @@ $(function() {
         $('#campaignTitle').val(campaignWrapper['campaign']['campaignName']);
         $('#campaignUrn').val(campaignWrapper['campaign']['campaignUrn']);
         $('#campaignDescription').val(campaignWrapper['description']); // optional
-        $('.classes').val(campaignWrapper['classes'])
+        $('.classes').val(campaignWrapper['classes']);
         $('#privacyStateBtn').val(campaignWrapper['privacyState']); 
         $('#runningStateBtn').val(campaignWrapper['runningState']);
         
     }
 
-    populateCampaignData();
+    //populateCampaignData();
     $("#test").click(function() {
         $('#loginModal').modal('show');
     });
@@ -111,15 +112,6 @@ $(function() {
             }
             e.preventDefault();
         } else {
-            /*
-            var campaignWrapper = {
-                'privacyState': $('#privacyStateBtn').html().toLowerCase(),
-                'runningState': $('#runningStateBtn').html().toLowerCase(),
-                'description': description,
-                'classes': $('.classes').val(),
-                'campaign': campaignEditor.createCampaign(title, urn)
-            };
-            */
             campaignWrapper['privacyState'] = $('#privacyStateBtn').val();
             campaignWrapper['runningState'] = $('#runningStateBtn').val();
             campaignWrapper['description'] = description;

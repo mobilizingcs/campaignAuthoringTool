@@ -54,7 +54,7 @@ $(function() {
 					});
                     break;
                 case 'timestamp':
-                    $.get("promptModals/timestamp.html", function(data){
+                    $.get("promptModals/timestampModal.html", function(data){
                         $("#promptData").append(data);
                     });
                     break;

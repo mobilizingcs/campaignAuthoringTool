@@ -26,37 +26,41 @@
         <script type="text/javascript" src="js/campaign-edit.js"></script>
         <script type="text/javascript" src="js/help-icon.js"></script>
         <script type="text/javascript" src="js/campaign-editor.js"></script>
+        <script type="text/javascript" src="js/promptUtil.js"></script>
+        <script type="text/javascript" src="js/vkbeautify.0.99.00.beta.js"></script>
     </head>
     <body>
-        <?php
-            include('navbar.php');
-        ?>
-        <div class="container">
-            <!--
-            <div class="breadcrumbsNav">
-                <ul class="breadcrumb">
-                    <li class="active" id="homeBreadcrumb"><i class="icon-home"></i> Home</li>
-                </ul>
+        <!-- navnar -->
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="navbar-container">
+                    <a class="brand" href="#"><img src="img/ohmage-logo.png" width="112"></a>
+
+                    <a href="index.php" class="logoutButton pull-right btn btn-info">Log Out</a>
+                    <p class="navbar-text pull-right" id="username"></p>
+                    <!--<a href="#" class="btn btn-link">About</a>-->
+                    <a href="help.php" target="_blank" class="btn btn-link pull-right helpBtn">Help</a>
+                    
+                </div>
             </div>
-            -->
+        </div>
+
+        <div class="container">
             <div class="row">
                 <div class="span3">
                     <div class="boxRounded boxDark" id="campaignMenu">
-                        <!--<div class="center">-->
+                        <div class="center">
                             <h5></h5>
                             <button type="button" class="btn btn-block" id="editCampaign">Edit Campaign Info</button>
                             <button type="button" class="btn btn-block" id="createNewSurvey">Create New Survey</button>
                             <button type="button" class="btn btn-block" id="editExistingSurvey">Edit Existing Surveys</button>
                             <button type="button" class="btn btn-block" id="viewSurveyXML">View Campaign XML</button>
                             <button type="button" class="btn btn-info btn-block" id="submitCampaign">Submit Campaign to Server</button>
-                        <!--</div>-->
+                        </div>
+
                         <?php
                             include('promptModals/viewXmlModal.php');
                         ?>
-                    </div>
-                </div>
-                <div class="span9 content">
-                    <div class="boxRounded boxDark">
 
                         <div id="loginModal" class="modal hide fade" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
                             <div class="modal-header centered">
@@ -90,8 +94,12 @@
                             </div>
                         </div>
 
+                    </div>
+                </div>
+
+                <div class="span9 content">
+                    <div class="boxRounded boxDark">
                         <h5>Edit Campaign</h5>
-                        <!--<div class="panel panel-info">Edit Campaign</div>-->
                         <div class="new-campaign">
                             <form class="form-horizontal" id="campaign-form" action="existing-surveys.php">
                                 <div class="control-group">
@@ -118,7 +126,7 @@
                                 <div class="control-group">
                                     <label class="control-label" for="classes">Classes <span class="red">*</span></label>
                                     <div class="controls">
-                                        <select class="classes"></select>
+                                        <select class="classes" id="classes"></select>
                                     </div>
                                 </div>
                                 <div class="control-group">
@@ -130,7 +138,7 @@
                                 <div class="control-group">
                                     <label class="control-label" for="privacyState">Privacy State <span class="red">*</span></label>
                                     <div class="controls">
-                                        <!--<button type="button" class="btn btn-info" id="privacyStateBtn">Shared</button>-->
+                                       
                                         <select id="privacyStateBtn" name="privacyStateBtn" class="privacyStateBtn">
                                             <option value="shared">Shared</option>
                                             <option value="private">Private</option>
@@ -141,7 +149,7 @@
                                 <div class="control-group">
                                     <label class="control-label" for="runningState">Running State <span class="red">*</span></label>
                                     <div class="controls">
-                                        <!--<button type="button" class="btn btn-info" id="runningStateBtn">Running</button>-->
+                                        
                                         <select id="runningStateBtn" name="runningStateBtn" class="runningStateBtn">
                                             <option value="running">Running</option>
                                             <option value="stopped">Stopped</option>
@@ -152,7 +160,6 @@
                                 <div class="control-group">
                                     <div class="controls">
                                         <button type="submit" id="edit-campaign" class="btn">Edit Campaign Info</button>
-                                        <!--<button type="button" id="test" class="btn">Test</button>-->
                                     </div>
                                 </div>
                             </form>
@@ -162,8 +169,19 @@
                 </div>
             </div>
         </div>
-        <?php
-            include('footer.php');
-        ?>
+        <!-- footer -->
+        <div id="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="span12">
+                        <hr>
+                        <div class="pull-right">
+                            <a href="#">Back to top</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
     </body>
 </html>

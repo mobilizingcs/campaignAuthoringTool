@@ -24,45 +24,31 @@
         <script type="text/javascript" src="js/menu.js"></script>
         <script type="text/javascript" src="js/survey.js"></script>
         <script type="text/javascript" src="js/help-icon.js"></script>
+        <script type="text/javascript" src="js/promptUtil.js"></script>
         <script type="text/javascript" src="js/json2xml.js"></script>
         <script type="text/javascript" src="js/campaign-editor.js"></script>
         <script type="text/javascript" src="js/breadcrumb.js"></script>
         <script type="text/javascript" src="js/vkbeautify.0.99.00.beta.js"></script>
     </head>
     <body>
-		<?php
-            include('navbar.php');
-        ?>
-        <div class="container">
-            <!--
-            <div class="breadcrumbsNav">
-                <ul class="breadcrumb">
-                    <li id="homeBreadcrumb"><i class="icon-home"></i> <a href="campaign.php">Home</a> <span class="divider"><i class="icon-chevron-right"></i></span></li>
-                    <li class="active" id="campaignBreadcrumb"></li>
-                </ul>
+		<div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="navbar-container">
+                    <a class="brand" href="#"><img src="img/ohmage-logo.png" width="112"></a>
+
+                    <a href="index.php" class="logoutButton pull-right btn btn-info">Log Out</a>
+                    <p class="navbar-text pull-right" id="username"></p>
+                    <!--<a href="#" class="btn btn-link">About</a>-->
+                    <a href="help.php" target="_blank" class="btn btn-link pull-right helpBtn">Help</a>
+                    
+                </div>
             </div>
-        -->
+        </div>
+
+        <div class="container">
             <div class="row">
                 <div class="span3">
                     <div class="boxRounded boxDark" id="campaignMenu">
-                        <!--
-                        <div class="center">
-                            <h5></h5>
-                            <button type="button" class="btn btn-block" id="createNewSurvey">Create New Survey</button>
-                            <div class="btn-group btn-block">
-                                <button class="btn btn-block dropdown-toggle" data-toggle="dropdown" id="editExistingSurvey">Edit Existing Survey  <span class="caret"></span></button>
-                                <ul class="dropdown-menu" id="existingSurveys">
-                                  <li><a href="#">Action</a></li>-->
-                            <!--      
-                                </ul>
-                            </div>
-                            <?php
-                            //include('promptModals/viewXmlModal.php');
-                            ?>      
-                            <button type="button" class="btn btn-block" id="viewSurveyXML">View Campaign XML</button>
-                            <button type="button" class="btn btn-info btn-block" id="submitCampaign">Submit Campaign to Server</button>
-                        </div>
-                        -->
                         <div class="center">
                             <h5></h5>
                             <button type="button" class="btn btn-block" id="editCampaign">Edit Campaign Info</button>
@@ -108,14 +94,6 @@
 
 
                     </div>
-                    <!--
-                     <div class="boxRounded boxDark">
-                        <?php
-                            //include('promptModals/viewXmlModal.php');
-                        ?>      
-                        <button type="button" class="btn btn-primary btn-block" id="viewSurveyXML">View Campaign XML</button>
-                    </div>
-                    -->
                 </div>
                 <div class="span9 content">
                     <div class="boxRounded boxDark">
@@ -190,14 +168,25 @@
                         </div>
                         <span class="red">*</span> <small>Required Fields</small>
                         <hr>
-                        <!--<p><h2 class="centered">Finished editing this campaign?</h2></p>-->
-                        <!--<button type="button" class="btn btn-primary btn-block" id="submitCampaign"><h3>Submit Campaign to Ohmage Server</h3></button>-->
+
                     </div>
                 </div>
             </div>
         </div>
-        <?php
-            include('footer.php');
-        ?>
+        <!-- footer -->
+        <div id="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="span12">
+                        <hr>
+                        <div class="pull-right">
+                            <a href="#">Back to top</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
     </body>
 </html>
