@@ -1,10 +1,4 @@
 <!DOCTYPE HTML>
-<?php
-    session_start(); 
-    include('notice.php');
-    require_once('authorize.php');
-    authorizeUser();
-?>
 <html>
     <head>
         <title>Edit Campaign</title>
@@ -21,6 +15,7 @@
         <script type="text/javascript" src="js/json2xml.js"></script>
         <script type="text/javascript" src="js/jquery.xml2json.js"></script>
         <script type="text/javascript" src="js/menu.js"></script>
+        <script type="text/javascript" src="js/insertXmlModal.js"></script>
         <script type="text/javascript" src="js/alerts.js"></script>
         <script type="text/javascript" src="js/navbar.js"></script>
         <script type="text/javascript" src="js/campaign-edit.js"></script>
@@ -58,9 +53,9 @@
                             <button type="button" class="btn btn-info btn-block" id="submitCampaign">Submit Campaign to Server</button>
                         </div>
 
-                        <?php
-                            include('promptModals/viewXmlModal.php');
-                        ?>
+                        <div class="xmlModal">
+                            <!-- xml modal -->
+                        </div>
 
                         <div id="loginModal" class="modal hide fade" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
                             <div class="modal-header centered">
@@ -101,7 +96,7 @@
                     <div class="boxRounded boxDark">
                         <h5>Edit Campaign</h5>
                         <div class="new-campaign">
-                            <form class="form-horizontal" id="campaign-form" action="existing-surveys.php">
+                            <form class="form-horizontal" id="campaign-form" action="existing-surveys.html">
                                 <div class="control-group">
                                     <label class="control-label" for="campaignTitle">Campaign Name <span class="red">*</span></label>
                                     <div class="controls">

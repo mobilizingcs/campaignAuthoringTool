@@ -13,3 +13,10 @@
     background-color: transparent !important;
     text-align: left; 
 }
+
+#surveyXml {
+    margin: auto;
+    width: 80%;
+    height: 380px;
+    text-align: left;
+}

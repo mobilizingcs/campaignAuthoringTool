@@ -16,12 +16,12 @@ $(function() {
             if (confirm('Are you sure you want to navigate away from this page? \nThere is one or more unfinished editing survey(s)')) {
                 localStorage['campaignWrapper'] = JSON.stringify(campaignWrapper);
                 console.log($('.surveyItem').find('.collapse-group2').find('.in').length);
-                window.location.replace('campaign-edit.php');
+                window.location.replace('campaign-edit.html');
             }
         } else {
             localStorage['campaignWrapper'] = JSON.stringify(campaignWrapper);
             //console.log($('.surveyItem').find('.collapse-group2').find('.in').length);
-            window.location.replace('campaign-edit.php');
+            window.location.replace('campaign-edit.html');
         }
     });
     // create new survey button
@@ -30,11 +30,11 @@ $(function() {
             if (confirm('Are you sure you want to navigate away from this page? \nThere is one or more unfinished editing survey(s)')) {
                 localStorage['campaignWrapper'] = JSON.stringify(campaignWrapper);
                 console.log($('.surveyItem').find('.collapse-group2').find('.in').length);
-                window.location.replace('survey.php');
+                window.location.replace('survey.html');
             }
         } else {
             localStorage['campaignWrapper'] = JSON.stringify(campaignWrapper);
-            window.location.replace('survey.php');
+            window.location.replace('survey.html');
         }
     });
 
@@ -44,11 +44,11 @@ $(function() {
             if (confirm('Are you sure you want to navigate away from this page? \nThere is one or more unfinished editing survey(s)')) {
                 localStorage['campaignWrapper'] = JSON.stringify(campaignWrapper);
                 console.log($('.surveyItem').find('.collapse-group2').find('.in').length);
-                window.location.replace('existing-surveys.php');
+                window.location.replace('existing-surveys.html');
             }
         } else {
             localStorage['campaignWrapper'] = JSON.stringify(campaignWrapper);
-            window.location.replace('existing-surveys.php');
+            window.location.replace('existing-surveys.html');
         }
     });
 
@@ -96,7 +96,7 @@ $(function() {
             $parent = $(this).parent();
             var index = $('#existingSurveysSortable li').index($parent);
             $.cookie('currentSurvey', index);
-            window.location.replace('prompt.php');
+            window.location.replace('prompt.html');
         }
     });
 

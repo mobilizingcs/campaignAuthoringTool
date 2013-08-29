@@ -41,15 +41,15 @@ $(function() {
         } else if ($('.previousItem').find('.collapse-group2').find('.in').length > 0) {
             if (confirm('Are you sure you want to navigate away from this page? \nThere is one or more unfinished editing prompt(s)')) {
                 localStorage['campaignWrapper'] = JSON.stringify(campaignWrapper);
-                window.location.replace('campaign-edit.php');
+                window.location.replace('campaign-edit.html');
             }
         } else if ($('.accordion-group').find('.in').length > 0) {
             if (confirm('Are you sure you want to navigate away from this page? \nYou are creating a message or prompt')) {
                 localStorage['campaignWrapper'] = JSON.stringify(campaignWrapper);
-                window.location.replace('campaign-edit.php');
+                window.location.replace('campaign-edit.html');
             }
         } else {
-            window.location = ('campaign-edit.php');
+            window.location = ('campaign-edit.html');
         }
     });
     // create new survey button
@@ -60,15 +60,15 @@ $(function() {
             if (confirm('Are you sure you want to navigate away from this page? \nThere is one or more unfinished editing prompt(s)')) {
                 localStorage['campaignWrapper'] = JSON.stringify(campaignWrapper);
                 console.log($('.previousItem').find('.collapse-group2').find('.in').length);
-                window.location.replace('survey.php');
+                window.location.replace('survey.html');
             }
         } else if ($('.accordion-group').find('.in').length > 0) {
             if (confirm('Are you sure you want to navigate away from this page? \nYou are creating a message or prompt')) {
                 localStorage['campaignWrapper'] = JSON.stringify(campaignWrapper);
-                window.location.replace('survey.php');
+                window.location.replace('survey.html');
             }
         } else {
-            window.location.replace('survey.php');
+            window.location.replace('survey.html');
         }
     });
 
@@ -80,15 +80,15 @@ $(function() {
             if (confirm('Are you sure you want to navigate away from this page? \nThere is one or more unfinished editing prompt(s)')) {
                 localStorage['campaignWrapper'] = JSON.stringify(campaignWrapper);
                 console.log($('.previousItem').find('.collapse-group2').find('.in').length);
-                window.location.replace('existing-surveys.php');
+                window.location.replace('existing-surveys.html');
             }
         } else if ($('.accordion-group').find('.in').length > 0) {
             if (confirm('Are you sure you want to navigate away from this page? \nYou are creating a message or prompt')) {
                 localStorage['campaignWrapper'] = JSON.stringify(campaignWrapper);
-                window.location.replace('existing-surveys.php');
+                window.location.replace('existing-surveys.html');
             }
         } else {
-            window.location.replace('existing-surveys.php');
+            window.location.replace('existing-surveys.html');
         }
     });
     window.onbeforeunload = function(e) {

@@ -6,63 +6,32 @@ $(function() {
 
     // edit campaign button
     $('#editCampaign').click(function() {
-        window.location = ('campaign-edit.php');
+        window.location = ('campaign-edit.html');
     });
 
     // create new survey button
     $('#createNewSurvey').click(function() {
-        window.location.replace('survey.php');
+        window.location.replace('survey.html');
     });
 
     // edit existing survey button
     $('#editExistingSurvey').click(function() {
-        window.location.replace('existing-surveys.php');
+        window.location.replace('existing-surveys.html');
     });
 
     // view campaign xml button
     $('#viewSurveyXML').click(function() {
-        deleteEditField(campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList']['']);
+        if (campaignWrapper['campaign']['surveys']['survey'].length == 0) {
+            
+        } else {
+            deleteEditField(campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList']['']);
+        }
         var xml = '<?xml version="1.0" encoding="UTF-8"?>' + json2xml({'campaign': campaignWrapper['campaign']});
         $('#surveyXml').text(vkbeautify.xml(xml));
         $('#xmlModal').modal('show');
         
 
     });
-
-    /*
-    // submit campaign button
-    $('#submitCampaign').click(function() {
-        //alert('test');
-        var xmlFile = '<?xml version="1.0" encoding="UTF-8"?>' + json2xml({'campaign': campaignWrapper['campaign']});
-        // $.post("https://test.ohmage.org/app/user_info/read", { auth_token: $.cookie('authToken'), client: 'campaign-webapp' }, function(response) {
-        $.post(SERVER + "app/user_info/read", { auth_token: $.cookie('authToken'), client: 'campaign-webapp' }, function(response) {
-            if (response.result === 'success') {
-                var classes = Object.keys(response['data'][$.cookie('username')]['classes']).join();
-                 $.post("submitCampaign.php", { 
-                    auth_token: $.cookie('authToken'), 
-                    client: "campaign-webapp", 
-                    running_state: campaignWrapper['runningState'],
-                    privacy_state: campaignWrapper['privacyState'],
-                    description: campaignWrapper['description'],
-                    class_urn_list: campaignWrapper['classes'],
-                    xml: xmlFile }, function(response) {
-                    var jsonStart = response.indexOf('{');
-                    var json = response.substring(jsonStart, response.length);
-                    var responseJSON = JSON.parse(json);
-                    if (responseJSON['result'] === 'success') {
-                        alert("Campaign submitted successfully!");
-                        window.location.replace('success.php');
-                    } else {
-                        alert("Error: " + responseJSON['errors'][0]['text']);
-                    }
-                }, "text");
-            } else {
-                //console.log('CLASS FAILURE');
-                $('#loginModal').modal('show');
-            }
-        }, "json");
-    });
-    */
 
     var oh = oh || {};
     oh.call = function(path, data, datafun){
@@ -148,7 +117,7 @@ $(function() {
                         //var responseJSON = JSON.parse(json);
                         //if (responseJSON['result'] === 'success') {
                         alert("Campaign submitted successfully!");
-                        window.location.replace('success.php');
+                        window.location.replace('success.html');
                         //} else {
                         //    alert("Error: " + responseJSON['errors'][0]['text']);
                         //}
@@ -176,34 +145,6 @@ $(function() {
                 $.post(SERVER + "app/user_info/read", { auth_token: $.cookie('authToken'), client: "campaign-webapp" },
                     function(response) {
                         if(response.result === "success"){
-                            /*
-                            var classes = Object.keys(response['data'][$.cookie('username')]['classes']).join();
-                             $.post("submitCampaign.php", { 
-                                auth_token: $.cookie('authToken'), 
-                                client: "campaign-webapp", 
-                                running_state: campaignWrapper['runningState'],
-                                privacy_state: campaignWrapper['privacyState'],
-                                description: campaignWrapper['description'],
-                                class_urn_list: campaignWrapper['classes'],
-                                xml: xmlFile }, function(response) {
-                                var jsonStart = response.indexOf('{');
-                                var json = response.substring(jsonStart, response.length);
-                                var responseJSON = JSON.parse(json);
-                                if (responseJSON['result'] === 'success') {
-                                    var successAlert = '<div class="alert alert-success createCampaignSuccess hide"><button class="close">&times;</button><strong>Campaign Submitted Successfully!</strong></div>';
-                                    $(successAlert).insertAfter('.newSurvey hr').slideToggle();
-                                    if($('.createCampaignSuccess').size() > 1) {
-                                        $('.createCampaignSuccess').slice(1).delay('1000').slideToggle('slow',function() { $(this).alert('close')});
-                                    }
-                                } else {
-                                    var errorAlert = '<div class="alert alert-error createCampaignError hide"><button class="close">&times;</button><strong>Error:</strong> ' + responseJSON['errors'][0]['text'] + '</div>';
-                                    $(errorAlert).insertAfter('.newSurvey hr').slideToggle();
-                                    if($('.createCampaignError').size() > 1) {
-                                        $('.createCampaignError').slice(1).delay('1000').slideToggle('slow',function() { $(this).alert('close')});
-                                    }
-                                }
-                            }, "text");
-                            */
                             var req = oh.call("/campaign/create", {
                                 xml : xmlFile,
                                 privacy_state : campaignWrapper['privacyState'],
@@ -217,7 +158,7 @@ $(function() {
                                     //var responseJSON = JSON.parse(json);
                                     //if (responseJSON['result'] === 'success') {
                                     alert("Campaign submitted successfully!");
-                                    window.location.replace('success.php');
+                                    window.location.replace('success.html');
                                     //} else {
                                     //    alert("Error: " + responseJSON['errors'][0]['text']);
                                     //}

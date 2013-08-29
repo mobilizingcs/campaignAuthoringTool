@@ -1,0 +1,471 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Create Prompt</title>
+        <meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
+        <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>
+        <link href="css/jquery-ui-1.9.1.min.css" rel="stylesheet" type="text/css"/>
+        <link href="css/jquery.powertips.min.css" rel="stylesheet" type="text/css"/>
+        <link href="css/layout.css" rel="stylesheet" type="text/css"/>
+        <link href="css/navbar.css" rel="stylesheet" type="text/css"/>
+        <link href="css/prompt.css" rel="stylesheet" type="text/css"/>
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/jquery-cookie.js"></script>
+        <script type="text/javascript" src="js/jquery-ui-1.9.0.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/configuration.js"></script>
+        <script type="text/javascript" src="js/Constant.js"></script>
+        <script type="text/javascript" src="js/promptUtil.js"></script>
+        
+        
+        <script type="text/javascript" src="js/menu.js"></script>
+        <script type="text/javascript" src="js/insertXmlModal.js"></script>  
+        <script type="text/javascript" src="js/navbar.js"></script>
+        <script type="text/javascript" src="js/alerts.js"></script>
+        <script type="text/javascript" src="js/help-icon.js"></script>
+        
+        <script type="text/javascript" src="js/json2xml.js"></script>
+        <script type="text/javascript" src="js/campaign-editor.js"></script>
+        <script type="text/javascript" src="js/surveyItemDisplay.js"></script>
+        <script type="text/javascript" src="js/prompt.js"></script>
+        
+        <script type="text/javascript" src="js/vkbeautify.0.99.00.beta.js"></script>
+        <script type="text/javascript" src="js/breadcrumb.js"></script>
+        <script type="text/javascript" src="js/promptType.js"></script> 
+        <script type="text/javascript" src="js/modal.js"></script>   
+        <script type="text/javascript" src="js/condition.js"></script>
+               
+               
+    </head>
+    <body>
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="navbar-container">
+                    <a class="brand" href="#"><img src="img/ohmage-logo.png" width="112"></a>
+
+                    <a href="login.html" class="logoutButton pull-right btn btn-info">Log Out</a>
+                    <p class="navbar-text pull-right" id="username"></p>
+                    <a href="help.html" target="_blank" class="btn btn-link pull-right helpBtn">Help</a>
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="span3">
+                    <div class="boxDark boxRounded" id="campaignMenu">
+                        <div class="center">
+                            <h5></h5>
+                            <button type="button" class="btn btn-block" id="editCampaign">Edit Campaign Info</button>
+                            <button type="button" class="btn btn-block" id="createNewSurvey">Create New Survey</button>
+                            <button type="button" class="btn btn-block" id="editExistingSurvey">Edit Existing Surveys</button>
+                            <button type="button" class="btn btn-block" id="viewSurveyXML">View Campaign XML</button>
+                            <button type="button" class="btn btn-info btn-block" id="submitCampaign">Submit Campaign to Server</button>
+                        </div>
+
+                        <div class="xmlModal">
+                            <!-- xml modal -->
+                        </div>
+
+                        <div id="loginModal" class="modal hide fade" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+                            <div class="modal-header centered">
+                               Time Out. Please relogin
+                            </div>
+                            <div class="modal-body centered">
+                                <div class="">
+                                    <form class="form-horizontal" id="login-form">
+                                        <div class="control-group centered">
+                                            <label class="control-label" for="inputUsername">Username</label>
+                                            <div class="controls">
+                                                <input type="text" class="span3" id="inputUsername" placeholder="Username">
+                                            </div>
+                                        </div>
+                                        <div class="control-group centered">
+                                            <label class="control-label" for="inputPassword">Password</label>
+                                            <div class="controls">
+                                                <input type="password" class="span3" id="inputPassword" placeholder="Password">
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <div class="controls">
+                                                <button type="submit" class="btn btn-info">Login</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer">   
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="span9">
+                    <div class="boxRounded boxDark content">
+                        <h5>Survey Items</h5>
+                        <div class="accordion-heading">
+                            <a class="left btn btn-link textLink accordion-toggle createItem createMessage pull-left" data-toggle="collapse" data-parent="#addNewItemAccordion" href="#newMessage">
+                                <small><i class="icon-comment"></i> Create a new message.</small>
+                            </a>
+                            <a class="left btn btn-link textLink accordion-toggle createItem createPrompt" data-toggle="collapse" data-parent="#addNewItemAccordion" href="#newPrompt">
+                                <small><i class="icon-ok-circle"></i> Create a new prompt.</small>
+                            </a>
+                        </div>
+                        <h6 class="left">
+                            Existing Items
+                            <small>(Prompt count: <span id="numQuestion">0</span>)</small>
+                            <small>Reorder survey items by dragging!</small>
+                        </h6>
+
+                        <table>
+                            <div class="previousItems" id="previousItem">
+                                <ul class="previousItemsSortable" id="previousItemsSortable">
+                                </ul>
+                            </div>
+                        </table>
+                        <div class="addNewItem">
+                            <h6 class="left">New Item</h6>
+                            <div class="accordion" id="addNewItemAccordion">
+                                <!-- Condition Modal -->
+                                <div id="conditionModal" class="modal hide fade" tabindex="-1" aria-labelledby="conditionModalLabel" aria-hidden="true">
+                                    <div class="modal-header">
+                                        <h3 class="centered">Edit Condition</h3>
+                                        </br>
+                                        <p class="centered">
+                                            Select a way to edit condition or select "No Condition" if 
+                                            you don't want using condition for this prompt.
+                                        </p>
+                                        <div class="centered controls">
+                                            <span class="centered">Edit Condition Using: </span>
+                                            <select id="conditionType">
+                                                <option value="">No Condition</option>
+                                                <option value="simple">Simple Option</option>
+                                                <option value="advanced">Advanced Option</option>
+                                            </select> 
+                                        </div>
+                                        <input type="hidden" id="conditionType">
+                                        <input type="hidden" id="conditionSource">
+                                    </div>
+                                    <div class="modal-body centered">
+                                        <div class="container">
+                                            <div class="control-group">
+                                                <div class="controls conditionHelpText" id="conditionHelpText">
+                                                </div>
+                                                <div class="controls" id="conditionData">
+
+                                                </div> 
+                                                <div class="centered" id="simpleCondition">
+                                                    <input type="hidden" id="conditionGroupCounter" value="0"/>
+                                                    <div class="centerd">
+                                                        <p style="text-align:left;">
+                                                            Create condtions using predefined operator and conjunction as below. </br>
+                                                            If you know the condition syntax or want to create more complex condition, please choose "Advanced Option".
+                                                        </p>
+                                                    </div>
+                                                    <div class="centered" id="simpleConditionHelp">
+                                                        <p style="text-align:left;" >
+                                                            Hover your mouse over <a class="conditionTooltip" title="" rel="tooltip" data-html="true" href="#" data-placement="right">here</a> to show instructions
+                                                        </P>
+                                                    </div>
+                                                    </br>
+                                                    </br>
+                                                    <table class="outsideTbl">
+                                                        <!--<button class="btn btn-primary addConditionGroup" id="addConditionGroup">Add New Group</button>-->
+                                                        <table class="group1" id="simpleConditionTbl" align="center">
+                                                              <tr>
+                                                                <!--<th>Group #</th>-->
+                                                                <th>Move Up</th>
+                                                                <th>Move Down</th>
+                                                                <th>Prompt ID</th>
+                                                                <th>Operator</th>
+                                                                <th>Value</th>
+                                                                <th></th>
+                                                                <th>Conjunction</th>
+                                                                <th>Add</th>
+                                                                <th>Delete</th>
+                                                              </tr>
+                                                              <tr>
+                                                                <!--<td><input class="conditionGroupNum span1" value="1" disabled/></td>-->
+                                                                <td><button class='btn btn-primary upCondition'><i class="icon-arrow-up icon-white"></i></button></td>
+                                                                <td><button class='btn btn-primary downCondition'><i class="icon-arrow-down icon-white"></i></button></td>
+                                                                <td><select class="span2 previousPrompts"></select></td>
+                                                                <td>
+                                                                    <select class="span1 operator">
+                                                                        <option value="==">==</option>
+                                                                        <option value="&gt;">&gt;</option>
+                                                                        <option value="&gt;=">&gt;=</option>
+                                                                        <option value="&lt;">&lt;</option>
+                                                                        <option value="&lt;=">&lt;=</option>
+                                                                        <option value="!=">!=</option>
+                                                                    </select>
+                                                                </td>
+                                                                <td>
+                                                                    <select class="span2 conditionValueChoice">
+                                                                        <option value="NOT_DISPLAYED">Not Display</option>
+                                                                        <option value="SKIPPED">Skipped</option>
+                                                                        <option value="USER_INPUT">Input your own value</option>
+                                                                    </select>
+                                                                </td>
+                                                                <td class="valueRow"><!--<input type="text" class="conditionValue span2" value="" disabled/>-->
+                                                                </td>
+                                                                <td>
+                                                                    <select class="span1 conjunction" >
+                                                                        <option value="">None</option>
+                                                                        <option value="and">AND</option>
+                                                                        <option value="or">OR</option>
+                                                                    </select>
+                                                                </td>
+                                                                <td><button class='btn btn-primary addCondition'><i class="icon-plus icon-white"></i></button></td>
+                                                                <td><button class='btn btn-primary deleteCondition'><i class="icon-remove icon-white"></i></button></td>
+                                                              </tr>
+                                                            
+                                                        </table>   
+                                                    </table>
+                                                </div>
+
+                                                <div class="centered hide" id="advancedCondition">
+                                                    <div class="centered">
+                                                        <p style="text-align: left;">
+                                                            Write your own condition in the text box below</br>
+                                                            Advanced condition option assumes that you know about condition syntax. </br>
+                                                            If you're not sure about syntax. Visit <a href="https://github.com/cens/ohmageServer/wiki/Campaign-Definition#wiki-condition" target="_blank"><span class="blue">this site</span></a> 
+                                                        </p>
+                                                    </div>
+                                                    </br>
+                                                    </br>
+                                                    <div class="centered">
+                                                        <p>Current condition rule :</p>
+                                                        <textarea class="advancedCondition span10" id="advancedConditionText"></textarea>
+                                                    </div>
+                                                </div>   
+                                            </div>    
+                                        </div>    
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                                        <button class="btn" id="conditionSubmit">Save changes</button>
+                                    </div>
+                                </div>
+                                <!-- End Condition Modal -->
+
+                                <!-- Prompt Type Modal -->
+                                <div id="promptTypeModal" class="modal hide fade" tabindex="-1" aria-labelledby="promptTypeModal" aria-hidden="true">
+                                    <div class="modal-header">
+                                        <h3 class="centered">Prompt Type</h3> </br>
+                                        <div class="centered">
+                                            <span class="centered">Choose a prompt type from the dropdown list: </span>
+                                            <select id="groupPromptType" class="promptType">
+                                                <option value="">Please choose a prompt type</option>
+                                                <option value="audio">Audio</option>
+                                                <option value="multi_choice">Multiple Choice</option>
+                                                <option value="multi_choice_custom">Multiple Choice Custom</option>
+                                                <option value="number">Number</option>
+                                                <option value="photo">Photo</option>
+                                                <option value="remote_activity">Remote Activity</option>
+                                                <option value="single_choice">Single Choice</option>
+                                                <option value="single_choice_custom">Single Choice Custom</option>
+                                                <option value="text">Text</option>
+                                                <option value="timestamp">Timestamp</option>
+                                                <option value="video">Video</option>
+                                            </select> 
+                                        </div>
+                                    </div>
+                                    <div class="modal-body centered">
+                                        <div class="container">
+                                            <div class="control-group">
+                                                <div class="controls">
+
+                                                </div>
+                                                <div class="controls" id="promptData">
+                                                    
+                                                </div>
+                                                
+                                            </div>    
+                                        </div>                 
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-primary submit" id="promptTypeSubmit">Save changes</button>
+                                        <!--<button class="btn btn-primary cancelBtn" data-dismiss="modal" aria-hidden="true">Cancel</button>-->
+                                    </div>
+                                </div>
+                                <!-- End Prompt Type Modal-->
+
+                                <!-- Message -->
+                                <div class="accordion-group">
+                                    <div id="newMessage" class="accordion-body collapse">
+                                        <div class="accordion-inner">
+                                            <br>
+                                            <form class="form-horizontal" id="messageForm">
+                                                <input type="hidden" name="editMessageId" id="editMessageId">
+                                                <div class="control-group">
+                                                    <label class="control-label" for="messageId">Message ID: <span class="red">*</span></label>
+                                                    <div class="controls">
+                                                        <textarea name="id" id="messageId" placeholder="A unique identifier for this message."></textarea>
+                                                        <i class="help-icon icon-question-sign" data-original-title="A unique identifier for this message." rel="tooltip" data-placement="right"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label" for="messageText">Message: <span class="red">*</span></label>
+                                                    <div class="controls">
+                                                        <textarea name="messageText" id="messageText" placeholder="The message to display to the user."></textarea>
+                                                        <i class="help-icon icon-question-sign" data-original-title="The text to be displayed to the user." rel="tooltip" data-placement="right"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <label class="control-label" for="condition">Condition: </label>
+                                                    <div class="controls">
+                                                        <div class="input-append">
+                                                            <input type="hidden" class="messageConditionType" id="messageConditionType" />
+                                                            <input type="hidden" class="messageConditionJson" id="messageConditionJson" />
+                                                            <textarea name="messageCondition" class="span5 messageCondition" id="messageCondition" placeholder="None." disabled></textarea>
+                                                            <button type="button" class="btn btn-link" id="messageConditionBtn">Edit Condition <i class="help-icon icon-question-sign" data-original-title="The condition which determines if the message is displayed or not." rel="tooltip" data-placement="top"></i></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group">
+                                                    <div class="controls">
+                                                        <button type="submit" class="btn" id="createMessage">Create Message</button>
+                                                        <button type="button" class="btn cancel" id="cancelMessage">Cancel</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Message -->
+                                <!-- Prompt -->
+                                <div class="accordion-group">
+                                    <div id="newPrompt" class="accordion-body collapse">
+                                        <div class="accordion-inner">
+                                            <br>
+                                            <form class="form-horizontal" id="promptForm">
+                                                <input type="hidden" name="editPromptId" id="editPromptId">
+                                                <div class="control-group">
+                                                    <label class="control-label" for="promptId">Prompt ID: <span class="red">*</span></label>
+                                                    <div class="controls">
+                                                        <input type="text" class="span4" name="id" id="promptId" placeholder="A unique identifier for the prompt." />
+                                                        <i class="help-icon icon-question-sign" data-original-title="A unique identifier for the prompt." rel="tooltip" data-placement="right"></i>
+                                                    </div>
+                                                </div>
+
+                                                <div class="control-group">
+                                                    <label class="control-label" for="displayLabel">Display Label: <span class="red">*</span></label>
+                                                    <div class="controls">
+                                                        <input type="text" class="span4" name="displayLabel" id="displayLabel" placeholder="Display Label" />
+                                                        <i class="help-icon icon-question-sign" data-original-title="The user-friendly name of this prompt used in visualizations." rel="tooltip" data-placement="right"></i>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="control-group">
+                                                    <label class="control-label" for="promptText">Prompt Text: <span class="red">*</span></label>
+                                                    <div class="controls">
+                                                        <textarea type="text" class="span4" name="promptText" id="promptText" placeholder="Prompt Text"></textarea>
+                                                        <i class="help-icon icon-question-sign" data-original-title="The text to display to the user when prompting them to respond." rel="tooltip" data-placement="right"></i>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="control-group">
+                                                    <label class="control-label" for="promptType">Prompt Type: <span class="red">*</span></label>
+                                                    
+                                                    <div class="controls">
+                                                        <select id="choosePromptType" name="promptType" class="promptType span4">
+                                                            <option value="">Please choose a prompt type</option>
+                                                            <option value="audio">Audio</option>
+                                                            <option value="multi_choice">Multiple Choice</option>
+                                                            <option value="multi_choice_custom">Multiple Choice Custom</option>
+                                                            <option value="number">Number</option>
+                                                            <option value="photo">Photo</option>
+                                                            <option value="remote_activity">Remote Activity</option>
+                                                            <option value="single_choice">Single Choice</option>
+                                                            <option value="single_choice_custom">Single Choice Custom</option>
+                                                            <option value="text">Text</option>
+                                                            <option value="timestamp">Timestamp</option>
+                                                            <option value="video">Video</option>
+                                                        </select>
+                                                        <!--<input type="hidden" name="promptType" id="promptType"/> -->
+                                                        <i class="help-icon icon-question-sign" data-original-title="Choose type of your prompt" rel="tooltip" data-placement="right"></i>
+                                                    </div>
+                                        
+                                                    </br>
+                                                    <label class="control-label" for="addedPrompt">Prompt Details:</label>
+                                                    <div class="controls">  
+                                                        <div>
+                                                            <textarea name="properties" class="span4" id="addedPrompt" readonly></textarea>
+                                                            <button type="button" class="btn btn-link" id="promptTypeBtn">Edit Prompt Detail</button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="control-group">
+                                                        <!--<label type="hiden" class="control-label" for="default">Default</label>-->
+                                                        <div class="controls">
+                                                            <input type="hidden" name="default" id="default" placeholder="Default" />
+                                                            <input type="hidden" class="jsonText" id="jsonText" />
+                                                            <!--<i class="help-icon icon-question-sign" data-original-title="The default value for this prompt. This is type-dependent." rel="tooltip" data-placement="right"></i>-->
+                                                        </div>
+                                                    </div>
+                                                    <div class="control-group">
+                                                        <label class="control-label" for="condition">Condition:</label>
+                                                        <div class="controls">
+                                                            <div class="input-append">
+                                                                <input type="hidden" class="promptConditionType" id="promptConditionType" />
+                                                                <input type="hidden" class="promptConditionJson" id="promptConditionJson" />
+                                                                <textarea name="promptCondition"  class="span4" id="promptCondition" placeholder="None." disabled></textarea>
+                                                                <button type="button" class="btn btn-link" id="promptConditionBtn">Edit Condition <i class="help-icon icon-question-sign" data-original-title="The condition which determines if the prompt is displayed or not." rel="tooltip" data-placement="top"></i></button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="control-group">
+                                                        <label class="control-label" for="skippable">Skip Option:</label>
+                                                        <div class="controls"> 
+                                                            <label class="checkbox">
+                                                                <input type="checkbox" name="skippable" id="skippable">
+                                                                Is this prompt skippable?
+                                                            </label>
+                                                        </div>
+                                                    </div> 
+                                                    
+                                                    <div class="control-group">
+                                                        <label class="control-label skipLabelText" for="skipLabel">Skip Label: </label>
+                                                        <div class="controls">
+                                                            <input type="text" class="span4" name="skipLabel" id="skipLabel" value="Skip" disabled/>
+                                                            <i class="help-icon icon-question-sign" data-original-title="If skippable, this is the text of the button to use to skip the label." rel="tooltip" data-placement="right"></i>
+                                                        </div> 
+                                                    </div>   
+                                                </div>
+                                                
+                                                <div class="control-group">
+                                                    <div class="controls">
+                                                        <button type="submit" class="btn" id="addPrompt">Add Prompt</button>
+                                                        <button type="button" class="btn" id="cancelPrompt">Cancel</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Prompt -->                                
+                            </div>
+                        </div>
+                        <span class="red">*</span> <small>Required Fields</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- footer -->
+        <div id="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="span12">
+                        <hr>
+                        <div class="pull-right">
+                            <a href="#">Back to top</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </body>
+</html>
+
