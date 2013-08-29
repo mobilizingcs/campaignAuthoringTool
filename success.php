@@ -1,10 +1,4 @@
 <!DOCTYPE HTML>
-<?php
-    session_start(); 
-    include('notice.php');
-    require_once('authorize.php');
-    authorizeUser();
-?>
 <html>
     <head>
         <title>Congratulation</title>
@@ -34,16 +28,16 @@
                 <div class="navbar-container">
                     <a class="brand" href="#"><img src="img/ohmage-logo.png" width="112"></a>
 
-                    <a href="index.php" class="logoutButton pull-right btn btn-info">Log Out</a>
+                    <a href="login.html" class="logoutButton pull-right btn btn-info">Log Out</a>
                     <p class="navbar-text pull-right" id="username"></p>
                     <!--<a href="#" class="btn btn-link">About</a>-->
-                    <a href="help.php" target="_blank" class="btn btn-link pull-right helpBtn">Help</a>
+                    <a href="help.html" target="_blank" class="btn btn-link pull-right helpBtn">Help</a>
                     
                 </div>
             </div>
         </div>
 
-        
+
         <div class="container">
             <div class="row">
                 <div class="span12">
@@ -52,15 +46,26 @@
                         <h5 class="centered"> Your campaign was successfully submitted to the server. You can either log out or create a new campaign. </h5>
                         <div class="centered">
                             <button type="button" class="btn btn-small btn-info centered createCampaign" id="createCampaign">Create New Campaign</button>
-                            <a href="index.php" class="logoutButton btn btn-small btn-info">Log Out</a>
+                            <a href="login.html" class="logoutButton btn btn-small btn-info">Log Out</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <?php
-            include('footer.php');
-        ?>
+        <!-- footer -->
+        <div id="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="span12">
+                        <hr>
+                        <div class="pull-right">
+                            <a href="#">Back to top</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
     </body>
 </html>
 

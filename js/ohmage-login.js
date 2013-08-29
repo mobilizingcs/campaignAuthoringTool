@@ -7,7 +7,7 @@ $(function() {
             if (response.result === "success") {
                 $.cookie("authToken", response.token, { expires: 1 });
                 $.cookie("username", inputUsername, { expires: 1 });
-                window.location.replace('campaign.php'); 
+                window.location.replace('campaign.html'); 
             }
             else {
                 var errorAlert = '<div class="alert alert-error login-error hide"><button class="close">&times;</button><strong>Login Failed: </strong>' + response.errors[0].text + '</div>';

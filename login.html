@@ -1,13 +1,4 @@
 <!DOCTYPE HTML>
-<?php
-    session_start();
-    if(isset($_COOKIE['authToken']))
-    {
-            header('Location: campaign.php');
-            exit();
-    }
-    include('notice.php');
-?>
 <html>
     <head>
         <title>Ohmage - Please log in.</title>
@@ -27,9 +18,6 @@
         <div class="container">
             <div class="row">
                 <div class="span12 centered content">
-                    <?php
-                        getNotice();
-                    ?>
                     <div class="boxRounded boxDark">
                         <a href="http://www.ohmage.org"><img src="img/ohmage-logo.png"></a>
                         <h1>Campaign Authoring</h1>

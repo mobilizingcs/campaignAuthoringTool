@@ -1,10 +1,4 @@
 <!DOCTYPE HTML>
-<?php
-    session_start(); 
-    include('notice.php');
-    require_once('authorize.php');
-    authorizeUser();
-?>
 <html>
     <head>
         <title>Create Campaign</title>
@@ -32,10 +26,9 @@
                 <div class="navbar-container">
                     <a class="brand" href="#"><img src="img/ohmage-logo.png" width="112"></a>
 
-                    <a href="index.php" class="logoutButton pull-right btn btn-info">Log Out</a>
+                    <a href="login.html" class="logoutButton pull-right btn btn-info">Log Out</a>
                     <p class="navbar-text pull-right" id="username"></p>
-                    <!--<a href="#" class="btn btn-link">About</a>-->
-                    <a href="help.php" target="_blank" class="btn btn-link pull-right helpBtn">Help</a>
+                    <a href="help.html" target="_blank" class="btn btn-link pull-right helpBtn">Help</a>
                     
                 </div>
             </div>
@@ -48,6 +41,7 @@
                         <h4>Campaign Editor <small>Create a new campaign info, or edit an existing one.</small></h4>
         
                         <div class="new-campaign">
+                            <hr>
                             <form class="form-horizontal" id="campaign-form" action="survey.php">
                                 <h5>Campaign Info </h5>
                                 <div class="control-group">
@@ -74,10 +68,6 @@
                                 <div class="control-group">
                                     <label class="control-label" for="classes">Classes <span class="red">*</span></label>
                                     <div class="controls">
-                                        <!--
-                                        <input type="text" class="span4" id="classes" placeholder="Classes" />
-                                        <i class="help-icon icon-question-sign" data-original-title="Classes that use this campaign" rel="tooltip" data-placement="right"></i>
-                                    -->
                                         <select class="classes"></select>
                                     </div>
                                 </div>
@@ -90,7 +80,6 @@
                                 <div class="control-group">
                                     <label class="control-label" for="privacyState">Privacy State <span class="red">*</span></label>
                                     <div class="controls">
-                                        <!--<button type="button" class="btn btn-info" id="privacyStateBtn">Shared</button>-->
                                         <select id="privacyStateBtn" name="privacyStateBtn" class="privacyStateBtn">
                                             <option value="shared">Shared</option>
                                             <option value="private">Private</option>
@@ -101,7 +90,6 @@
                                 <div class="control-group">
                                     <label class="control-label" for="runningState">Running State <span class="red">*</span></label>
                                     <div class="controls">
-                                        <!--<button type="button" class="btn btn-info" id="runningStateBtn">Running</button>-->
                                         <select id="runningStateBtn" name="runningStateBtn" class="runningStateBtn">
                                             <option value="running">Running</option>
                                             <option value="stopped">Stopped</option>
@@ -122,8 +110,20 @@
                 </div>
             </div>
         </div>
-        <?php
-            include('footer.php');
-        ?>
+        
+        <!-- footer -->
+        <div id="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="span12">
+                        <hr>
+                        <div class="pull-right">
+                            <a href="#">Back to top</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
     </body>
 </html>
