@@ -16,12 +16,12 @@ $(function() {
             if(response.result === "success"){
                 var campaignCount = 0;
                 console.log(username);
-                var classes = Object.keys(response['data'][$.cookie('username')]['classes']).join();
+                var classes = Object.keys(response['data'][username]['classes']).join();
                 console.log(classes);
-                $.each(response.data[$.cookie('username')]['classes'], function(index, val) {
+                $.each(response.data[username]['classes'], function(index, val) {
                     $('.classes').append('<option value="' + index + '">' + val + "</option>");
                 });
-                $.each(response.data[$.cookie('username')].campaigns, function(index, val) {
+                $.each(response.data[username].campaigns, function(index, val) {
                     $('.campaign-select').append('<option value="' + index + '">' + val + "</option>");
                     campaignCount++;
                 });
