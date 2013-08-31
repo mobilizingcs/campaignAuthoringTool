@@ -33,8 +33,8 @@ $(function() {
 
     });
 
-    var oh = oh || {};
-    oh.call = function(path, data, datafun){
+    var oh2 = oh2 || {};
+    oh2.call = function(path, data, datafun){
 
         /*
         function processError(errors){
@@ -102,9 +102,9 @@ $(function() {
     $('#submitCampaign').click(function() {
         var xmlFile = '<?xml version="1.0" encoding="UTF-8"?>' + json2xml({'campaign': campaignWrapper['campaign']});
 
-        $.post(SERVER + "app/user_info/read", { auth_token: $.cookie('authToken'), client: 'campaign-webapp' }, function(response) {
+        $.post(SERVER + "app/user_info/read", { auth_token: $.cookie('auth_token'), client: 'campaign-webapp' }, function(response) {
             if (response.result === 'success') {
-                var req = oh.call("/campaign/create", {
+                var req = oh2.call("/campaign/create", {
                     xml : xmlFile,
                     privacy_state : campaignWrapper['privacyState'],
                     running_state : campaignWrapper['runningState'],
@@ -124,7 +124,9 @@ $(function() {
                 });
             } else {
                 //console.log('CLASS FAILURE');
-                $('#loginModal').modal('show');
+                //$('#loginModal').modal('show');
+                alert('Time out! Please re-login')
+                oh.sendtologin();
             }
         }, "json");
     });
@@ -145,7 +147,7 @@ $(function() {
                 $.post(SERVER + "app/user_info/read", { auth_token: $.cookie('authToken'), client: "campaign-webapp" },
                     function(response) {
                         if(response.result === "success"){
-                            var req = oh.call("/campaign/create", {
+                            var req = oh2.call("/campaign/create", {
                                 xml : xmlFile,
                                 privacy_state : campaignWrapper['privacyState'],
                                 running_state : campaignWrapper['runningState'],
@@ -153,15 +155,8 @@ $(function() {
                                 description : campaignWrapper['description'],
                                 class_urn_list : campaignWrapper['classes']      
                             }, function(response) {
-                                    //var jsonStart = response.indexOf('{');
-                                    //var json = response.substring(jsonStart, response.length);
-                                    //var responseJSON = JSON.parse(json);
-                                    //if (responseJSON['result'] === 'success') {
                                     alert("Campaign submitted successfully!");
                                     window.location.replace('success.html');
-                                    //} else {
-                                    //    alert("Error: " + responseJSON['errors'][0]['text']);
-                                    //}
                             });
                         } else {
                             // relogin
