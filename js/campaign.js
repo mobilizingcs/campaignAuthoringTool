@@ -4,7 +4,7 @@ $(function() {
     $('#authors').val($.cookie('username'));
 
     // Get existing campaigns
-    $.post("https://test.ohmage.org/app/user_info/read", { auth_token: $.cookie('authToken'), client: "campaign-webapp" },
+    $.post("/app/user_info/read", { auth_token: $.cookie('auth_token'), client: "campaign-webapp" },
         function(response) {
             if(response.result === "success"){
                 var campaignCount = 0;
@@ -22,6 +22,11 @@ $(function() {
                 }
             }
         }, "json");
+    /*
+    oh.user.info(function() {
+
+    });
+    */
 
     // Create Campaign Button
     $('#create-campaign').click(function(e) {
