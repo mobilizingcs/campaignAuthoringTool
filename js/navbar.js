@@ -12,7 +12,7 @@ $(function() {
             //$.removeCookie('authToken');
             //$.removeCookie('username');
             //window.location.replace('login.html');
-            oh.logout(function(x){};);
+            oh.logout(function(x){});
         } else {
             e.preventDefault();
         }
