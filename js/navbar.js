@@ -1,8 +1,7 @@
 $(function() {
     var username = "";
-    oh.user.whoami(function(x) {
-                                username = x;
-                                  });
+    oh.user.whoami(function(x) { console.log(x) 
+                                 username = x; });
     //$('#username').html('<i class="icon-user"></i> Logged in as ' + $.cookie('username'));
     $('#username').html('<i class="icon-user"></i> Logged in as ' + username);
     $('.logoutButton').click(function (e) {
