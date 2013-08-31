@@ -1,13 +1,21 @@
 $(function() {
     $('#campaignTitle').focus();
 
-    $('#authors').val($.cookie('username'));
+    var username;
+    oh.user.whoami(function(x) { 
+                                 username = x; 
+                                 $('#authors').val(username);});
+    //$('#authors').val($.cookie('username'));
+    oh.call("/user/whoami", {}, function(res){
+        username = res.username;
+    });
 
     // Get existing campaigns
     $.post("/app/user_info/read", { auth_token: $.cookie('auth_token'), client: "campaign-webapp" },
         function(response) {
             if(response.result === "success"){
                 var campaignCount = 0;
+                console.log(username);
                 var classes = Object.keys(response['data'][$.cookie('username')]['classes']).join();
                 console.log(classes);
                 $.each(response.data[$.cookie('username')]['classes'], function(index, val) {

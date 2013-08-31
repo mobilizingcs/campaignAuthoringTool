@@ -1,6 +1,6 @@
 $(function() {
     var username = "";
-    oh.user.whoami(function(x) { console.log(x) 
+    oh.user.whoami(function(x) { 
                                  username = x; 
                                  $('#username').html('<i class="icon-user"></i> Logged in as ' + username);});
 
