@@ -58,13 +58,13 @@ $(function() {
         data.client = "dashboard"
 
         //add auth_token from cookie
-        if($.cookie('authToken')){
-            data.auth_token = $.cookie('authToken');
+        if($.cookie('auth_token')){
+            data.auth_token = $.cookie('auth_token');
         }
 
         var myrequest = $.ajax({
             type: "POST",
-            url : "https://test.ohmage.org" + "/app" + path,
+            url : "/app" + path,
             data: data,
             dataType: "text",
             xhrFields: {
@@ -102,7 +102,7 @@ $(function() {
     $('#submitCampaign').click(function() {
         var xmlFile = '<?xml version="1.0" encoding="UTF-8"?>' + json2xml({'campaign': campaignWrapper['campaign']});
 
-        $.post(SERVER + "app/user_info/read", { auth_token: $.cookie('auth_token'), client: 'campaign-webapp' }, function(response) {
+        $.post("/app/user_info/read", { auth_token: $.cookie('auth_token'), client: 'campaign-webapp' }, function(response) {
             if (response.result === 'success') {
                 var req = oh2.call("/campaign/create", {
                     xml : xmlFile,
@@ -112,15 +112,8 @@ $(function() {
                     description : campaignWrapper['description'],
                     class_urn_list : campaignWrapper['classes']      
                 }, function(response) {
-                        //var jsonStart = response.indexOf('{');
-                        //var json = response.substring(jsonStart, response.length);
-                        //var responseJSON = JSON.parse(json);
-                        //if (responseJSON['result'] === 'success') {
                         alert("Campaign submitted successfully!");
                         window.location.replace('success.html');
-                        //} else {
-                        //    alert("Error: " + responseJSON['errors'][0]['text']);
-                        //}
                 });
             } else {
                 //console.log('CLASS FAILURE');
