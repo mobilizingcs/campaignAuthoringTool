@@ -1,3 +1,5 @@
+// THIS FILE IS NOT USED WITH UNIFIED LOGIN
+
 $(function() {
     $("#login-form").submit(function(e) {
         var $this = $(this);
