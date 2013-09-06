@@ -289,7 +289,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button class="btn btn-primary submit" id="promptTypeSubmit">Save changes</button>
-                                        <!--<button class="btn btn-primary cancelBtn" data-dismiss="modal" aria-hidden="true">Cancel</button>-->
+                                        <button class="btn btn-primary " id="promptTypeCancel" aria-hidden="true">Cancel</button>
                                     </div>
                                 </div>
                                 <!-- End Prompt Type Modal-->
@@ -403,6 +403,7 @@
                                                         <div class="controls">
                                                             <input type="hidden" name="default" id="default" placeholder="Default" />
                                                             <input type="hidden" class="jsonText" id="jsonText" />
+                                                            <input type="hidden" class="currPromptType" id="currPromptType" />
                                                             <!--<i class="help-icon icon-question-sign" data-original-title="The default value for this prompt. This is type-dependent." rel="tooltip" data-placement="right"></i>-->
                                                         </div>
                                                     </div>

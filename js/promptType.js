@@ -480,16 +480,32 @@ $(function() {
             return true;
     }
 
+    $('#promptTypeCancel').click(function() {
+        if (editObj == null) {
+            type = $('#currPromptType').val();
+            jQuery("#groupPromptType").val(type);
+            $('#choosePromptType').val(type);
+        } else {
+            type = editObj.find('.editPromptDetails').find('.currPromptType').val();
+            jQuery("#groupPromptType").val(type);
+            editObj.find('.editPromptDetails').find('.choosePromptType').val(type);
+        }
+        $('#promptTypeModal').modal('hide');
+
+    });
+
     $('#promptTypeSubmit').click(function() {
         var type;
         if (editObj == null) {
             type = jQuery("#groupPromptType").val();
             $('#choosePromptType').val(type);
+            $('#currPromptType').val(type);
         } else {
             //type = editObj.find('.editPromptDetails').find('.choosePromptType').val();
             var type = jQuery("#groupPromptType").val();
             //$("#groupPromptType").val(type);
             editObj.find('.editPromptDetails').find('.choosePromptType').val(type);
+            editObj.find('.editPromptDetails').find('.currPromptType').val(type);
         }
         switch (type) {
         case 'audio':

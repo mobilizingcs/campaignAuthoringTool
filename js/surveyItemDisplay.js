@@ -70,6 +70,7 @@ var editPrompt = '<hr>' +
                             //'<div class="input-append">'+
                                 '<input type="hidden" class="promptConditionType" id="promptConditionType" />' +
                                 '<input type="hidden" class="promptConditionJson" id="promptConditionJson" />' +
+                                '<input type="hidden" class="currPromptType" id="currPromptType" />' + 
                                 '<textarea name="promptCondition"  class="span4 promptCondition" placeholder="None." disabled></textarea>'+
                                 '<button type="button" class="btn btn-link conditionBtn promptConditionBtn" >Edit Condition <i class="help-icon icon-question-sign" data-original-title="The condition which determines if the prompt is displayed or not." rel="tooltip" data-placement="top"></i></button>'+
                             //'</div>'+

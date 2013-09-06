@@ -1144,7 +1144,7 @@ $(function() {
 
         if (changeConfirm) {
             editObj = currItem;
-            currItem.find('.editPromptDetails').find('.addedPrompt').val(""); // clear text box 
+            //currItem.find('.editPromptDetails').find('.addedPrompt').val(""); // clear text box 
             var prevValue = currItem.find('.editPromptDetails').find(".choosePromptType").val();
             showNewModal(prevValue);
         }
@@ -1986,7 +1986,7 @@ $(function() {
         }
 
         if (changeConfirm) {
-            $('#addedPrompt').val(""); // clear text box 
+            //$('#addedPrompt').val(""); // clear text box 
             var prevValue = jQuery("#choosePromptType").val();  
             showNewModal(prevValue);
         } else {

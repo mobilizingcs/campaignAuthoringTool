@@ -13,7 +13,7 @@ $(function() {
         }
 
         if (changeConfirm) {   
-            $('#addedPrompt').val(""); // clear text box
+            //$('#addedPrompt').val(""); // clear text box
             $('#promptData').empty();
             switch ($this.val()) {
                 case 'audio':
