@@ -182,3 +182,7 @@ table {
 textarea {
     height: 40px;
 }
+
+.promptDetails {
+    height: 80px !important;
+}
