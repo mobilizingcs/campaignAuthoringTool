@@ -3,11 +3,11 @@
 }
 .navbar .brand {
     padding: 0 0 0 20px;
-    border-right: 1px solid #0088cc;
+    /*border-right: 1px solid #0088cc;*/
 }
 .helpBtn {
 	text-decoration: underline !important;
-	border-right: 2px solid #0088cc;
+	/*border-right: 2px solid #0088cc;*/
 }
 .logoutButton {
     margin-left: 10px;
