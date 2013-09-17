@@ -2,7 +2,17 @@ var campaignWrapper = $.parseJSON(localStorage['campaignWrapper']);
 $(function() {
     $('#campaignTitle').focus();
 
-    $('#authors').val($.cookie('username'));
+    // get username
+    var username;
+    oh.user.whoami(function(x) { 
+                                 username = x; 
+                                 $('#authors').val(username);});
+    //$('#authors').val($.cookie('username'));
+    oh.call("/user/whoami", {}, function(res){
+        username = res.username;
+    });
+
+    $('#authors').val(username);
 
     // relogin
 
@@ -11,11 +21,11 @@ $(function() {
         function(response) {
             if(response.result === "success"){
                 var campaignCount = 0;
-                var classes = Object.keys(response['data'][$.cookie('username')]['classes']).join();
-                $.each(response.data[$.cookie('username')]['classes'], function(index, val) {
+                var classes = Object.keys(response['data'][username]['classes']).join();
+                $.each(response.data[username]['classes'], function(index, val) {
                     $('.classes').append('<option value="' + index + '">' + val + "</option>");
                 });
-                $.each(response.data[$.cookie('username')].campaigns, function(index, val) {
+                $.each(response.data[username].campaigns, function(index, val) {
                     $('.campaign-select').append('<option value="' + index + '">' + val + "</option>");
                     campaignCount++;
                 });
