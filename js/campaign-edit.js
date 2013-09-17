@@ -7,7 +7,7 @@ $(function() {
     // relogin
 
     // Get existing campaigns
-    $.post("https://test.ohmage.org/app/user_info/read", { auth_token: $.cookie('auth_token'), client: "campaign-webapp" },
+    $.post("/app/user_info/read", { auth_token: $.cookie('auth_token'), client: "campaign-webapp" },
         function(response) {
             if(response.result === "success"){
                 var campaignCount = 0;
