@@ -5,7 +5,7 @@ var editPrompt = '<hr>' +
                 '<div class="control-group">' +
                     '<label class="control-label inline-label" for="promptId">Prompt ID: <span class="red">*</span></label>' +
                     //'<div class="controls">' +
-                        '<input type="text" class="span4 promptId" name="id" placeholder="A unique identifier for the prompt." />' +
+                        '<input type="text" class="span4 promptId" name="id" placeholder="A unique name so you can refer back to this prompt." />' +
                         ' <i class="help-icon icon-question-sign" data-original-title="A unique identifier for the prompt." rel="tooltip" data-placement="right"></i>' +
                     //'</div>'+
                 '</div>' +
@@ -21,7 +21,7 @@ var editPrompt = '<hr>' +
                 '<div class="control-group">'+
                     '<label class="control-label inline-label" for="promptText">Prompt Text: <span class="red">*</span></label>'+
                     //'<div class="controls">'+
-                        '<textarea type="text" class="span4 promptText" name="promptText" placeholder="Prompt Text"></textarea>'+
+                        '<textarea type="text" class="span4 promptText" name="promptText" placeholder="Question Text"></textarea>'+
                         '<i class="help-icon icon-question-sign" data-original-title="The text to display to the user when prompting them to respond." rel="tooltip" data-placement="right"></i>'+
                     //'</div>'+
                 '</div>'+
