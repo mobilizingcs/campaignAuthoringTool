@@ -105,10 +105,10 @@ function addSurveyToPage(index) {
                         //'<div class="controls">' +
                             
                             //'<label class="checkbox">' +
-                                '<input type="checkbox" id="surveyAnytime" value="">' +
+                            '<input type="checkbox" id="surveyAnytime" value="">' +
                                 
                             //'</label>' +
-                            '   Do you want the survey to be taken at anytime? ' +
+                            'Can the survey be taken at anytime? ' +
                             '<i class="help-icon icon-question-sign" data-original-title="A boolean value indicating whether or not the survey may be taken at any time. If false, the survey may only be taken when a trigger has fired indicating that the user may now take the survey." rel="tooltip" data-placement="right"></i>' +
                         //'</div>' +
                     '</div>' +                          
