@@ -133,14 +133,14 @@ function addMessageToPrevItems(index) {
                     '<div class="control-group">' +
                         '<label class="control-label inline-label" for="messageId">Message ID: <span class="red">*</span></label>' +
                         //'<div class="controls">' +
-                            '<textarea name="id" class="messageId" placeholder="A unique identifier for this message."></textarea>' +
+                            '<input type="text" class="span4" name="id" class="messageId" placeholder="A unique name so you can refer back to this message."/>' +
                             '<i class="help-icon icon-question-sign" data-original-title="A unique identifier for this message." rel="tooltip" data-placement="right"></i>' +
                         //'</div>'+
                     '</div>'+
                     '<div class="control-group">'+
                         '<label class="control-label inline-label" for="messageText">Message: <span class="red">*</span></label>'+
                         //'<div class="controls">'+
-                            '<textarea name="messageText" class="messageText" placeholder="The message to display to the user."></textarea>'+
+                            '<input type="text" class="span4" name="messageText" class="messageText" placeholder="The message to display to the user."/>'+
                             '<i class="help-icon icon-question-sign" data-original-title="The text to be displayed to the user." rel="tooltip" data-placement="right"></i>'+
                         //'</div>'+
                     '</div>'+
@@ -150,7 +150,7 @@ function addMessageToPrevItems(index) {
                             //'<div class="input-append">'+
                                 '<input type="hidden" class="messageConditionType" id="messageConditionType" />' +
                                 '<input type="hidden" class="messageConditionJson" id="messageConditionJson" />' +
-                                '<textarea name="messageCondition" class="messageCondition" placeholder="None." disabled></textarea>'+
+                                '<textarea name="messageCondition" class="span4 messageCondition" placeholder="None." disabled></textarea>'+
                                 '<button type="button" class="btn btn-link conditionBtn messageConditionBtn" >Edit Condition <i class="help-icon icon-question-sign" data-original-title="The condition which determines if the message is displayed or not." rel="tooltip" data-placement="top"></i></button>'+
                             //'</div>'+
                         //'</div>'+
