@@ -53,7 +53,7 @@ function addSurveyToPage(index) {
 
             // survey edit
         '<div class="collapse-group2">' + 
-            '<div id="edit' + target + '" class="collapse surveyEdit group1 span6">'+
+            '<div id="edit' + target + '" class="collapse surveyEdit group1 span7">'+
                 '<hr>' + 
                 '<div class="accordion-inner editSurveyDetails">'+
                     '<div class="control-group">' +
