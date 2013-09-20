@@ -6,7 +6,7 @@ var editPrompt = '<hr>' +
                     '<label class="control-label inline-label" for="promptId">Prompt ID: <span class="red">*</span></label>' +
                     //'<div class="controls">' +
                         '<input type="text" class="span4 promptId" name="id" placeholder="A unique name so you can refer back to this prompt." />' +
-                        ' <i class="help-icon icon-question-sign" data-original-title="A unique identifier for the prompt." rel="tooltip" data-placement="right"></i>' +
+                        ' <i class="help-icon icon-question-sign help-hover" data-original-title="A unique identifier for the prompt." rel="tooltip" data-placement="right"></i>' +
                     //'</div>'+
                 '</div>' +
 
@@ -14,7 +14,7 @@ var editPrompt = '<hr>' +
                     '<label class="control-label inline-label" for="displayLabel">Display Label: <span class="red">*</span></label>'+
                     //'<div class="controls">'+
                         '<input type="text" class="span4 displayLabel" name="displayLabel" placeholder="Display Label" />'+
-                        '<i class="help-icon icon-question-sign" data-original-title="The user-friendly name of this prompt used in visualizations." rel="tooltip" data-placement="right"></i>'+
+                        '<i class="help-icon icon-question-sign help-hover" data-original-title="The user-friendly name of this prompt used in visualizations." rel="tooltip" data-placement="right"></i>'+
                     //</div>'+
                 '</div>'+
                 
@@ -22,7 +22,7 @@ var editPrompt = '<hr>' +
                     '<label class="control-label inline-label" for="promptText">Prompt Text: <span class="red">*</span></label>'+
                     //'<div class="controls">'+
                         '<textarea type="text" class="span4 promptText" name="promptText" placeholder="Question Text"></textarea>'+
-                        '<i class="help-icon icon-question-sign" data-original-title="The text to display to the user when prompting them to respond." rel="tooltip" data-placement="right"></i>'+
+                        '<i class="help-icon icon-question-sign help-hover" data-original-title="The text to display to the user when prompting them to respond." rel="tooltip" data-placement="right"></i>'+
                     //'</div>'+
                 '</div>'+
                 
@@ -45,7 +45,7 @@ var editPrompt = '<hr>' +
                             '<option value="video">Video</option>'+
                         '</select>'+
                         '<input type="hidden" class="promptType" name="promptType" id="promptType"/> '+
-                        '<i class="help-icon icon-question-sign" data-original-title="Choose type of your prompt" rel="tooltip" data-placement="right"></i>'+
+                        '<i class="help-icon icon-question-sign help-hover" data-original-title="Choose type of your prompt" rel="tooltip" data-placement="right"></i>'+
                     //'</div>'+
         
                     '</br>'+
@@ -72,7 +72,8 @@ var editPrompt = '<hr>' +
                                 '<input type="hidden" class="promptConditionJson" id="promptConditionJson" />' +
                                 '<input type="hidden" class="currPromptType" id="currPromptType" />' + 
                                 '<textarea name="promptCondition"  class="span4 promptCondition" placeholder="None." disabled></textarea>'+
-                                '<button type="button" class="btn btn-link conditionBtn promptConditionBtn" >Edit Condition <i class="help-icon icon-question-sign" data-original-title="The condition which determines if the prompt is displayed or not." rel="tooltip" data-placement="top"></i></button>'+
+                                '<button type="button" class="btn btn-link conditionBtn promptConditionBtn" >Edit Condition </button>'+
+                                '<i class="help-icon icon-question-sign help-hover" data-original-title="The condition which determines if the prompt is displayed or not." rel="tooltip" data-placement="top"></i>'+
                             //'</div>'+
                         //'</div>'+
                     '</div>'+
@@ -90,7 +91,7 @@ var editPrompt = '<hr>' +
                         '<label class="control-label inline-label skipLabelText" for="skipLabel">Skip Label:</label>'+
                         //'<div class="controls">'+
                             '<input type="text" class="span4 skipLabel" name="skipLabel" placeholder="Skip" disabled/>'+
-                            '<i class="help-icon icon-question-sign" data-original-title="If skippable, this is the text of the button to use to skip the label." rel="tooltip" data-placement="right"></i>'+
+                            '<i class="help-icon icon-question-sign help-hover" data-original-title="If skippable, this is the text of the button to use to skip the label." rel="tooltip" data-placement="right"></i>'+
                         //'</div> '+
                     '</div>   '+
                 '</div>'+
@@ -112,7 +113,7 @@ function addMessageToPrevItems(index) {
         '<button type="button" class="btn btn-link pull-right deleteItem"><i class="icon-trash icon-black"></i><small> Delete</small></button>' +
         //'<button type="button" class="btn btn-link pull-right editItem"><i class="icon-pencil icon-black"></i> Edit</button>' +
         '<button type="button" class="btn btn-link pull-right editItem" data-toggle="collapse" data-target="#edit' + target + '"><i class="icon-file icon-black"></i><small> Edit</small></button>' +
-        '<i class="icon-comment help-hover"></i> <button type="button" class="btn btn-link help-hover" data-original-title="Message (Click for more details)" rel="tooltip" data-placement="top" data-toggle="collapse" href="#' + target + '"><u> <strong class="detailsID">' + message['id'] + '</strong></u></button><br>' + 
+        '<i class="icon-comment help-hover"></i> <button type="button" class="btn btn-link help-hover viewDetails" data-original-title="Message (Click for more details)" rel="tooltip" data-placement="top" data-toggle="collapse" href="#' + target + '"><u> <strong class="detailsID">' + message['id'] + '</strong></u></button><br>' + 
          
         // prompt details 
         '<div class="collapse-group1">' + 
@@ -134,14 +135,14 @@ function addMessageToPrevItems(index) {
                         '<label class="control-label inline-label" for="messageId">Message ID: <span class="red">*</span></label>' +
                         //'<div class="controls">' +
                             '<input type="text" name="id" class="span4 messageId" placeholder="A unique name so you can refer back to this message."/>' +
-                            '<i class="help-icon icon-question-sign" data-original-title="A unique identifier for this message." rel="tooltip" data-placement="right"></i>' +
+                            '<i class="help-icon icon-question-sign help-hover" data-original-title="A unique identifier for this message." rel="tooltip" data-placement="right"></i>' +
                         //'</div>'+
                     '</div>'+
                     '<div class="control-group">'+
                         '<label class="control-label inline-label" for="messageText">Message: <span class="red">*</span></label>'+
                         //'<div class="controls">'+
                             '<input type="text" name="messageText" class="span4 messageText" placeholder="The message to display to the user."/>'+
-                            '<i class="help-icon icon-question-sign" data-original-title="The text to be displayed to the user." rel="tooltip" data-placement="right"></i>'+
+                            '<i class="help-icon icon-question-sign help-hover" data-original-title="The text to be displayed to the user." rel="tooltip" data-placement="right"></i>'+
                         //'</div>'+
                     '</div>'+
                     '<div class="control-group">'+
@@ -151,7 +152,8 @@ function addMessageToPrevItems(index) {
                                 '<input type="hidden" class="messageConditionType" id="messageConditionType" />' +
                                 '<input type="hidden" class="messageConditionJson" id="messageConditionJson" />' +
                                 '<textarea name="messageCondition" class="span4 messageCondition" placeholder="None." disabled></textarea>'+
-                                '<button type="button" class="btn btn-link conditionBtn messageConditionBtn" >Edit Condition <i class="help-icon icon-question-sign" data-original-title="The condition which determines if the message is displayed or not." rel="tooltip" data-placement="top"></i></button>'+
+                                '<button type="button" class="btn btn-link conditionBtn messageConditionBtn" >Edit Condition </button>'+
+                                '<i class="help-icon icon-question-sign help-hover" data-original-title="The condition which determines if the message is displayed or not." rel="tooltip" data-placement="top"></i>' +
                             //'</div>'+
                         //'</div>'+
                     '</div>'+
@@ -197,7 +199,7 @@ function addAudioToPrevItem(index) {
         '<button type="button" class="btn btn-link pull-right deleteItem"><i class="icon-trash icon-black"></i><small> Delete</small></button>' +
         //'<button type="button" class="btn btn-link pull-right editItem"><i class="icon-pencil icon-black"></i> Edit</button>' +
         '<button type="button" class="btn btn-link pull-right editItem" data-toggle="collapse" data-target="#edit' + target + '"><i class="icon-file icon-black"></i><small> Edit</small></button>' +
-        '<i class="icon-ok-circle help-hover"> </i><button type="button" class="btn btn-link help-hover" data-original-title="Prompt (Click for more details)" rel="tooltip" data-placement="top" data-toggle="collapse" href="#' + target + '"><u> <strong class="detailsID">' + prompt['id'] + '</strong></u></button><br>'+
+        '<i class="icon-ok-circle help-hover"> </i><button type="button" class="btn btn-link help-hover viewDetails" data-original-title="Prompt (Click for more details)" rel="tooltip" data-placement="top" data-toggle="collapse" href="#' + target + '"><u> <strong class="detailsID">' + prompt['id'] + '</strong></u></button><br>'+
         
         '<div class="collapse-group1">' + 
             '<div id="' + target + '" class="collapse itemDetails out">'+
@@ -256,7 +258,7 @@ function addMultipleChoiceToPrevItem(index) {
         '<button type="button" class="btn btn-link pull-right deleteItem"><i class="icon-trash icon-black"></i><small> Delete</small></button>' +
         //'<button type="button" class="btn btn-link pull-right editItem"><i class="icon-pencil icon-black"></i> Edit</button>' +
         '<button type="button" class="btn btn-link pull-right editItem" data-toggle="collapse" data-target="#edit' + target + '"><i class="icon-file icon-black"></i><small> Edit</small></button>' +
-        '<i class="icon-ok-circle help-hover"> </i><button type="button" class="btn btn-link help-hover" data-original-title="Prompt (Click for more details)" rel="tooltip" data-placement="top" data-toggle="collapse" href="#' + target + '"><u> <strong class="detailsID">' + prompt['id'] + '</strong></u></button><br>'+
+        '<i class="icon-ok-circle help-hover"> </i><button type="button" class="btn btn-link help-hover viewDetails" data-original-title="Prompt (Click for more details)" rel="tooltip" data-placement="top" data-toggle="collapse" href="#' + target + '"><u> <strong class="detailsID">' + prompt['id'] + '</strong></u></button><br>'+
 
         '<div class="collapse-group1">' + 
             '<div id="' + target + '" class="collapse itemDetails out">'+
@@ -315,7 +317,7 @@ function addNumberToPrevItem(index) {
         '<button type="button" class="btn btn-link pull-right deleteItem"><i class="icon-trash icon-black"></i><small> Delete</small></button>' +
         //'<button type="button" class="btn btn-link pull-right editItem"><i class="icon-pencil icon-black"></i> Edit</button>' +
         '<button type="button" class="btn btn-link pull-right editItem" data-toggle="collapse" data-target="#edit' + target + '"><i class="icon-file icon-black"></i><small> Edit</small></button>' +
-        '<i class="icon-ok-circle help-hover"> </i><button type="button" class="btn btn-link help-hover" data-original-title="Prompt (Click for more details)" rel="tooltip" data-placement="top" data-toggle="collapse" href="#' + target + '"><u> <strong class="detailsID">' + prompt['id'] + '</strong></u></button><br>'+
+        '<i class="icon-ok-circle help-hover"> </i><button type="button" class="btn btn-link help-hover viewDetails" data-original-title="Prompt (Click for more details)" rel="tooltip" data-placement="top" data-toggle="collapse" href="#' + target + '"><u> <strong class="detailsID">' + prompt['id'] + '</strong></u></button><br>'+
         
         '<div class="collapse-group1">' + 
             '<div id="' + target + '" class="collapse itemDetails out">'+
@@ -373,7 +375,7 @@ function addPhotoToPrevItem(index) {
         '<button type="button" class="btn btn-link pull-right deleteItem"><i class="icon-trash icon-black"></i><small> Delete</small></button>' +
         //'<button type="button" class="btn btn-link pull-right editItem"><i class="icon-pencil icon-black"></i> Edit</button>' +
         '<button type="button" class="btn btn-link pull-right editItem" data-toggle="collapse" data-target="#edit' + target + '"><i class="icon-file icon-black"></i><small> Edit</small></button>' +
-        '<i class="icon-ok-circle help-hover"> </i><button type="button" class="btn btn-link help-hover" data-original-title="Prompt (Click for more details)" rel="tooltip" data-placement="top" data-toggle="collapse" href="#' + target + '"><u> <strong class="detailsID">' + prompt['id'] + '</strong></u></button><br>'+
+        '<i class="icon-ok-circle help-hover"> </i><button type="button" class="btn btn-link help-hover viewDetails" data-original-title="Prompt (Click for more details)" rel="tooltip" data-placement="top" data-toggle="collapse" href="#' + target + '"><u> <strong class="detailsID">' + prompt['id'] + '</strong></u></button><br>'+
         
         '<div class="collapse-group1">' + 
             '<div id="' + target + '" class="collapse itemDetails out">'+
@@ -430,7 +432,7 @@ function addRemoteToPrevItem(index) {
         '<button type="button" class="btn btn-link pull-right deleteItem"><i class="icon-trash icon-black"></i><small> Delete</small></button>' +
         //'<button type="button" class="btn btn-link pull-right editItem"><i class="icon-pencil icon-black"></i> Edit</button>' +
         '<button type="button" class="btn btn-link pull-right editItem" data-toggle="collapse" data-target="#edit' + target + '"><i class="icon-file icon-black"></i><small> Edit</small></button>' +
-        '<i class="icon-ok-circle help-hover"> </i><button type="button" class="btn btn-link help-hover" data-original-title="Prompt (Click for more details)" rel="tooltip" data-placement="top" data-toggle="collapse" href="#' + target + '"><u> <strong class="detailsID">' + prompt['id'] + '</strong></u></button><br>'+
+        '<i class="icon-ok-circle help-hover"> </i><button type="button" class="btn btn-link help-hover viewDetails" data-original-title="Prompt (Click for more details)" rel="tooltip" data-placement="top" data-toggle="collapse" href="#' + target + '"><u> <strong class="detailsID">' + prompt['id'] + '</strong></u></button><br>'+
       
         '<div class="collapse-group1">' +       
             '<div id="' + target + '" class="collapse itemDetails out">'+
@@ -490,7 +492,7 @@ function addSingleChoiceToPrevItem(index) {
         '<button type="button" class="btn btn-link pull-right deleteItem"><i class="icon-trash icon-black"></i><small> Delete</small></button>' +
         //'<button type="button" class="btn btn-link pull-right editItem"><i class="icon-pencil icon-black"></i> Edit</button>' +
         '<button type="button" class="btn btn-link pull-right editItem" data-toggle="collapse" data-target="#edit' + target + '"><i class="icon-file icon-black"></i><small> Edit</small></button>' +
-        '<i class="icon-ok-circle help-hover"> </i><button type="button" class="btn btn-link help-hover" data-original-title="Prompt (Click for more details)" rel="tooltip" data-placement="top" data-toggle="collapse" href="#' + target + '"><u> <strong class="detailsID">' + prompt['id'] + '</strong></u></button><br>'+
+        '<i class="icon-ok-circle help-hover"> </i><button type="button" class="btn btn-link help-hover viewDetails" data-original-title="Prompt (Click for more details)" rel="tooltip" data-placement="top" data-toggle="collapse" href="#' + target + '"><u> <strong class="detailsID">' + prompt['id'] + '</strong></u></button><br>'+
    
         '<div class="collapse-group1">' + 
             '<div id="' + target + '" class="collapse itemDetails out">'+
@@ -549,7 +551,7 @@ function addTextToPrevItem(index) {
         '<button type="button" class="btn btn-link pull-right deleteItem"><i class="icon-trash icon-black"></i><small> Delete</small></button>' +
         //'<button type="button" class="btn btn-link pull-right editItem"><i class="icon-pencil icon-black"></i> Edit</button>' +
         '<button type="button" class="btn btn-link pull-right editItem" data-toggle="collapse" data-target="#edit' + target + '"><i class="icon-file icon-black"></i><small> Edit</small></button>' +
-        '<i class="icon-ok-circle help-hover"> </i><button type="button" class="btn btn-link help-hover" data-original-title="Prompt (Click for more details)" rel="tooltip" data-placement="top" data-toggle="collapse" href="#' + target + '"><u> <strong class="detailsID">' + prompt['id'] + '</strong></u></button><br>'+
+        '<i class="icon-ok-circle help-hover"> </i><button type="button" class="btn btn-link help-hover viewDetails" data-original-title="Prompt (Click for more details)" rel="tooltip" data-placement="top" data-toggle="collapse" href="#' + target + '"><u> <strong class="detailsID">' + prompt['id'] + '</strong></u></button><br>'+
 
         '<div class="collapse-group1">' + 
             '<div id="' + target + '" class="collapse itemDetails out">'+
@@ -596,7 +598,7 @@ function addTimestampToPrevItem(index) {
         '<button type="button" class="btn btn-link pull-right deleteItem"><i class="icon-trash icon-black"></i><small> Delete</small></button>' +
         //'<button type="button" class="btn btn-link pull-right editItem"><i class="icon-pencil icon-black"></i> Edit</button>' +
         '<button type="button" class="btn btn-link pull-right editItem" data-toggle="collapse" data-target="#edit' + target + '"><i class="icon-file icon-black"></i><small> Edit</small></button>' +
-        '<i class="icon-ok-circle help-hover"> </i><button type="button" class="btn btn-link help-hover" data-original-title="Prompt (Click for more details)" rel="tooltip" data-placement="top" data-toggle="collapse" href="#' + target + '"><u> <strong class="detailsID">' + prompt['id'] + '</strong></u></button><br>'+
+        '<i class="icon-ok-circle help-hover"> </i><button type="button" class="btn btn-link help-hover viewDetails" data-original-title="Prompt (Click for more details)" rel="tooltip" data-placement="top" data-toggle="collapse" href="#' + target + '"><u> <strong class="detailsID">' + prompt['id'] + '</strong></u></button><br>'+
         
         '<div class="collapse-group1">' + 
             '<div id="' + target + '" class="collapse itemDetails out">'+
@@ -651,7 +653,7 @@ function addVideoToPrevItem(index) {
         '<button type="button" class="btn btn-link pull-right deleteItem"><i class="icon-trash icon-black"></i><small> Delete</small></button>' +
         //'<button type="button" class="btn btn-link pull-right editItem"><i class="icon-pencil icon-black"></i> Edit</button>' +
         '<button type="button" class="btn btn-link pull-right editItem" data-toggle="collapse" data-target="#edit' + target + '"><i class="icon-file icon-black"></i><small> Edit</small></button>' +
-        '<i class="icon-ok-circle help-hover"> </i><button type="button" class="btn btn-link help-hover" data-original-title="Prompt (Click for more details)" rel="tooltip" data-placement="top" data-toggle="collapse" href="#' + target + '"><u> <strong class="detailsID">' + prompt['id'] + '</strong></u></button><br>'+
+        '<i class="icon-ok-circle help-hover"> </i><button type="button" class="btn btn-link help-hover viewDetails" data-original-title="Prompt (Click for more details)" rel="tooltip" data-placement="top" data-toggle="collapse" href="#' + target + '"><u> <strong class="detailsID">' + prompt['id'] + '</strong></u></button><br>'+
         
         '<div class="collapse-group1">' + 
             '<div id="' + target + '" class="collapse itemDetails out">'+

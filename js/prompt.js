@@ -955,6 +955,20 @@ $(function() {
         //alert("Not Implemented yet");
     });
 
+    $('#previousItemsSortable').on('click', 'button.viewDetails', function(e) {
+        //if (!isEditing) {
+            //isEditing = true;
+            $parent = $(this).parent();
+            if (($parent).find('.collapse-group2').find('.in').length > 0) {
+                $parent.find('.itemEdit').collapse('hide');
+            }
+        //} else {
+        //    e.stopPropagation(); 
+        //    alert('Please finish editing or cancel before closing this');
+        //}
+        //alert("Not Implemented yet");
+    });
+
     // edit survey item
     $('#previousItemsSortable').on('click', 'button.editItem', function(e) {
         if (!isEditing) {
