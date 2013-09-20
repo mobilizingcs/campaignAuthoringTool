@@ -133,14 +133,14 @@ function addMessageToPrevItems(index) {
                     '<div class="control-group">' +
                         '<label class="control-label inline-label" for="messageId">Message ID: <span class="red">*</span></label>' +
                         //'<div class="controls">' +
-                            '<input type="text" class="span4" name="id" class="messageId" placeholder="A unique name so you can refer back to this message."/>' +
+                            '<input type="text" name="id" class="span4 messageId" placeholder="A unique name so you can refer back to this message."/>' +
                             '<i class="help-icon icon-question-sign" data-original-title="A unique identifier for this message." rel="tooltip" data-placement="right"></i>' +
                         //'</div>'+
                     '</div>'+
                     '<div class="control-group">'+
                         '<label class="control-label inline-label" for="messageText">Message: <span class="red">*</span></label>'+
                         //'<div class="controls">'+
-                            '<input type="text" class="span4" name="messageText" class="messageText" placeholder="The message to display to the user."/>'+
+                            '<input type="text" name="messageText" class="span4 messageText" placeholder="The message to display to the user."/>'+
                             '<i class="help-icon icon-question-sign" data-original-title="The text to be displayed to the user." rel="tooltip" data-placement="right"></i>'+
                         //'</div>'+
                     '</div>'+

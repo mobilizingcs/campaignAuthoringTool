@@ -168,9 +168,11 @@ table {
     max-width:none;
 }
 */
-.conditionTooltip {
-    white-space:pre;
-    max-width: none !important;
+.conditionTooltips {
+    position:relative;
+    left:-70px;
+    bottom: -5px;
+    /*z-index:-1;*/
 }
 
 .inline-label {
