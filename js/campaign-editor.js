@@ -172,6 +172,8 @@ var campaignEditor = {
         
         if (messageData['messageCondition']) {
             contentList[index]['message']['condition'] = messageData['messageCondition'];
+        } else {
+            delete contentList[index]['message'].condition;
         }
         
         return true;
@@ -302,6 +304,9 @@ var campaignEditor = {
         }
 
         if (condition) contentList[index]['prompt']['condition'] = condition;
+        else {
+            delete contentList[index]['prompt'].condition;
+        }
         contentList[index]['prompt']['skippable'] = skippable;
         if (skippable) {
             if (skipLabel) contentList[index]['prompt']['skipLabel'] = skipLabel;

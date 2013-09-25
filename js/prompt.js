@@ -1013,7 +1013,11 @@ $(function() {
             messageData['id'] = $edit.find('.editPromptDetails').find('.messageId').val();
             messageData['messageText'] = $edit.find('.editPromptDetails').find('.messageText').val();
             if ($edit.find('.editPromptDetails').find('.messageCondition').val().trim() != "") {
+                //console.log('condition: ' + $edit.find('.editPromptDetails').find('.messageCondition').val())
                 messageData['messageCondition'] = $edit.find('.editPromptDetails').find('.messageCondition').val();
+            } else {
+                //$edit.find('.editPromptDetails').find('.messageCondition').val().trim() != "";
+                //console.log("EMPTY");
             }
 
             var result = campaignEditor.editMessage(messageData, index);
@@ -1054,7 +1058,9 @@ $(function() {
                 //alert(promptData['default'])
             }
 
-            if ($edit.find('.editPromptDetails').find('.promptCondition').val().trim() != "") promptData['promptCondition'] = $edit.find('.editPromptDetails').find('.promptCondition').val();
+            if ($edit.find('.editPromptDetails').find('.promptCondition').val().trim() != "") {
+                promptData['promptCondition'] = $edit.find('.editPromptDetails').find('.promptCondition').val();
+            }
             if ($edit.find('.editPromptDetails').find('.skippable').is(':checked')) { 
                 promptData['skippable'] = true;
             } else {
