@@ -509,7 +509,7 @@ $(function() {
 		            var conjunction = $this.find(".conjunction").val();
 
 		            output += "(" + promptID + " " + operator + " " + value + ")" + " " + conjunction + " \n";
-
+                    output = output.trim();
                     
                     var row = {};
                     row['promptID'] = promptID;
