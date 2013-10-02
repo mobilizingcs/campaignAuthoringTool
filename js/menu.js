@@ -100,6 +100,7 @@ $(function() {
     }
 
     $('#submitCampaign').click(function() {
+        deleteEditField(campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList']['']);
         var xmlFile = '<?xml version="1.0" encoding="UTF-8"?>' + json2xml({'campaign': campaignWrapper['campaign']});
 
         $.post("/app/user_info/read", { auth_token: $.cookie('auth_token'), client: 'campaign-webapp' }, function(response) {
