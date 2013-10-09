@@ -54,8 +54,9 @@ $(function() {
 					
             		break
             	case 'advanced':
-                    var validate = submitValidationSimple();
+                    //var validate = submitValidationSimple("ERROR SUPPRESS");
                     var source = $('#conditionSource').val();
+                    var validate = true;
                     if (validate) {
                         var output = "";
                         //var json = {'row':[]};
@@ -76,6 +77,7 @@ $(function() {
                         });
                         $("#simpleConditionTbl").find("tr:gt(1)").remove();
                     }
+                    
                     $("#advancedConditionText").val(output);        
 					$("#simpleCondition").hide();
                     //$('.advancedCondition').val("");
@@ -162,7 +164,6 @@ $(function() {
 		}
 	}
 	function validateConditionValue() {
-		// TODO
 		$this = $(this);
 		var promptType = $this.parents("tr:first").find(".previousPrompts").val();
         var valueChoice = $this.parents("tr:first").find(".conditionValueChoice").val();
