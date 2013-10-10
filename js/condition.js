@@ -509,8 +509,7 @@ $(function() {
 		            var operator = $this.find(".operator").val();
 		            var conjunction = $this.find(".conjunction").val();
 
-		            output += "(" + promptID + " " + operator + " " + value + ")" + " " + conjunction + " \n";
-                    output = output.trim();
+		            output += "(" + promptID + " " + operator + " " + value + ")" + " " + conjunction + " " +"\n";
                     
                     var row = {};
                     row['promptID'] = promptID;
@@ -522,6 +521,7 @@ $(function() {
                     json['row'].push(row);
 
 		        });
+                output = output.trim();
 		        switch (source) {
                 case 'message':
                     console.log(JSON.stringify(json));
