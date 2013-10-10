@@ -60,22 +60,24 @@ $(function() {
                     if (validate) {
                         var output = "";
                         //var json = {'row':[]};
-                        $('#simpleConditionTbl tr:not(:first-child)').each(function()
-                        {
-                            $this = $(this);
-                            var value ="";
-                            var valueType = $this.find(".conditionValueChoice").val();
-                            if (valueType == 'NOT_DISPLAYED') value = "NOT_DISPLAYED";
-                            else if (valueType == 'SKIPPED') value = "SKIPPED";
-                            else value = $this.find(".conditionValue").val();
+                        if (prevValue == 'simple') {
+                            $('#simpleConditionTbl tr:not(:first-child)').each(function()
+                            {
+                                $this = $(this);
+                                var value ="";
+                                var valueType = $this.find(".conditionValueChoice").val();
+                                if (valueType == 'NOT_DISPLAYED') value = "NOT_DISPLAYED";
+                                else if (valueType == 'SKIPPED') value = "SKIPPED";
+                                else value = $this.find(".conditionValue").val();
 
-                            var promptID = $this.find(".previousPrompts option:selected").text();
-                            var operator = $this.find(".operator").val();
-                            var conjunction = $this.find(".conjunction").val();
+                                var promptID = $this.find(".previousPrompts option:selected").text();
+                                var operator = $this.find(".operator").val();
+                                var conjunction = $this.find(".conjunction").val();
 
-                            output += "(" + promptID + " " + operator + " " + value + ")" + " " + conjunction + " \n";
-                        });
-                        $("#simpleConditionTbl").find("tr:gt(1)").remove();
+                                output += "(" + promptID + " " + operator + " " + value + ")" + " " + conjunction + " \n";
+                            });
+                            $("#simpleConditionTbl").find("tr:gt(1)").remove();
+                        }
                     }
                     
                     $("#advancedConditionText").val(output);        
