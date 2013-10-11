@@ -74,12 +74,12 @@ $(function() {
                                 var operator = $this.find(".operator").val();
                                 var conjunction = $this.find(".conjunction").val();
 
-                                output += "(" + promptID + " " + operator + " " + value + ")" + " " + conjunction + " \n";
+                                output += "(" + promptID + " " + operator + " " + value + ")" + " " + conjunction + " ";
                             });
                             $("#simpleConditionTbl").find("tr:gt(1)").remove();
                         }
                     }
-                    
+                    output.trim();
                     $("#advancedConditionText").val(output);        
 					$("#simpleCondition").hide();
                     //$('.advancedCondition').val("");
@@ -511,7 +511,7 @@ $(function() {
 		            var operator = $this.find(".operator").val();
 		            var conjunction = $this.find(".conjunction").val();
 
-		            output += "(" + promptID + " " + operator + " " + value + ")" + " " + conjunction + " " +"\n";
+		            output += "(" + promptID + " " + operator + " " + value + ")" + " " + conjunction + " ";
                     
                     var row = {};
                     row['promptID'] = promptID;
