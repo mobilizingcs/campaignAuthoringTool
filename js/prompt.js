@@ -479,10 +479,8 @@ $(function() {
         for (var i = 0; i < size; i++) {
             var item = campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''][i]
             if (item['message']) {
-                var value = item['message']['id'];
-                var text = value;
-                $('.previousPrompts').append($('<option>', { value : 'message' })
-                                     .text(text));
+                // as per new bugs , NOT adding message to the condition list
+                // this item does nothing
             }
             else if (item['prompt']) {
                 var value = item['prompt']['id'];
@@ -1452,26 +1450,6 @@ $(function() {
         //$('#newMessage').collapse('show');
     }
 
-    /*
-    $('#editMessage').live('click',function() {
-        var itemId = $('#editMessageId').val();
-        var messageData = {};
-        messageData['id'] = $('#messageId').val();
-        messageData['messageText'] = $('#messageText').val();
-        if ($('#messageCondition').val().trim() != "") messageData['condition'] = $('#messageCondition').val();
-
-        var index = campaignEditor.editMessage(messageData, itemId);
-
-        if (index === false) {
-            surveyItemError('Some required fields are missing!')
-        } else {
-            location.reload();
-            //$('#createMessage').toggle();
-            //$('#editMessage').toggle();
-            //$('#cancelMessageEdit').toggle();
-        }
-    });
-    */
     $('#cancelMessage').live('click',function() {
         if (confirm("Are you sure you want to Cancel ?\n All unchanged save will be lost")) {
             //$('.createItemError').slideToggle('slow',function() { $(this).alert('close')});
@@ -1490,8 +1468,6 @@ $(function() {
     });
 
     function setupEditPrompt (currItem, prompt, itemId) {
-        // TODO
-        //var itemId = prompt['editId'];
         console.log(currItem);
         currItem.find('.editPromptDetails').find('.editPromptId').val(itemId);
         currItem.find('.editPromptDetails').find('.promptId').val(prompt['id']);
@@ -1507,10 +1483,8 @@ $(function() {
 
         switch (prompt['promptType']) {
             case "audio":
-                // TODO
                 var maxLength = prompt['properties']['property'][0]['label'];
                 var properties = "max_milliseconds:" + maxLength;
-                //$('#videoTable').find('.maxVideoLength').val(maxLength);
                 currItem.find('.editPromptDetails').find('.addedPrompt').val(properties);
                 break;
             case "multi_choice":
@@ -1558,43 +1532,7 @@ $(function() {
                         if (i == prompt['default']) tmp += " (default)"
                     }
                     properties += tmp + '\n';
-
-                    /*
-                    if (i == 0) {
-                        $('#singleChoiceTable tr:nth-child(2)').find(".singleOptionNum").val(i);
-                        $('#singleChoiceTable tr:nth-child(2)').find(".singleLabel").val(label);
-                        $('#singleChoiceTable tr:nth-child(2)').find(".singleValue").val(value);
-                    } else {
-                        // add row to table
-                        $row = $('#singleChoiceTable tr:nth-child(2)').clone();
-                        $('#singleChoiceTable tr:last').after($row);
-                        $('#singleChoiceTable tr:last').find(".singleOptionNum").val(i);
-                        $('#singleChoiceTable tr:last').find(".singleLabel").val(label);
-                        $('#singleChoiceTable tr:last').find(".singleValue").val(value);
-                    }
-                    */
                 }
-
-                // update default box
-                /*
-                $('#singleChoiceDefault').empty();
-                var key = 0;
-                $('#singleChoiceDefault')
-                    .append($("<option></option>")
-                    .attr("value",-1)
-                    .text("None")); 
-                $('#singleChoiceTable tr:not(:first-child)').each(function()
-                {
-                    $this = $(this);
-                    var optionNum = $this.find(".singleOptionNum").val();
-                    var label = $this.find(".singleLabel").val();
-                    $('#singleChoiceDefault')
-                     .append($("<option></option>")
-                     .attr("value",key++)
-                     .text(optionNum + ': ' + label)); 
-                });
-                $('#singleChoiceDefault').val(currItem.find('.editPromptDetails').find('.default').val());
-                */
                 currItem.find('.editPromptDetails').find('.addedPrompt').val(properties);
                 break;
             case "number":
@@ -1690,17 +1628,6 @@ $(function() {
             currItem.find('.editPromptDetails').find('.skippable').prop('checked', false);
             currItem.find('.editPromptDetails').find('.skipLabel').val("");
         }
-        
-        //$('#addPrompt').text('Edit Prompt');
-        //$('#addPrompt').toggle();
-        //$('#editPrompt').toggle();
-        //$('#cancelPromptEdit').toggle();
-        
-        // next 2 lines somehow cause errors, temporary disable
-        //$('#newMessage').collapse('hide');
-        //$('#newRepeatableSet').collapse('hide');
-        //$('#newPrompt').collapse('show');
-        
     }
 
     $('#editPrompt').live('click',function() {
@@ -1753,22 +1680,6 @@ $(function() {
         } else {
             location.reload();
         }
-        /*
-        messageData['id'] = $('#messageId').val();
-        messageData['messageText'] = $('#messageText').val();
-        if ($('#messageCondition').val().trim() != "") messageData['condition'] = $('#messageCondition').val();
-
-        var index = campaignEditor.editMessage(messageData, itemId);
-
-        if (index === false) {
-            surveyItemError('Some required fields are missing!')
-        } else {
-            location.reload();
-            //$('#createMessage').toggle();
-            //$('#editMessage').toggle();
-            //$('#cancelMessageEdit').toggle();
-        }
-        */
     });
 
     
@@ -1788,18 +1699,6 @@ $(function() {
         disabled.attr('disabled','disabled');
 
         var itemIndex;
-        /*
-        if (messageData['editMessageId']) {
-            event.preventDefault();
-            var messageId = parseInt(messageData['editMessageId']);
-    
-            console.log(messageId);
-            itemIndex = campaignEditor.surveyItemIndexes(campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList']['']).indexOf(messageId);
-            //itemIndex = indexMapper[campaignEditor.surveyItemIndexes(campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList']['']).indexOf(id)];
-            console.log(itemIndex);
-            campaignEditor.addMessage(messageData, itemIndex);
-        } else {
-            */
         event.preventDefault();
         itemIndex = campaignEditor.addMessage(messageData);
         
@@ -1947,22 +1846,6 @@ $(function() {
         }
     });
 
-    //var prevValue2 = $('.choosePromptType').val();
-    /*
-    $('.choosePromptType' ).on('mousedown', 'option', function (event) {
-        $parent = $(this).closest('.previousItem');
-        //var currentSurvey = campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')];
-        //var index = $('#previousItemsSortable li').index($parent);
-        //var item = currentSurvey['contentList'][''][index];
-        $edit = $parent.find('.group2');
-        event.preventDefault();
-        if ($(this).val() === prevValue2) {
-            alert('same');
-            $('.promptTypeBtn').trigger('click');
-        }
-        //alert('click3');
-    });
-    */
     /*
     jQuery(".choosePromptType").focus(function() {
         //alert('click');
