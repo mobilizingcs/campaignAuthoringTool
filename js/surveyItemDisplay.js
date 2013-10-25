@@ -82,7 +82,7 @@ var editPrompt = '<hr>' +
                         //'<div class="controls"> '+
                             //'<label class="checkbox">'+
                                 '<input type="checkbox" name="skippable" class="skippable" >'+
-                                '  Is this prompt skippable?'+
+                                '  Check if this prompt is skippable?'+
                             //'</label>'+
                         //'</div>'+
                     '</div> '+

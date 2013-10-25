@@ -494,7 +494,6 @@ $(function() {
         if ($('#conditionType').val() == 'simple') { // simple condition
         	var validate = submitValidationSimple();
         	var source = $('#conditionSource').val();
-            console.log(source);
         	if (validate) {
         		var output = "";
                 var json = {'row':[]};
@@ -509,6 +508,9 @@ $(function() {
 
 		            var promptID = $this.find(".previousPrompts option:selected").text();
 		            var operator = $this.find(".operator").val();
+                    // replace operator for the right one
+                    operator = operator.replace(/\</g,"&lt;"); // for <
+                    operator = operator.replace(/\>/g,"&gt;"); // for >
 		            var conjunction = $this.find(".conjunction").val();
 
 		            output += "(" + promptID + " " + operator + " " + value + ")" + " " + conjunction + " ";
@@ -560,7 +562,7 @@ $(function() {
         }
         else if ($('#conditionType').val() == 'advanced') { //advance condition
             var source = $('#conditionSource').val();
-            var text = $('.advancedCondition').val();
+            var text = $('.advancedCondition').val().trim();
             switch (source) {
                 case 'message':
                     if (editObj == null) {
@@ -585,7 +587,6 @@ $(function() {
                 default:
                     break;
             }
-            console.log($('#messageCondition').val());
             $('#conditionModal').modal('hide');
         } else {
         	var source = $('#conditionSource').val();
@@ -810,6 +811,6 @@ $(function() {
         
         var conjunction = $row.find(".conjunction").val();
         var oldVal = $('.advancedCondition').val();
-        $('.advancedCondition').val(oldVal + conjunction + '\n'); 
+        $('.advancedCondition').val(oldVal + conjunction); 
     });
 });
