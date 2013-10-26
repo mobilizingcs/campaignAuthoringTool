@@ -563,6 +563,9 @@ $(function() {
         else if ($('#conditionType').val() == 'advanced') { //advance condition
             var source = $('#conditionSource').val();
             var text = $('.advancedCondition').val().trim();
+            // replace operator with the right one
+            text = text.replace(/\</g,"&lt;"); // for <
+            text = text.replace(/\>/g,"&gt;"); // for >
             switch (source) {
                 case 'message':
                     if (editObj == null) {
