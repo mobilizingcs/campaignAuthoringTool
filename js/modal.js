@@ -111,7 +111,7 @@ $(function() {
         $this = $(this);
         $this.val($this.val().trim());
         var val = $this.val();
-        if (!isPositiveNumber(val)) {
+        if (!isPositiveFloatNumber(val)) {
             alert('Value must be a positive number');
             $this.val("");
             //$this.css("background-color", "red");
@@ -210,7 +210,7 @@ $(function() {
         $this = $(this);
         var currentLabel = $this.val().trim();
         var val = $this.val();
-        if (!isPositiveNumber(val)) {
+        if (!isPositiveFloatNumber(val)) {
             alert('Value must be a positive number');
             $this.val("");
             //$this.css("background-color", "red");
