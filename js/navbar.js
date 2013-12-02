@@ -8,11 +8,15 @@ $(function() {
     
     $('.logoutButton').click(function (e) {
         if (confirm("Are you sure you want to log out? All unsaved data will be lost.")) {
-            //$.post("https://test.ohmage.org/app/user/logout", { client: "campaign-webapp", auth_token: $.cookie('authToken')});
-            //$.removeCookie('authToken');
-            //$.removeCookie('username');
-            //window.location.replace('login.html');
+            /*
+              SN - since we don't have a final location for the tool,
+              let's look up our location. then we set it to support auto redirect.
+            */
+            history.pushState({}, '', '/'+(window.location.pathname.split("\/",2))[1]));
             oh.logout(function(x){});
+            localStorage.removeItem('campaignWrapper');
+            $.removeCookie('currentCampaign');
+            $.removeCookie('currentSurvey');
         } else {
             e.preventDefault();
         }
