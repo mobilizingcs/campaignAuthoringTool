@@ -10,6 +10,9 @@ $(function() {
         username = res.username;
     });
 
+    //adding keep alive call to prevent auth_token timeout while user is active.
+    oh.keepalive();
+
     // Get existing campaigns
     $.post("/app/user_info/read", { auth_token: $.cookie('auth_token'), client: "campaign-webapp" },
         function(response) {

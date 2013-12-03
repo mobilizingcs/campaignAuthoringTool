@@ -33,6 +33,9 @@ $(function() {
 
     });
 
+    //adding keep alive call to prevent auth_token timeout while user is active.
+    oh.keepalive();
+
     var oh2 = oh2 || {};
     oh2.call = function(path, data, datafun){
 
