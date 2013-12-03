@@ -104,6 +104,10 @@ $(function() {
 
     $('#submitCampaign').click(function() {
         deleteEditField(campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList']['']);
+        //test if campaign has a finished survey, don't upload if it doesnt
+        if (campaignWrapper['campaign']['surveys']['survey'][0]['contentList'][''].length === 0){
+        alert("It doesn't look like your campaign is finished, make sure to finish before you upload!");
+        } else {
         var xmlFile = '<?xml version="1.0" encoding="UTF-8"?>' + json2xml({'campaign': campaignWrapper['campaign']});
 
         $.post("/app/user_info/read", { auth_token: $.cookie('auth_token'), client: 'campaign-webapp' }, function(response) {
@@ -126,6 +130,7 @@ $(function() {
                 oh.sendtologin();
             }
         }, "json");
+	}
     });
 
     // relogin
