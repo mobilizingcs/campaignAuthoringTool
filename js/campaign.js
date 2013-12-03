@@ -53,10 +53,11 @@ $(function() {
         if (urn === '') {
             $('#campaignUrn').parent().parent().addClass('error');
         } else {
+	    urn = urn.replace(/\s/g,"");
             $('#campaignUrn').parent().parent().removeClass('error');
         }
         var campaign = campaignEditor.createCampaign(title, urn);
-        if (!campaign) {
+        if (!campaign) { 
             var errorAlert = '<div class="alert alert-error create-campaign-error hide"><button class="close">&times;</button><strong>Error:</strong> One or more required field is missing</div>';
             $(errorAlert).insertAfter('.new-campaign hr').slideToggle();
             if($('.create-campaign-error').size() > 1) {

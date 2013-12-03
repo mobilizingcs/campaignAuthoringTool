@@ -112,6 +112,7 @@ $(function() {
         if (urn === '') {
             $('#campaignUrn').parent().parent().addClass('error');
         } else {
+            urn = urn.replace(/\s/g,"");
             $('#campaignUrn').parent().parent().removeClass('error');
         }
         var campaign = campaignEditor.editCampaign(campaignWrapper['campaign'], title, urn);
