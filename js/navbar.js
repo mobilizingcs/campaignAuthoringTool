@@ -12,7 +12,7 @@ $(function() {
               SN - since we don't have a final location for the tool,
               let's look up our location. then we set it to support auto redirect.
             */
-            history.pushState({}, '', '/'+(window.location.pathname.split("\/",2))[1]));
+            history.pushState({}, '', '/'+(window.location.pathname.split("\/",2))[1]);
             oh.logout(function(x){});
             localStorage.removeItem('campaignWrapper');
             $.removeCookie('currentCampaign');
