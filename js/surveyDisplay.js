@@ -59,7 +59,7 @@ function addSurveyToPage(index) {
                     '<div class="control-group">' +
                         '<label class="control-label" for="surveyId">Survey Id: <span class="red">*</span></label>'+
                         //'<div class="controls">' +
-                            '<input class="span3" type="text" id="surveyId" />' +
+                            '<input class="span3 hastip" type="text" id="surveyId" />' +
                             '<i class="help-icon icon-question-sign" data-original-title="A unique identifier for this survey." rel="tooltip" data-placement="right"></i>' +
                         //'</div>' +
                     '</div>' +
@@ -67,7 +67,7 @@ function addSurveyToPage(index) {
                     '<div class="control-group">' +
                         '<label class="control-label" for="surveyTitle">Title: <span class="red">*</span></label>' +
                         //'<div class="controls">' +
-                            '<input class="span3" type="text" id="surveyTitle" />'+
+                            '<input class="span3 hastip" type="text" id="surveyTitle" />'+
                             '<i class="help-icon icon-question-sign" data-original-title="A name for the survey to be displayed to the user." rel="tooltip" data-placement="right"></i>' +
                         //'</div>' +
                     '</div>' +
@@ -76,7 +76,7 @@ function addSurveyToPage(index) {
                         '<div class="control-group">' +
                             '<label class="control-label" for="surveyDescription">Description: </label>' +
                             //'<div class="controls">' +
-                                '<textarea id="surveyDescription" class="span3" placeholder="Enter the description of your survey here..."></textarea>' +
+                                '<textarea id="surveyDescription" class="span3 hastip" placeholder="Enter the description of your survey here..."></textarea>' +
                                 '<i class="help-icon icon-question-sign" data-original-title="A user-friendly description of the survey." rel="tooltip" data-placement="right"></i>' +
                             //'</div>' +
                         '</div>' +
@@ -86,7 +86,7 @@ function addSurveyToPage(index) {
                         '<div class="control-group">' +
                             '<label class="control-label" for="surveyIntroText">Introduction Text: </label>' +
                             //'<div class="controls">' +
-                                '<textarea id="surveyIntroText" class="span3" placeholder="Text to display to the user before they begin the survey..."></textarea>' +
+                                '<textarea id="surveyIntroText" class="span3 hastip" placeholder="Text to display to the user before they begin the survey..."></textarea>' +
                                 '<i class="help-icon icon-question-sign" data-original-title="The text to be displayed when a survey is started." rel="tooltip" data-placement="right"></i>' +
                             //'</div>' +
                         '</div>' +
@@ -95,7 +95,7 @@ function addSurveyToPage(index) {
                     '<div class="control-group">' +
                         '<label class="control-label" for="surveySubmitText">Submit Text: <span class="red">*</span></label>' +
                         //'<div class="controls">' +
-                            '<textarea class="span3" id="surveySubmitText" placeholder="Text to display to a user upon survey completion..."></textarea>' +
+                            '<textarea class="span3 hastip" id="surveySubmitText" placeholder="Text to display to a user upon survey completion..."></textarea>' +
                             '<i class="help-icon icon-question-sign" data-original-title="The text to be displayed on the submit screen once a survey has been completed." rel="tooltip" data-placement="right"></i>' +
                         //'</div>' +
                     '</div>' +     
@@ -105,7 +105,7 @@ function addSurveyToPage(index) {
                         //'<div class="controls">' +
                             
                             //'<label class="checkbox">' +
-                            '<input type="checkbox" id="surveyAnytime" value="">' +
+                            '<input type="checkbox" class="hastip" id="surveyAnytime" value="">' +
                                 
                             //'</label>' +
                             '   The survey can be taken at any time. ' +

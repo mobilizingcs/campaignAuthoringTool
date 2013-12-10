@@ -13,6 +13,7 @@
         <script type="text/javascript" src="js/bootstrap.min.js"></script>
         <script type="text/javascript" src="js/underscore.js"></script>
         <script type="text/javascript" src="js/ohmage.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript" src="js/Constant.js"></script>
         <script type="text/javascript" src="js/configuration.js"></script>
         <script type="text/javascript" src="js/navbar.js"></script>
@@ -102,7 +103,7 @@
                                 <div class="control-group">
                                     <label class="control-label" for="surveyId">Survey ID <span class="red">*</span></label>
                                     <div class="controls">
-                                        <input class="span5" type="text" id="surveyId" />
+                                        <input class="span5 hastip" type="text" id="surveyId" />
                                         <i class="help-icon icon-question-sign" data-original-title="A unique identifier for this survey." rel="tooltip" data-placement="right"></i>
                                     </div>
                                 </div>
@@ -110,7 +111,7 @@
                                 <div class="control-group">
                                     <label class="control-label" for="surveyTitle">Title <span class="red">*</span></label>
                                     <div class="controls">
-                                        <input class="span5" type="text" id="surveyTitle" />
+                                        <input class="span5 hastip" type="text" id="surveyTitle" />
                                         <i class="help-icon icon-question-sign" data-original-title="A name for the survey to be displayed to the user." rel="tooltip" data-placement="right"></i>
                                     </div>
                                 </div>
@@ -120,7 +121,7 @@
                                     <div class="control-group">
                                         <label class="control-label" for="surveyDescription">Description </label>
                                         <div class="controls">
-                                            <textarea id="surveyDescription" class="span5" placeholder="Enter the description of your survey here..."></textarea>
+                                            <textarea id="surveyDescription" class="span5 hastip" placeholder="Enter the description of your survey here..."></textarea>
                                             <i class="help-icon icon-question-sign" data-original-title="A user-friendly description of the survey." rel="tooltip" data-placement="right"></i>
                                         </div>
                                     </div>
@@ -131,7 +132,7 @@
                                     <div class="control-group">
                                         <label class="control-label" for="surveyIntroText">Introduction Text</label>
                                         <div class="controls">
-                                            <textarea id="surveyIntroText" class="span5" placeholder="Text to display to the user before they begin the survey..."></textarea>
+                                            <textarea id="surveyIntroText" class="span5 hastip" placeholder="Text to display to the user before they begin the survey..."></textarea>
                                             <i class="help-icon icon-question-sign" data-original-title="The text to be displayed when a survey is started." rel="tooltip" data-placement="right"></i>
                                         </div>
                                     </div>
@@ -140,7 +141,7 @@
                                 <div class="control-group">
                                     <label class="control-label" for="surveySubmitText">Submit Text <span class="red">*</span></label>
                                     <div class="controls">
-                                        <textarea class="span5" id="surveySubmitText" placeholder="Text to display to a user upon survey completion..."></textarea>
+                                        <textarea class="span5 hastip" id="surveySubmitText" placeholder="Text to display to a user upon survey completion..."></textarea>
                                         <i class="help-icon icon-question-sign" data-original-title="The text to be displayed on the submit screen once a survey has been completed." rel="tooltip" data-placement="right"></i>
                                     </div>
                                 </div>     
@@ -150,7 +151,7 @@
                                     <label class="control-label" for="surveyAnytime">Anytime</label>
                                     <div class="controls">
                                         <label class="checkbox">
-                                            <input type="checkbox" id="surveyAnytime" value="" checked="checked">
+                                            <input type="checkbox" class="hastip" id="surveyAnytime" value="" checked="checked">
                                             The survey can be taken at any time.
                                             <i class="help-icon icon-question-sign" data-original-title="A boolean value indicating whether or not the survey may be taken at any time. If false, the survey may only be taken when a trigger has fired indicating that the user may now take the survey." rel="tooltip" data-placement="right"></i>
                                         </label>

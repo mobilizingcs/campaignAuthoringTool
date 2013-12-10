@@ -16,6 +16,7 @@
         <script type="text/javascript" src="js/configuration.js"></script>
         <script type="text/javascript" src="js/underscore.js"></script>
         <script type="text/javascript" src="js/ohmage.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript" src="js/Constant.js"></script>
         <script type="text/javascript" src="js/promptUtil.js"></script>
         
@@ -303,14 +304,14 @@
                                                 <div class="control-group">
                                                     <label class="control-label" for="messageId">Message ID: <span class="red">*</span></label>
                                                     <div class="controls">
-                                                        <input type="text" name="id" class="span4" id="messageId" placeholder="A unique name so you can refer back to this message."/>
+                                                        <input type="text" name="id" class="span4 hastip" id="messageId" placeholder="A unique name so you can refer back to this message."/>
                                                         <i class="help-icon icon-question-sign" data-original-title="A unique identifier for this message." rel="tooltip" data-placement="right"></i>
                                                     </div>
                                                 </div>
                                                 <div class="control-group">
                                                     <label class="control-label" for="messageText">Message: <span class="red">*</span></label>
                                                     <div class="controls">
-                                                        <input type="text" name="messageText" class="span4" id="messageText" placeholder="The message to display to the user."/>
+                                                        <input type="text" name="messageText" class="span4 hastip" id="messageText" placeholder="The message to display to the user."/>
                                                         <i class="help-icon icon-question-sign" data-original-title="The text to be displayed to the user." rel="tooltip" data-placement="right"></i>
                                                     </div>
                                                 </div>
@@ -322,7 +323,7 @@
                                                             <input type="hidden" class="messageConditionJson" id="messageConditionJson" />
                                                             <textarea name="messageCondition" class="span4 messageCondition" id="messageCondition" placeholder="None." disabled></textarea>
                                                             
-                                                            <button type="button" class="btn btn-link" id="messageConditionBtn">Edit Condition </button>
+                                                            <button type="button" class="btn btn-link hastip" id="messageConditionBtn">Edit Condition </button>
                                                             <i class="help-icon icon-question-sign" data-original-title="The condition which determines if the message is displayed or not." rel="tooltip" data-placement="bottom"></i>
                                                         <!--</div>-->
                                                     </div>
@@ -349,7 +350,7 @@
                                                 <div class="control-group">
                                                     <label class="control-label" for="promptId">Prompt ID: <span class="red">*</span></label>
                                                     <div class="controls">
-                                                        <input type="text" class="span4" name="id" id="promptId" placeholder="A unique name so you can refer back to this prompt." />
+                                                        <input type="text" class="span4 hastip" name="id" id="promptId" placeholder="A unique name so you can refer back to this prompt." />
                                                         <i class="help-icon icon-question-sign" data-original-title="A unique identifier for the prompt." rel="tooltip" data-placement="right"></i>
                                                     </div>
                                                 </div>
@@ -357,7 +358,7 @@
                                                 <div class="control-group">
                                                     <label class="control-label" for="displayLabel">Display Label: <span class="red">*</span></label>
                                                     <div class="controls">
-                                                        <input type="text" class="span4" name="displayLabel" id="displayLabel" placeholder="Display Label" />
+                                                        <input type="text" class="span4 hastip" name="displayLabel" id="displayLabel" placeholder="Display Label" />
                                                         <i class="help-icon icon-question-sign" data-original-title="The user-friendly name of this prompt used in visualizations." rel="tooltip" data-placement="right"></i>
                                                     </div>
                                                 </div>
@@ -365,7 +366,7 @@
                                                 <div class="control-group">
                                                     <label class="control-label" for="promptText">Prompt Text: <span class="red">*</span></label>
                                                     <div class="controls">
-                                                        <textarea type="text" class="span4" name="promptText" id="promptText" placeholder="Question Text"></textarea>
+                                                        <textarea type="text" class="span4 hastip" name="promptText" id="promptText" placeholder="Question Text"></textarea>
                                                         <i class="help-icon icon-question-sign" data-original-title="The text to display to the user when prompting them to respond." rel="tooltip" data-placement="right"></i>
                                                     </div>
                                                 </div>
@@ -374,7 +375,7 @@
                                                     <label class="control-label" for="promptType">Prompt Type: <span class="red">*</span></label>
                                                     
                                                     <div class="controls">
-                                                        <select id="choosePromptType" name="promptType" class="promptType span4">
+                                                        <select id="choosePromptType" name="promptType" class="promptType span4 hastip">
                                                             <option value="">Please choose a prompt type</option>
                                                             <option value="audio">Audio (native Android only)</option>
                                                             <option value="multi_choice">Multiple Choice</option>
@@ -416,7 +417,7 @@
                                                                 <input type="hidden" class="promptConditionType" id="promptConditionType" />
                                                                 <input type="hidden" class="promptConditionJson" id="promptConditionJson" />
                                                                 <textarea name="promptCondition"  class="span4" id="promptCondition" placeholder="None." disabled></textarea>
-                                                                <button type="button" class="btn btn-link" id="promptConditionBtn">Edit Condition </button> <i class="help-icon icon-question-sign" data-original-title="The condition which determines if the prompt is displayed or not." rel="tooltip" data-placement="top"></i>
+                                                                <button type="button" class="btn btn-link hastip" id="promptConditionBtn">Edit Condition </button> <i class="help-icon icon-question-sign" data-original-title="The condition which determines if the prompt is displayed or not." rel="tooltip" data-placement="top"></i>
                                                             <!--</div>-->
                                                         </div>
                                                     </div>
@@ -433,7 +434,7 @@
                                                     <div class="control-group">
                                                         <label class="control-label skipLabelText" for="skipLabel">Skip Label: </label>
                                                         <div class="controls">
-                                                            <input type="text" class="span4" name="skipLabel" id="skipLabel" value="Skip" disabled/>
+                                                            <input type="text" class="span4 hastip" name="skipLabel" id="skipLabel" value="Skip" disabled/>
                                                             <i class="help-icon icon-question-sign" data-original-title="If skippable, this is the text of the button to use to skip the label." rel="tooltip" data-placement="right"></i>
                                                         </div> 
                                                     </div>   

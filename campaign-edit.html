@@ -16,6 +16,7 @@
         <script type="text/javascript" src="js/jquery.xml2json.js"></script>
         <script type="text/javascript" src="js/underscore.js"></script>
         <script type="text/javascript" src="js/ohmage.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript" src="js/menu.js"></script>
         <script type="text/javascript" src="js/insertXmlModal.js"></script>
         <script type="text/javascript" src="js/alerts.js"></script>
@@ -102,21 +103,21 @@
                                 <div class="control-group">
                                     <label class="control-label" for="campaignTitle">Campaign Name <span class="red">*</span></label>
                                     <div class="controls">
-                                        <input type="text" class="span5" id="campaignTitle" placeholder="Campaign Title" />
+                                        <input type="text" class="span5 hastip" id="campaignTitle" placeholder="Campaign Title" />
                                         <i class="help-icon icon-question-sign" data-original-title="A name to be displayed to the user for this campaign." rel="tooltip" data-placement="right"></i>
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <label class="control-label" for="campaignUrn">Campaign Urn <span class="red">*</span></label>
                                     <div class="controls">
-                                        <input type="text" class="span5" id="campaignUrn" placeholder="Campaign Urn" />
+                                        <input type="text" class="span5 hastip" id="campaignUrn" placeholder="Campaign Urn" />
 					<i class="help-icon icon-question-sign" data-original-title="Every campaign must have a unique URN and *cannot contain space*. It should be named so it can be traced back to the creator, ex. 'urn:campaign:author:topic'" rel="tooltip" data-placement="right"></i>
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <label class="control-label" for="campaignDescription">Description</label>
                                     <div class="controls">
-                                        <textarea type="text" class="span5" id="campaignDescription" placeholder="Description"> </textarea>
+                                        <textarea type="text" class="span5 hastip" id="campaignDescription" placeholder="Description"> </textarea>
                                         <i class="help-icon icon-question-sign" data-original-title="Optional campaign description that can be viewed through Ohmage main page" rel="tooltip" data-placement="right"></i>
                                     </div>
                                 </div>
@@ -136,7 +137,7 @@
                                     <label class="control-label" for="privacyState">Privacy State <span class="red">*</span></label>
                                     <div class="controls">
                                        
-                                        <select id="privacyStateBtn" name="privacyStateBtn" class="privacyStateBtn">
+                                        <select id="privacyStateBtn" name="privacyStateBtn" class="privacyStateBtn hastip">
                                             <option value="shared">Shared</option>
                                             <option value="private">Private</option>
                                         </select>
@@ -147,7 +148,7 @@
                                     <label class="control-label" for="runningState">Running State <span class="red">*</span></label>
                                     <div class="controls">
                                         
-                                        <select id="runningStateBtn" name="runningStateBtn" class="runningStateBtn">
+                                        <select id="runningStateBtn" name="runningStateBtn" class="runningStateBtn hastip">
                                             <option value="running">Running</option>
                                             <option value="stopped">Stopped</option>
                                         </select>
