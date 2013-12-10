@@ -656,6 +656,7 @@ $(function() {
                                     }
                                 }
                             }
+			    $this.parents("tr:first").find(".valueRow").find(".conditionValue").remove();
                             $this.parents("tr:first").find(".valueRow").append('<select class="conditionValue span1" ></select>');
                             for (j=0; j<numOption; j++) {
                                 var option = '<option value=' + j + '>' + j + '</option>';
@@ -713,6 +714,7 @@ $(function() {
                                 }
                             }
                         }
+			$this.parents("tr:first").find(".valueRow").find(".conditionValue").remove();
                         $this.parents("tr:first").find(".valueRow").append('<select class="conditionValue span1" ></select>');
                         for (j=0; j<numOption; j++) {
                             var option = '<option value=' + j + '>' + j + '</option>';
