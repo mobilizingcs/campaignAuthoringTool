@@ -32,17 +32,17 @@ var editPrompt = '<hr>' +
                     //'<div class="controls">'+
                         '<select class="choosePromptType span4">'+
                             '<option value="">Please choose a prompt type</option>'+
-                            '<option value="audio">Audio</option>'+
-                            '<option value="multi_choice">Multiple Choice</option>'+
-                            '<option value="multi_choice_custom">Multiple Choice Custom</option>'+
+                            //'<option value="audio">Audio</option>'+
+                            //'<option value="multi_choice">Multiple Choice</option>'+
+                            //'<option value="multi_choice_custom">Multiple Choice Custom</option>'+
                             '<option value="number">Number</option>'+
                             '<option value="photo">Photo</option>'+
-                            '<option value="remote_activity">Remote Activity</option>'+
+                            //'<option value="remote_activity">Remote Activity</option>'+
                             '<option value="single_choice">Single Choice</option>'+
                             '<option value="single_choice_custom">Single Choice Custom</option>'+
                             '<option value="text">Text</option>'+
                             '<option value="timestamp">Timestamp</option>'+
-                            '<option value="video">Video</option>'+
+                            //'<option value="video">Video</option>'+
                         '</select>'+
                         '<input type="hidden" class="promptType" name="promptType" id="promptType"/> '+
                         '<i class="help-icon icon-question-sign help-hover" data-original-title="Choose type of your prompt" rel="tooltip" data-placement="right"></i>'+
