@@ -25,13 +25,16 @@ $(function() {
         $.post("/app/user_info/read", { auth_token: $.cookie('auth_token'), client: "campaign-webapp" },
             function(response) {
                 if(response.result === "success"){
-                    var campaignCount = 0;
-                    console.log(username);
-                    var classes = Object.keys(response['data'][username]['classes']).join();
-                    console.log(classes);
-                    $.each(response.data[username]['classes'], function(index, val) {
-                        $('.classes').append('<option value="' + index + '">' + val + "</option>");
+                    var inverse = {};
+                    $.each(response['data'][username]['classes'], function(key, val){
+                        inverse[val] = key;
+                    })
+                    var classes = Object.keys(inverse).sort();
+                    $.each(classes, function(i, name) {
+                        var urn = inverse[name]
+                        $('.classes').append('<option value="' + urn + '">' + name + "</option>");
                     });
+                    var campaignCount = 0;
                     $.each(response.data[username].campaigns, function(index, val) {
                         $('.campaign-select').append('<option value="' + index + '">' + val + "</option>");
                         campaignCount++;
