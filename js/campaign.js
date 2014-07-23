@@ -8,6 +8,7 @@ $(function() {
             var mydata = JSON.parse(localStorage.campaignWrapper)
             if(mydata.username == username){
                 $.cookie('currentCampaign', mydata['campaign']['campaignName']);
+                $.cookie('currentSurvey', "0")
                 document.location.href = './campaign-edit.html';
             } else {
                 delete localStorage.campaignWrapper;

@@ -133,6 +133,13 @@ $(function() {
 	}
     });
 
+    $("#deleteCampaign").click(function(){
+        delete localStorage.campaignWrapper
+        $.removeCookie("currentCampaign");
+        $.removeCookie("currentSurvey");
+        window.location.replace('./');
+    })
+
     // relogin
     $("#login-form").submit(function(e) {
         var $this = $(this);
