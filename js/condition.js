@@ -16,7 +16,7 @@ $(function() {
 		});*/
 		$("#simpleCondition").show();
 		$("#advancedCondition").hide();
-		
+
 	} else if (prevValue === "advanced") {
 		/*
 		$.get("promptModals/advancedCondition.html", function(data){
@@ -51,7 +51,7 @@ $(function() {
 					$("#simpleCondition").show();
 					$("#advancedCondition").hide();
 					$('#conditionType').val('simple');
-					
+
             		break
             	case 'advanced':
                     //var validate = submitValidationSimple("ERROR SUPPRESS");
@@ -80,7 +80,7 @@ $(function() {
                         }
                     }
                     output.trim();
-                    $("#advancedConditionText").val(output);        
+                    $("#advancedConditionText").val(output);
 					$("#simpleCondition").hide();
                     //$('.advancedCondition').val("");
 					$("#advancedCondition").show();
@@ -157,7 +157,7 @@ $(function() {
                 $this.parents("tr:first").find(".conditionValueChoice").append(conditionValueChoice[0]);
                 $this.parents("tr:first").find(".conditionValueChoice").append(conditionValueChoice[1]);
                 $this.parents("tr:first").find(".conditionValueChoice").append(conditionValueChoice[2]);
-				break;       
+				break;
 			case '-1':
 				//$this.parents("tr:first").find(".operator option").remove();
                 break;
@@ -193,7 +193,7 @@ $(function() {
                         // find the prompt in the contentList
                         var numOption = 0;
                         for (i in campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList']['']) {
-                            
+
                             if (campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''][i]['prompt']) {
                                 if (campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''][i]['prompt']['id'] == promptID) {
                                     numOption = campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''][i]['prompt']['properties']['property'].length;
@@ -219,7 +219,7 @@ $(function() {
                         // find the prompt in the contentList
                         var numOption = 0;
                         for (i in campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList']['']) {
-                            
+
                             if (campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''][i]['prompt']) {
                                 if (campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''][i]['prompt']['id'] == promptID) {
                                     numOption = campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''][i]['prompt']['properties']['property'].length;
@@ -243,7 +243,7 @@ $(function() {
                         // find the prompt in the contentList
                         var numOption = 0;
                         for (i in campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList']['']) {
-                            
+
                             if (campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''][i]['prompt']) {
                                 if (campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''][i]['prompt']['id'] == promptID) {
                                     numOption = campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''][i]['prompt']['properties']['property'].length;
@@ -267,7 +267,7 @@ $(function() {
                         // find the prompt in the contentList
                         var numOption = 0;
                         for (i in campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList']['']) {
-                            
+
                             if (campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''][i]['prompt']) {
                                 if (campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''][i]['prompt']['id'] == promptID) {
                                     numOption = campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''][i]['prompt']['properties']['property'].length;
@@ -292,7 +292,7 @@ $(function() {
                 case 'photo':
                     // cannot reach here
                     return false;
-                    break; 
+                    break;
                 case 'remote_activity':
                     // cannot reach here
                     return false;
@@ -311,7 +311,7 @@ $(function() {
                 case 'video':
                     // cannot reach here
                     return false;
-                    break;            
+                    break;
     			case '-1':
                     // cannot reach here
                     return false;
@@ -325,7 +325,7 @@ $(function() {
                 alert(errorMessage);
                 $this.parents("tr:first").find(".conditionValue").addClass('error2');
                 return false;
-            } else { 
+            } else {
                 $this.parents("tr:first").find(".conditionValue").removeClass('error2');
                 return true;
             }
@@ -345,7 +345,7 @@ $(function() {
             var valueChoice = $this.find(".conditionValueChoice").val();
             var oldErrorMessage = errorMessage;
 
-            
+
             if (promptType == "") {
             	errorMessage += "Previous prompt must not be None.\n";
             	errorCode = 1;
@@ -371,7 +371,7 @@ $(function() {
                             // find the prompt in the contentList
                             var numOption = 0;
                             for (i in campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList']['']) {
-                                
+
                                 if (campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''][i]['prompt']) {
                                     if (campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''][i]['prompt']['id'] == promptID) {
                                         numOption = campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''][i]['prompt']['properties']['property'].length;
@@ -397,7 +397,7 @@ $(function() {
                     case 'photo':
                         // cannot reach here
                         return false;
-                        break; 
+                        break;
                     case 'remote_activity':
                         // cannot reach here
                         return false;
@@ -413,7 +413,7 @@ $(function() {
                     case 'video':
                         // cannot reach here
                         return false;
-                        break; 
+                        break;
                     case '-1':
                         // cannot reach here
                         return false;
@@ -441,11 +441,11 @@ $(function() {
             if (oldErrorMessage != errorMessage) {
             	errorMessage += "\n";
             }
-            
+
         });
 
         if (errorCode != 0) {
-            alert(errorMessage);    
+            alert(errorMessage);
             return false;
         } else {
             return true;
@@ -453,20 +453,20 @@ $(function() {
 	}
 
 
-	$("table[id=simpleConditionTbl] .upCondition,.downCondition,.addCondition,.deleteCondition").live("click", function(e){
+	$("table[id=simpleConditionTbl] .upCondition,.downCondition,.addCondition,.deleteCondition").on("click", function(e){
     	e.preventDefault();
         var row = $(this).parents("tr:first");
         var firstrow = $('table tr:first');
-        var groupNum = $(this).closest('table').find(".conditionGroupNum").val(); 
+        var groupNum = $(this).closest('table').find(".conditionGroupNum").val();
         var selector = '.group' + groupNum;
         if ($(this).is(".upCondition") && row.prevAll().length > 1) {
             row.prev().find(".conditionGroupNum").val("");
             row.insertBefore(row.prev());
-            $(this).closest('table').find("tr:nth-child(2)").find(".conditionGroupNum").val(groupNum);   
+            $(this).closest('table').find("tr:nth-child(2)").find(".conditionGroupNum").val(groupNum);
         } else if ($(this).is(".downCondition") && row.nextAll().length > 0) {
             row.find(".conditionGroupNum").val("");
             row.insertAfter(row.next());
-            $(this).closest('table').find("tr:nth-child(2)").find(".conditionGroupNum").val(groupNum);   
+            $(this).closest('table').find("tr:nth-child(2)").find(".conditionGroupNum").val(groupNum);
         } else if ($(this).is(".addCondition")) {
         	var $tr = $(this).closest("tr");
     		var $clone = $tr.clone();
@@ -480,9 +480,9 @@ $(function() {
             console.log($table.find("tr:nth-child(2)").find(".conditionGroupNum").val());
         	if ($(this).closest('table').find('tr').length <= 2) alert("Cannot delete last condition");
         	else $(this).closest("tr").remove();
-            
+
             // update group # in case of delete first row
-            $table.find("tr:nth-child(2)").find(".conditionGroupNum").val(groupNum);             
+            $table.find("tr:nth-child(2)").find(".conditionGroupNum").val(groupNum);
         }
 
         updateOptionCondition();
@@ -514,7 +514,7 @@ $(function() {
 		            var conjunction = $this.find(".conjunction").val();
 
 		            output += "(" + promptID + " " + operator + " " + value + ")" + " " + conjunction + " ";
-                    
+
                     var row = {};
                     row['promptID'] = promptID;
                     row['promptType'] = $this.find(".previousPrompts option:selected").val();
@@ -539,7 +539,7 @@ $(function() {
                         editObj.find('.editPromptDetails').find('.messageConditionType').val('simple');
                         editObj.find('.editPromptDetails').find('.messageConditionJson').val(JSON.stringify(json));
                     }
-                    
+
                     break;
                 case 'prompt':
                     if (editObj == null) {
@@ -557,8 +557,8 @@ $(function() {
                     break;
                 }
                 $("#simpleConditionTbl").find("tr:gt(1)").remove();
-        		$('#conditionModal').modal('hide');	
-        	}	     
+        		$('#conditionModal').modal('hide');
+        	}
         }
         else if ($('#conditionType').val() == 'advanced') { //advance condition
             var source = $('#conditionSource').val();
@@ -610,15 +610,15 @@ $(function() {
                     break;
             }
             $('#conditionModal').modal('hide');
-        }       
+        }
     });
 
-    // delegate    
+    // delegate
     $('#conditionModal').delegate('.previousPrompts', 'change', updateConditionPromptType);
     $('#conditionModal').delegate('.conditionValue', 'change', validateConditionValue);
 
     // operator selector
-    jQuery(".operator").live("change", function(e){
+    jQuery(".operator").on("change", function(e){
         e.preventDefault();
         $this = $(this);
         var promptType = $this.parents("tr:first").find(".previousPrompts").val();
@@ -680,7 +680,7 @@ $(function() {
         }
     });
     // Condition value
-    jQuery(".conditionValueChoice").live("change", function(e){
+    jQuery(".conditionValueChoice").on("change", function(e){
         e.preventDefault();
         $this = $(this);
         switch($this.val()) {
@@ -744,7 +744,7 @@ $(function() {
     });
 
     // add new condition gropu
-    jQuery(".addConditionGroup").live("click", function(e){
+    jQuery(".addConditionGroup").on("click", function(e){
         e.preventDefault();
         $this = $(this);
 
@@ -771,8 +771,8 @@ $(function() {
         $(currentGroup).after($tblConjuntion);
         //console.log($newRow);
     });
-    
-    $(".conditionTooltip").live({
+
+    $(".conditionTooltip").on({
         mouseenter: function() {
             var $this = $(this);
             $this.attr('data-original-title', simpleConditionTooltip);
@@ -784,8 +784,8 @@ $(function() {
            }
        }
     );
-    
-    jQuery(".addThisCondition").live("click", function(e){
+
+    jQuery(".addThisCondition").on("click", function(e){
         e.preventDefault();
         $this = $(this);
         $row = $this.closest('tr');
@@ -806,16 +806,16 @@ $(function() {
 
             output += "(" + promptID + " " + operator + " " + value + ")";
             var oldVal = $('.advancedCondition').val();
-            $('.advancedCondition').val(oldVal + output); 
+            $('.advancedCondition').val(oldVal + output);
         }
     });
-    jQuery(".addConjunction").live("click", function(e){
+    jQuery(".addConjunction").on("click", function(e){
         e.preventDefault();
         $this = $(this);
         $row = $this.closest('tr');
-        
+
         var conjunction = $row.find(".conjunction").val();
         var oldVal = $('.advancedCondition').val();
-        $('.advancedCondition').val(oldVal + conjunction); 
+        $('.advancedCondition').val(oldVal + conjunction);
     });
 });

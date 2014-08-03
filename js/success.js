@@ -7,7 +7,7 @@ $(function() {
         if (confirm("Are you sure you want to log out? All unsaved data will be lost.")) {
         	window.location.replace('index.html');
         	jQuery(document).empty();
-            oh.logout(function(x){});
+            oh.logout()
         } else {
             e.preventDefault();
         }

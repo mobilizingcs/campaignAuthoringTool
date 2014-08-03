@@ -9,36 +9,39 @@
         <link href="css/layout.css" rel="stylesheet" type="text/css"/>
         <link href="css/navbar.css" rel="stylesheet" type="text/css"/>
         <link href="css/prompt.css" rel="stylesheet" type="text/css"/>
+
         <script type="text/javascript" src="js/jquery.min.js"></script>
         <script type="text/javascript" src="js/jquery-cookie.js"></script>
+        <script type="text/javascript" src="js/ohmage.js"></script>
+        <script type="text/javascript" src="js/app.js"></script>
+
         <script type="text/javascript" src="js/jquery-ui-1.9.0.min.js"></script>
         <script type="text/javascript" src="js/bootstrap.min.js"></script>
         <script type="text/javascript" src="js/configuration.js"></script>
         <script type="text/javascript" src="js/underscore.js"></script>
-        <script type="text/javascript" src="js/ohmage.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript" src="js/Constant.js"></script>
         <script type="text/javascript" src="js/promptUtil.js"></script>
-        
-        
+
+
         <script type="text/javascript" src="js/menu.js"></script>
-        <script type="text/javascript" src="js/insertXmlModal.js"></script>  
+        <script type="text/javascript" src="js/insertXmlModal.js"></script>
         <script type="text/javascript" src="js/navbar.js"></script>
         <script type="text/javascript" src="js/alerts.js"></script>
         <script type="text/javascript" src="js/help-icon.js"></script>
-        
+
         <script type="text/javascript" src="js/json2xml.js"></script>
         <script type="text/javascript" src="js/campaign-editor.js"></script>
         <script type="text/javascript" src="js/surveyItemDisplay.js"></script>
         <script type="text/javascript" src="js/prompt.js"></script>
-        
+
         <script type="text/javascript" src="js/vkbeautify.0.99.00.beta.js"></script>
         <script type="text/javascript" src="js/breadcrumb.js"></script>
-        <script type="text/javascript" src="js/promptType.js"></script> 
-        <script type="text/javascript" src="js/modal.js"></script>   
+        <script type="text/javascript" src="js/promptType.js"></script>
+        <script type="text/javascript" src="js/modal.js"></script>
         <script type="text/javascript" src="js/condition.js"></script>
-               
-               
+
+
     </head>
     <body>
         <div class="navbar navbar-fixed-top">
@@ -49,7 +52,7 @@
                     <a href="../web/#login" class="logoutButton pull-right btn btn-info">Log Out</a>
                     <p class="navbar-text pull-right" id="username"></p>
                     <a href="help.html" target="_blank" class="btn btn-link pull-right helpBtn">Help</a>
-                    
+
                 </div>
             </div>
         </div>
@@ -99,7 +102,7 @@
                                     </form>
                                 </div>
                             </div>
-                            <div class="modal-footer">   
+                            <div class="modal-footer">
                             </div>
                         </div>
 
@@ -137,7 +140,7 @@
                                         <h3 class="centered">Edit Condition</h3>
                                         </br>
                                         <p class="centered">
-                                            Select a way to edit condition or select "No Condition" if 
+                                            Select a way to edit condition or select "No Condition" if
                                             you don't want using condition for this prompt.
                                         </p>
                                         <div class="centered controls">
@@ -146,7 +149,7 @@
                                                 <option value="">No Condition</option>
                                                 <option value="simple">Simple Condition</option>
                                                 <option value="advanced">Advanced Condition</option>
-                                            </select> 
+                                            </select>
                                         </div>
                                         <input type="hidden" id="conditionType">
                                         <input type="hidden" id="conditionSource">
@@ -158,7 +161,7 @@
                                                 </div>
                                                 <div class="controls" id="conditionData">
 
-                                                </div> 
+                                                </div>
                                                 <div class="centered" id="simpleCondition">
                                                     <input type="hidden" id="conditionGroupCounter" value="0"/>
                                                     <div class="centerd">
@@ -223,8 +226,8 @@
                                                                 <td><button class='btn btn-primary addCondition'><i class="icon-plus icon-white"></i></button></td>
                                                                 <td><button class='btn btn-primary deleteCondition'><i class="icon-remove icon-white"></i></button></td>
                                                               </tr>
-                                                            
-                                                        </table>   
+
+                                                        </table>
                                                     </table>
                                                 </div>
 
@@ -233,7 +236,7 @@
                                                         <p style="text-align: left;">
                                                             Write your own condition in the text box below</br>
                                                             Advanced condition option assumes that you know about condition syntax. </br>
-                                                            If you're not sure about syntax. Visit <a href="https://github.com/cens/ohmageServer/wiki/Campaign-Definition#wiki-condition" target="_blank"><span class="blue">this site</span></a> 
+                                                            If you're not sure about syntax. Visit <a href="https://github.com/cens/ohmageServer/wiki/Campaign-Definition#wiki-condition" target="_blank"><span class="blue">this site</span></a>
                                                         </p>
                                                     </div>
                                                     </br>
@@ -242,9 +245,9 @@
                                                         <p>Current condition rule :</p>
                                                         <textarea class="advancedCondition span10" id="advancedConditionText"></textarea>
                                                     </div>
-                                                </div>   
-                                            </div>    
-                                        </div>    
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
@@ -272,7 +275,7 @@
                                                 <option value="text">Text</option>
                                                 <option value="timestamp">Timestamp</option>
                                                 <option value="video">Video (native Android only)</option>
-                                            </select> 
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="modal-body centered">
@@ -282,11 +285,11 @@
 
                                                 </div>
                                                 <div class="controls" id="promptData">
-                                                    
+
                                                 </div>
-                                                
-                                            </div>    
-                                        </div>                 
+
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button class="btn btn-primary submit" id="promptTypeSubmit">Save changes</button>
@@ -323,7 +326,7 @@
                                                             <input type="hidden" class="messageConditionType" id="messageConditionType" />
                                                             <input type="hidden" class="messageConditionJson" id="messageConditionJson" />
                                                             <textarea name="messageCondition" class="span4 messageCondition" id="messageCondition" placeholder="None." disabled></textarea>
-                                                            
+
                                                             <button type="button" class="btn btn-link hastip" id="messageConditionBtn">Edit Condition </button>
                                                             <i class="help-icon icon-question-sign" data-original-title="The condition which determines if the message is displayed or not." rel="tooltip" data-placement="bottom"></i>
                                                         <!--</div>-->
@@ -363,7 +366,7 @@
                                                         <i class="help-icon icon-question-sign" data-original-title="The user-friendly name of this prompt used in visualizations." rel="tooltip" data-placement="right"></i>
                                                     </div>
                                                 </div>
-                                                
+
                                                 <div class="control-group">
                                                     <label class="control-label" for="promptText">Prompt Text: <span class="red">*</span></label>
                                                     <div class="controls">
@@ -371,10 +374,10 @@
                                                         <i class="help-icon icon-question-sign" data-original-title="The text to display to the user when prompting them to respond." rel="tooltip" data-placement="right"></i>
                                                     </div>
                                                 </div>
-                                                
+
                                                 <div class="control-group">
                                                     <label class="control-label" for="promptType">Prompt Type: <span class="red">*</span></label>
-                                                    
+
                                                     <div class="controls">
                                                         <select id="choosePromptType" name="promptType" class="promptType span4 hastip">
                                                             <option value="">Please choose a prompt type</option>
@@ -393,10 +396,10 @@
                                                         <!--<input type="hidden" name="promptType" id="promptType"/> -->
                                                         <i class="help-icon icon-question-sign" data-original-title="Choose type of your prompt" rel="tooltip" data-placement="right"></i>
                                                     </div>
-                                        
+
                                                     </br>
                                                     <label class="control-label" for="addedPrompt">Prompt Details:</label>
-                                                    <div class="controls">  
+                                                    <div class="controls">
                                                         <div>
                                                             <textarea name="properties" class="span4 promptDetails" id="addedPrompt" readonly></textarea>
                                                             <button type="button" class="btn btn-link" id="promptTypeBtn">Edit Prompt Detail</button>
@@ -424,23 +427,23 @@
                                                     </div>
                                                     <div class="control-group">
                                                         <label class="control-label" for="skippable">Skip Option:</label>
-                                                        <div class="controls"> 
+                                                        <div class="controls">
                                                             <label class="checkbox">
                                                                 <input type="checkbox" name="skippable" id="skippable">
                                                                 Check if this prompt is skippable?
                                                             </label>
                                                         </div>
-                                                    </div> 
-                                                    
+                                                    </div>
+
                                                     <div class="control-group">
                                                         <label class="control-label skipLabelText" for="skipLabel">Skip Label: </label>
                                                         <div class="controls">
                                                             <input type="text" class="span4 hastip" name="skipLabel" id="skipLabel" value="Skip" disabled/>
                                                             <i class="help-icon icon-question-sign" data-original-title="If skippable, this is the text of the button to use to skip the label." rel="tooltip" data-placement="right"></i>
-                                                        </div> 
-                                                    </div>   
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                
+
                                                 <div class="control-group">
                                                     <div class="controls">
                                                         <button type="submit" class="btn" id="addPrompt">Add Prompt</button>
@@ -451,7 +454,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- End Prompt -->                                
+                                <!-- End Prompt -->
                             </div>
                         </div>
                         <span class="red">*</span> <small>Required Fields</small>
@@ -472,7 +475,7 @@
                 </div>
             </div>
         </div>
-        
+
     </body>
 </html>
 

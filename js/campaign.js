@@ -1,7 +1,7 @@
 $(function() {
     $('#campaignTitle').focus();
 
-    oh.user.whoami(function(username) {
+    oh.user.whoami().done(function(username) {
 
         //check if there is an unsubmitted campaign
         if(localStorage && localStorage.campaignWrapper){
@@ -18,37 +18,7 @@ $(function() {
         //set username
         $('#authors').val(username);
 
-        //adding keep alive call to prevent auth_token timeout while user is active.
-        oh.keepalive();
-
-        // Get existing campaigns
-        $.post("/app/user_info/read", { auth_token: $.cookie('auth_token'), client: "campaign-webapp" },
-            function(response) {
-                if(response.result === "success"){
-                    var inverse = {};
-                    $.each(response['data'][username]['classes'], function(key, val){
-                        inverse[val] = key;
-                    })
-                    var classes = Object.keys(inverse).sort();
-                    $.each(classes, function(i, name) {
-                        var urn = inverse[name]
-                        $('.classes').append('<option value="' + urn + '">' + name + "</option>");
-                    });
-                    var campaignCount = 0;
-                    $.each(response.data[username].campaigns, function(index, val) {
-                        $('.campaign-select').append('<option value="' + index + '">' + val + "</option>");
-                        campaignCount++;
-                    });
-                    if(campaignCount === 0) {
-                        $('.existing-campaigns').remove();
-                    }
-                }
-            }, "json");
-        /*
-        oh.user.info(function() {
-
-        });
-        */
+        populateClasses(username);
 
         // Create Campaign Button
         $('#create-campaign').click(function(e) {
@@ -68,7 +38,7 @@ $(function() {
                 $('#campaignUrn').parent().parent().removeClass('error');
             }
             var campaign = campaignEditor.createCampaign(title, urn);
-            if (!campaign) { 
+            if (!campaign) {
                 var errorAlert = '<div class="alert alert-error create-campaign-error hide"><button class="close">&times;</button><strong>Error:</strong> One or more required field is missing</div>';
                 $(errorAlert).insertAfter('.new-campaign hr').slideToggle();
                 if($('.create-campaign-error').size() > 1) {
@@ -98,10 +68,10 @@ $(function() {
 
             var title = campaign.campaignName;
             var urn = campaign.campaignUrn;
-            
+
             var obj = campaign.surveys.survey.contentList;
             var count = 0;
-            
+
             var xml2 = $.parseXML(xml), $xml = $( xml );
             console.log($xml);
 
@@ -124,14 +94,14 @@ $(function() {
 
                 if (typeof($(this).find("description").first().text()) != 'undefined') surveyData['description'] = $(this).find("description").first().text();
                 if (typeof($(this).find("introText").first().text()) != 'undefined') surveyData['introText'] = $(this).find("introText").first().text();
-                
+
                 var success = campaignEditor.addSurvey(campaignWrapper['campaign'], surveyData);
 
                 var count = 0;
                 $(this).find('contentList').children().each(function() {
                     //e.preventDefault();
                     var type = this.tagName;
-                    
+
                     var contentList = campaignWrapper['campaign']['surveys']['survey'][surveyIndex]['contentList'][''];
                     if (type.toLowerCase() == "prompt") {
                         var promptData = {};
@@ -168,7 +138,7 @@ $(function() {
                             promptData['properties'] = properties;
                         }
                         contentList.push({'prompt': promptData});
-                        
+
                     } else if (type.toLowerCase() == "message") {
                         var messageData = {};
                         messageData['id'] = $(this).find("id").first().text();
@@ -188,7 +158,7 @@ $(function() {
                 console.log(count);
                 console.log(campaignWrapper);
             });
-            /* 
+            /*
             $.each(campaign.surveys, function (i, survey) {
                 // Process survey data
                 var surveyData = {};
@@ -199,9 +169,9 @@ $(function() {
 
                 if (typeof(survey.description) != 'undefined') surveyData['description'] = survey.description;
                 if (typeof(survey.introText) != 'undefined') surveyData['introText'] = survey.introText;
-                
+
                 var success = campaignEditor.addSurvey(campaignWrapper['campaign'], surveyData);
-                
+
                 // process prompts data
 
             });
@@ -221,7 +191,7 @@ $(function() {
                 }
             }
             */
-            //console.log(count);    
+            //console.log(count);
         });
     });
 });

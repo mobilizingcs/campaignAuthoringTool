@@ -12,7 +12,7 @@ $(function() {
             changeConfirm = confirm(text);
         }
 
-        if (changeConfirm) {   
+        if (changeConfirm) {
             //$('#addedPrompt').val(""); // clear text box
             $('#promptData').empty();
             switch ($this.val()) {
@@ -42,7 +42,7 @@ $(function() {
                     $.get("promptModals/photoModal.html", function(data){
     					$("#promptData").append(data);
 					});
-                    break; 
+                    break;
                 case 'remote_activity':
                     $.get("promptModals/remoteActivityModal.html", function(data){
     					$("#promptData").append(data);
@@ -62,7 +62,7 @@ $(function() {
 					$.get("promptModals/videoModal.html", function(data){
     					$("#promptData").append(data);
 					});
-                    break;                
+                    break;
                 default:
                     break;
             }
@@ -90,12 +90,12 @@ $(function() {
         //console.log($(this).val());
         $('#singleChoiceDefault').empty();
         var key = 0;
-        
+
         $('#singleChoiceDefault')
             .append($("<option></option>")
             .attr("value",-1)
-            .text("None")); 
-        
+            .text("None"));
+
         $('#singleChoiceTable tr:not(:first-child)').each(function()
         {
             $this = $(this);
@@ -104,7 +104,7 @@ $(function() {
             $('#singleChoiceDefault')
              .append($("<option></option>")
              .attr("value",key++)
-             .text(optionNum + ': ' + label)); 
+             .text(optionNum + ': ' + label));
         });
     };
     function singleValidateValue() {
@@ -142,7 +142,7 @@ $(function() {
         }
     };
 
-	$("table[id=singleChoiceTable] .delete").live("click", function(e) {
+	$("table[id=singleChoiceTable] .delete").on("click", function(e) {
 		e.preventDefault();
         if ($("#singleChoiceTable tr").length <= 2) alert("Cannot delete last option");
         else $(this).closest("tr").remove();
@@ -150,7 +150,7 @@ $(function() {
         updateSelection();
     });
 
-	$("table[id=singleChoiceTable] .add").live("click", function(e) {
+	$("table[id=singleChoiceTable] .add").on("click", function(e) {
 		e.preventDefault();
 		var $tr = $(this).closest("tr");
         var $clone = $tr.clone();
@@ -166,7 +166,7 @@ $(function() {
         updateSelection();
     });
 
-    $("table[id=singleChoiceTable] .up,.down").live("click", function(e){
+    $("table[id=singleChoiceTable] .up,.down").on("click", function(e){
     	e.preventDefault();
         var row = $(this).parents("tr:first");
         var firstrow = $('table tr:first');
@@ -203,7 +203,7 @@ $(function() {
             $('#multiChoiceDefault')
              .append($("<option></option>")
              .attr("value",key++)
-             .text(optionNum + ': ' + label)); 
+             .text(optionNum + ': ' + label));
         });
     };
     function multiValidateValue() {
@@ -240,7 +240,7 @@ $(function() {
         }
     };
 
-    $("table[id=multiChoiceTable] .upMulti,.downMulti,.addMulti,.deleteMulti").live("click", function(e){
+    $("table[id=multiChoiceTable] .upMulti,.downMulti,.addMulti,.deleteMulti").on("click", function(e){
     	e.preventDefault();
         var row = $(this).parents("tr:first");
         var firstrow = $('table tr:first');

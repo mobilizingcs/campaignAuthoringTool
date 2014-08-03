@@ -22,19 +22,17 @@ $(function() {
     // view campaign xml button
     $('#viewSurveyXML').click(function() {
         if (campaignWrapper['campaign']['surveys']['survey'].length == 0) {
-            
+
         } else {
             deleteEditField(campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList']['']);
         }
         var xml = '<?xml version="1.0" encoding="UTF-8"?>' + json2xml({'campaign': campaignWrapper['campaign']});
         $('#surveyXml').text(vkbeautify.xml(xml));
         $('#xmlModal').modal('show');
-        
+
 
     });
 
-    //adding keep alive call to prevent auth_token timeout while user is active.
-    oh.keepalive();
 
     var oh2 = oh2 || {};
     oh2.call = function(path, data, datafun){
@@ -52,10 +50,10 @@ $(function() {
             } else {
                 alert("Fail: " + path + ":\n" + errors[0].text)
             }
-        }   
+        }
         */
         //input processing
-        var data = data ? data : {};        
+        var data = data ? data : {};
 
         //default parameter
         data.client = "dashboard"
@@ -79,7 +77,7 @@ $(function() {
                 if(!rsptxt || rsptxt == ""){
                     alert("Undefined error.")
                     return false;
-                }           
+                }
                 var response = jQuery.parseJSON(rsptxt);
                 if(response.result == "success"){
                     if(datafun) datafun(response)
@@ -97,7 +95,7 @@ $(function() {
             } else {
                 datafun(rsptxt);
             }
-        }).error(function(){alert("Ohmage returned an undefined error.")});     
+        }).error(function(){alert("Ohmage returned an undefined error.")});
 
         return(myrequest)
     }
@@ -106,31 +104,22 @@ $(function() {
         deleteEditField(campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList']['']);
         //test if campaign has a finished survey, don't upload if it doesnt
         if (campaignWrapper['campaign']['surveys']['survey'][0]['contentList'][''].length === 0){
-        alert("It doesn't look like your campaign is finished, make sure to finish before you upload!");
+            alert("It doesn't look like your campaign is finished, make sure to finish before you upload!");
         } else {
-        var xmlFile = '<?xml version="1.0" encoding="UTF-8"?>' + json2xml({'campaign': campaignWrapper['campaign']});
+            var xmlFile = '<?xml version="1.0" encoding="UTF-8"?>' + json2xml({'campaign': campaignWrapper['campaign']});
 
-        $.post("/app/user_info/read", { auth_token: $.cookie('auth_token'), client: 'campaign-webapp' }, function(response) {
-            if (response.result === 'success') {
-                var req = oh2.call("/campaign/create", {
-                    xml : xmlFile,
-                    privacy_state : campaignWrapper['privacyState'],
-                    running_state : campaignWrapper['runningState'],
-                    campaign_urn : campaignWrapper['campaign']['campaignUrn'],    
-                    description : campaignWrapper['description'],
-                    class_urn_list : campaignWrapper['classes']      
-                }, function(response) {
-                        alert("Campaign submitted successfully!");
-                        window.location.replace('success.html');
-                });
-            } else {
-                //console.log('CLASS FAILURE');
-                //$('#loginModal').modal('show');
-                alert('Time out! Please re-login')
-                oh.sendtologin();
-            }
-        }, "json");
-	}
+            oh.campaign.create({
+                xml : xmlFile,
+                privacy_state : campaignWrapper['privacyState'],
+                running_state : campaignWrapper['runningState'],
+                campaign_urn : campaignWrapper['campaign']['campaignUrn'],
+                description : campaignWrapper['description'],
+                class_urn_list : campaignWrapper['classes']
+            }).done(function(){
+                alert("Campaign submitted successfully!");
+                window.location.replace('success.html');
+            })
+	    }
     });
 
     $("#deleteCampaign").click(function(){
@@ -160,9 +149,9 @@ $(function() {
                                 xml : xmlFile,
                                 privacy_state : campaignWrapper['privacyState'],
                                 running_state : campaignWrapper['runningState'],
-                                campaign_urn : campaignWrapper['campaign']['campaignUrn'],    
+                                campaign_urn : campaignWrapper['campaign']['campaignUrn'],
                                 description : campaignWrapper['description'],
-                                class_urn_list : campaignWrapper['classes']      
+                                class_urn_list : campaignWrapper['classes']
                             }, function(response) {
                                     alert("Campaign submitted successfully!");
                                     window.location.replace('success.html');
@@ -179,6 +168,6 @@ $(function() {
             }
         }, "json");
         e.preventDefault();
-    });    
+    });
 });
 

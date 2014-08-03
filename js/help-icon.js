@@ -7,7 +7,7 @@ $(function() {
         $this.tooltip('hide');
     })
 
-    $(".help-hover").live({
+    $(".help-hover").on({
         mouseenter: function() {
            		var $this = $(this);
         		$this.tooltip('show');
@@ -18,5 +18,4 @@ $(function() {
            }
        }
     );
-    
 });

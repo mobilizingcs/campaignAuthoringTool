@@ -1,384 +1,365 @@
-var oh = oh || {};
-oh.utils = oh.utils || {};
-oh.user = oh.user || {};
-oh.class = oh.class || {};
-oh.campaign = oh.campaign || {};
-oh.document = oh.document || {};
+/*
+ * JavaScript client library for Ohmage 2.xx
+ * Autor: Jeroen Ooms <jeroenooms@gmail.com>
+ * License: Apache 2
+ */
 
-oh.utils.delayexec = function(){
-	var timer;
-	function exec(call, delay){
-		if(timer) {
-			dashboard.message("clear " + timer);			
-			clearTimeout(timer);
-		}
-		timer = setTimeout(function(){
-			timer = null;
-			call();
-		}, delay);
-		dashboard.message("added " + timer)		
-	};
-	return exec;
-}
+function Ohmage(app, client){
 
-oh.utils.parsedate = function(datestring){
-	if(!datestring) {
-		return null;
-	}
-	var a = datestring.split(/[^0-9]/);
-	return new Date (a[0],a[1]-1,a[2],a[3],a[4],a[5]);
-}
-
-oh.utils.get = function(item){
-	return function(d){
-		if(d[item] && d[item] != "NOT_DISPLAYED"){
-			return d[item];
-		}
-		//NA support in dc.js piechart is really bad.
-		return "NA"
-	}
-}
-
-oh.utils.getnum = function(item){
-	return function(d){
-		if(d[item] && d[item] != "NOT_DISPLAYED"){
-			return parseFloat(d[item]) || null;
-		}
-	}
-}
-
-oh.utils.getdate = function(item){
-	return function(d){
-		if(d[item] && d[item] != "NOT_DISPLAYED"){
-			return d3.time.day(oh.utils.parsedate(d[item]));
-		}
-	}
-}
-
-oh.utils.bin = function(binwidth){
-	return function(x){
-		return Math.floor(x/binwidth) * binwidth;
-	}
-}
-
-oh.utils.gethour = function(item){
-	return function(d){
-		if(d[item] && d[item] != "NOT_DISPLAYED"){
-			return oh.utils.parsedate(d[item]).getHours();
-		}
-	}
-}
-
-oh.utils.state = function(mycampaign, myresponse){
-	if(!mycampaign){
-		return window.location.hash.substring(1).split("/");
-	} 
-	if(!myresponse){
-		window.location.hash = mycampaign;
-		return;
-	}
-	window.location.hash = mycampaign + "/" + myresponse;
-}
-
-oh.utils.readconfig = function(next){
-	$.ajax({
-		url: "config.json",
-		dataType: "json"
-	})
-	.success(function(data) {
-		dashboard.config = data;
-		if(next) next();
-	})
-	.fail(function(err) { 
-		alert("error loading config.json"); 
-		dashboard.message(err) 
-	});
-}
-
-oh.utils.error = function(msg){
-	throw new Error(msg)
-}
-
-oh.call = function(path, data, datafun){
-
-	//THIS IS A HACK FOR LAUSD
-	function errorMessage(code, text){
-		if(path == "/user/change_password" && code == "0203"){
-			return "ERROR: Your password is incorrect.";
-		} else if(path == "/class/create" && text == "The user does not have permission to create new classes."){
-			return "ERROR: Could not create this class. It appears you do not have the class creation privilege. Contact mobilize-support@cs.ucla.edu for assistance.";
-		}
-		//default message
-		return "Fail: " + path + ": " + code + ".\n" + text;
+	//validate parameters
+	if( ! app || ! client ) {
+		throw "app and client are required parameters.";
+	} else {
+		//remove trailing slash if any
+		app = app.replace(/\/+$/, "");
 	}
 
-	function processError(errors){
-		if(errors[0].code && errors[0].code == "0200"){
-			var pattern = /(is unknown)|(authentication token)|(not provided)/i;
-			if(!errors[0].text.match(pattern)) {
-				alert(errors[0].text);
+	//globals
+	var callbacks = [];
+	var login;
+
+	//container with optional set functions
+	var oh = {}
+
+	oh.callback = function(name, fun){
+		callbacks.push({name:name, fun:fun})
+		return oh;
+	}
+
+	//main ajax function
+	oh.call = function(path, data, datafun){
+
+		//support for multiple errorfuns and chaining
+		var errorfuns = [];
+		function error(x,y,z){
+			//don't call on HTTP 0 (canceled)
+			if(z.status){
+				$.each(errorfuns, function(i, val){
+					val(x,y,z)
+				});
 			}
-			if(!/login.html$/.test(window.location.pathname)){
-				oh.sendtologin();
-			}
-		} else {
-			alert(errorMessage(errors[0].code, errors[0].text));
 		}
-	}	
 
-	//input processing
-	var data = data ? data : {};		
+		//default is to return res.result.data property
+		var datafun = datafun || function(x){ return x.data; }
 
-	//default parameter
-	data.client = "dashboard"
+		//input processing
+		var data = data || {};
 
-	//add auth_token from cookie
-	if($.cookie('auth_token')){
-		data.auth_token = $.cookie('auth_token');
+		//default parameter
+		data.client = client;
+
+		//add auth_token from cookie
+		if($.cookie('auth_token')){
+			data.auth_token = $.cookie('auth_token');
+		}
+
+		//actual ajax
+		var req = $.ajax({
+			type: "POST",
+			url : app + path,
+			data: data,
+			dataType: "text",
+			xhrFields: {
+				withCredentials: true
+			}
+		}).then(function(rsptxt, textStatus, req) {
+			//jQuery doneFilter
+			var filter = $.Deferred()
+
+			//ohmage returns whatever it feels like.
+			if(req.getResponseHeader("content-type") == "application/json"){
+
+				//ohmage content-type cannot be trusted
+				if(!rsptxt || rsptxt == "") {
+					var errorThrown = "Fail: " + path + ". Ohmage returned undefined error."
+					error(errorThrown, -1, req)
+					filter.reject(req, textStatus, errorThrown);
+				}
+
+				//let's assume JSON
+				var response = $.parseJSON(rsptxt);
+
+				//HTTP 200 does not actually mean success
+				if(response.result == "success"){
+					filter.resolve(datafun(response), textStatus, req);
+				} else if(response.result == "failure") {
+					//fail request with error code+msg
+					var errorThrown = response.errors[0].text;
+					error(response.errors[0].text, response.errors[0].code, req)
+					filter.reject(req, textStatus, errorThrown);
+				} else {
+					var msg = "JSON response did not contain result attribute."
+					error(errorThrown, -2, req)
+					filter.reject(req, textStatus, errorThrown);
+				}
+			} else {
+				//case of HTTP 200 but not JSON.
+				filter.resolve(rsptxt, textStatus, req);
+			}
+
+			//return to done() callback
+			return filter.promise();
+		}, function(req, textStatus, errorThrown){
+			//jQuery failFilter
+			var filter = $.Deferred();
+
+			//Augment Ohmage error message
+			error("HTTP " + req.status + ": " + req.responseText, -3, req)
+			filter.reject(req, textStatus, errorThrown);
+
+			//return to fail() callback
+			return filter.promise();
+		})
+
+		//add the custom 'error' cb
+		req.error = function(fun){
+			//chainable wrapper
+			errorfuns.push(function(x,y,z){
+				fun(x,y,z);
+				return req
+			});
+		}
+
+		//trigger global callbacks
+		$.each(callbacks, function(i, val){
+			req[val.name](val.fun);
+		});
+
+		return(req)
 	}
 
-	var myrequest = $.ajax({
-		type: "POST",
-		url : "/app" + path,
-		data: data,
-		dataType: "text",
-		xhrFields: {
-			withCredentials: true
-		}
-	}).done(function(rsptxt) {
-		//in case of json
-		if(myrequest.getResponseHeader("content-type") == "application/json"){
-			if(!rsptxt || rsptxt == ""){
-				alert("Fail: " + path + ". Ohmage returned undefined error.");
-				return false;
-			}			
-			var response = jQuery.parseJSON(rsptxt);
-			if(response.result == "success"){
-				if(datafun) datafun(response)
-			} else if(response.result == "failure") {
-				processError(response.errors)
-				return false;
-			} else{
-				alert("JSON response did not contain result attribute.")
-			}
-		//anything else
-		} else {
-			datafun(rsptxt);
-		}
-	}).error(function(){
-		alert("Fail: " + path + ": " + request.status + "\n\n" + request.responseText)
-	});		
+	//API sections
+	oh.config = {};
+	oh.user = {};
+	oh.class = {};
+	oh.campaign = {};
+	oh.document = {};
 
-	return(myrequest)
-}
+	//API wrappres
+	oh.config.read = function(){
+		return oh.call("/config/read")
+	}
 
-oh.login = function(user, password, cb){
-	var req = oh.call("/user/auth_token", { 
-		user: user, 
-		password: password
-	}, function(response){
-		if(!cb) return;
-		cb()
-	})
-	return req;
-}
+	oh.user.whoami = function(){
+		return oh.call("/user/whoami", {}, function(x){return x.username})
+	}
 
-oh.logout = function(cb){
-	oh.call("/user/logout", {}, cb);
-}
+	//@args user
+	//@args password
+	oh.user.auth_token = function(data){
+		return oh.call("/user/auth_token", data, function(x){return x.token});
+	}
 
-oh.sendtologin = function(){
-	window.location = "../web/#login"
-}
+	//shorthand for above
+	oh.login = function(user, password){
+		return oh.user.auth_token({
+			user:user,
+			password : password
+		});
+	}
 
-oh.campaign_read = function(cb){
-	var req = oh.call("/campaign/read", {
-		output_format : "short"
-	}, function(res){
-		if(!cb) return;
-		var arg = (res.metadata && res.metadata.items) ? res.metadata.items : null;
-		cb(arg)
+	oh.user.logout = function(){
+		return oh.call("/user/logout");
+	}
+
+	oh.user.info = function(){
+		return oh.call("/user_info/read")
+	}
+
+	//@args user_list
+	oh.user.read = function(data){
+		return oh.call("/user/read", data)
+	}
+
+	//@args class_urn_list
+	//@args first_name
+	//@args last_name
+	//@args organization
+	//@args personal_id
+	oh.user.setup = function(data){
+		return oh.call("/user/setup", data)
+	}
+
+	//@args user
+	//@args password
+	//@args username
+	//@args new_password
+	oh.user.change_password = function(data){
+		return oh.call("/user/change_password", data)
+	}
+
+
+	//@args class_urn_list
+	oh.class.read = function(data){
+		return oh.call("/class/read", data)
+	}
+
+	//@args class_urn
+	//@args class_name
+	oh.class.create = function(data){
+		return oh.call("/class/create", data)
+	}
+
+	oh.class.delete = function(data){
+		return oh.call("/class/delete", data)
+	}
+
+	oh.class.update = function(data){
+		return oh.call("/class/update", data)
+	}
+
+	//shorthand
+	oh.class.adduser = function(class_urn, username){
+		return oh.class.update({
+			class_urn : class_urn,
+			user_role_list_add : username
+		})
+	}
+
+	//shorthand
+	oh.class.removeuser = function(class_urn, username){
+		return oh.class.update({
+			class_urn : class_urn,
+			user_list_remove : username
+		})
+	}
+
+	//@args class_urn
+	oh.class.search = function(data){
+		return oh.call("/class/search")
+	}
+
+	oh.campaign.read = function(data){
+		//set a default
+		data = data || {};
+		data.output_format = data.output_format || "short";
+		return oh.call("/campaign/read", data, function(x){return x.metadata.items});
+	}
+
+	//@args xml
+	//@args privacy_state
+	//@args running_state
+	//@args campaign_urn
+	//@args campaign_name
+	//@args class_urn_list
+	oh.campaign.create = function(data){
+		return oh.call("/campaign/create", data)
+	}
+
+	oh.campaign.update = function(data){
+		return oh.call("/campaign/update", data)
+	}
+
+	//shorthand
+	oh.campaign.addclass = function(campaign_urn, class_urn){
+		return oh.campaign.update({
+			campaign_urn : campaign_urn,
+			class_list_add : class_urn
+		})
+	}
+
+	//@args campaign_urn
+	oh.campaign.delete = function(data){
+		return oh.call("/campaign/delete", data)
+	}
+
+	//@args document_name
+	//@args privacy_state
+	//@args document_class_role_list
+	//@args document
+	oh.document.create = function(data){
+		return oh.call("/document/create", data, function(x) {return x.document_id})
+	}
+
+	oh.document.read = function(data){
+		return oh.call("/document/read", data)
+	}
+
+	//shorthand for searching
+	oh.document.search = function(filter){
+		return oh.document.read({
+			document_name_search : filter
+		})
+	}
+
+	//@args document_id
+	oh.document.contents = function(data){
+		return oh.call("/document/read/contents", data)
+	}
+
+	//no more than 1 ping every 60 sec
+	oh.ping = debounce(oh.user.whoami, 60*1000, true);
+
+	//ping once every t sec
+	oh.keepalive = once(function(t){
+		t = t || 60;
+		setInterval(oh.ping, t*1000)
 	});
-	return req;
-};
 
-oh.user.whoami = function(cb){
-	var req = oh.call("/user/whoami", {}, function(res){
-		if(!cb) return;
-		cb(res.username)
-	});
-	return req;
-}
-
-oh.user.info = function(cb){
-	oh.call("/user_info/read", {},
-	function(res){
-		if(!cb) return;
-		cb(res)
-	});
-}
-
-oh.user.read = function(username, cb){
-	return oh.call("/user/read",{
-		user_list : username
-	}, function(res){
-		cb && cb(res.data)
-	});
-}
-
-oh.user.setup = function(first_name, last_name, organization, personal_id, class_urn_list, cb){
-	return oh.call("/user/setup", {
-		class_urn_list : class_urn_list || "",
-		first_name : first_name,
-		last_name : last_name,
-		organization : organization,
-		personal_id : personal_id
-	}, function(res){
-		if(!cb) return;
-		cb(res.data)
-	});
-}
-
-oh.user.password = function(user, password, username, new_password, cb){
-	return oh.call("/user/change_password", {
-		user : user,
-		password : password,
-		username : username,
-		new_password : new_password
-	}, function(){
-		cb && cb()
-	})
-}
-
-oh.class.read = function(class_urn, cb){
-	var req = oh.call("/class/read", {
-		 class_urn_list : class_urn
-	}, function(res){
-		cb && cb(res.data);
-	});
-	return req;	
-}
-
-oh.class.create = function(class_urn, class_name, cb){
-	var req = oh.call("/class/create", {
-		class_urn : class_urn,
-		class_name : class_name
-	}, function(res){
-		if(!cb) return;
-		cb()
-	});
-	return req;	
-}
-
-oh.class.delete = function(class_urn, cb){
-	var req = oh.call("/class/delete", {
-		class_urn : class_urn
-	}, function(res){
-		if(!cb) return;
-		cb()
-	});
-	return req;	
-}
-
-oh.class.adduser = function(class_urn, username, cb){
-	return oh.call("/class/update", {
-		class_urn : class_urn,
-		user_role_list_add : username
-	}, function(res){
-		cb && cb();
-	});
-}
-
-oh.class.removeuser = function(class_urn, username, cb){
-	return oh.call("/class/update", {
-		class_urn : class_urn,
-		user_list_remove : username
-	}, function(res){
-		cb && cb();
-	});	
-}
-
-oh.class.search = function(filter, cb){
-	return oh.call("/class/search", {
-		class_urn : filter
-	}, function(res){
-		cb && cb(Object.keys(res.data));
-	});
-}
-
-oh.campaign.create = function(xml, campaign_urn, campaign_name, class_urn, cb){
-	var req = oh.call("/campaign/create", {
-		xml : xml,
-		privacy_state : "shared",
-		running_state : "running",
-		campaign_urn : campaign_urn,	
-		campaign_name : campaign_name,
-		class_urn_list : class_urn		
-	}, function(res){
-		if(!cb) return;
-		cb()
-	});
-	return req;		
-}
-
-oh.campaign.delete = function(campaign_urn, cb){
-	var req = oh.call("/campaign/delete", {
-		campaign_urn : campaign_urn,		
-	}, function(res){
-		if(!cb) return;
-		cb()
-	});
-	return req;	
-}
-
-oh.document.create = function(document_name, document, class_urn, cb){
-	return oh.call("/document/create", {
-		document_name : document_name,
-		privacy_state : "private",
-		document_class_role_list : class_urn + ";reader",
-		document : document
-	}, function(res){
-		if(!cb) return;
-		cb(res["document_id"])
-	});
-}
-
-oh.document.search = function(filter, cb){
-	return oh.call("/document/read", {
-		document_name_search : filter
-	}, function(res){
-		cb && cb(res.data)
-	});
-}
-
-oh.document.contents = function(document_id, cb){
-	return oh.call("/document/read/contents", {
-		document_id : document_id
-	}, function(res){
-		cb && cb(res)
-	});
-}
-
-//no more than 1 ping every 60 sec
-oh.ping = _.debounce(oh.user.whoami, 60*1000, true);
-
-//ping once every t sec
-oh.keepalive = _.once(function(t){
-	t = t || 60;
-	setInterval(oh.ping, t*1000)
-});
-
-//or: keep alive only when active
-oh.keepactive = _.once(function(t){
-	$('html').click(function() {
-		oh.ping();
-	});
-});
-
-oh.ping(function(){
-	oh.user.whoami(function(x){
-		oh.user.read(x, function(data){
-			oh.keepalive();
+	//or: keep alive only when active
+	oh.keepactive = once(function(t){
+		$('html').click(function() {
+			oh.ping();
 		});
 	});
-});
+
+	// Copied from underscore.js
+	function debounce(func, wait, immediate) {
+		var timeout, args, context, timestamp, result;
+
+		var now = function() {
+			return new Date().getTime();
+		};
+
+		var later = function() {
+			var last = now() - timestamp;
+			if (last < wait) {
+				timeout = setTimeout(later, wait - last);
+			} else {
+				timeout = null;
+				if (!immediate) {
+					result = func.apply(context, args);
+					context = args = null;
+				}
+			}
+		};
+
+		return function() {
+			context = this;
+			args = arguments;
+			timestamp = now();
+			var callNow = immediate && !timeout;
+			if (!timeout) {
+				timeout = setTimeout(later, wait);
+			}
+			if (callNow) {
+				result = func.apply(context, args);
+				context = args = null;
+			}
+
+			return result;
+		};
+	};
+
+	// Copied from underscore.js
+	function once(func) {
+		var ran = false, memo;
+		return function() {
+			if (ran) return memo;
+			ran = true;
+			memo = func.apply(this, arguments);
+			func = null;
+			return memo;
+		};
+	};
+
+	// test run call
+	oh.config.read().done(function(x){
+		console.log("This is Ohmage/" + x.application_name + " " + x.application_version + " (" + x.application_build + ")")
+	}).error(function(msg, code){
+		console.log("Ohmage seems offline: " + msg)
+	});
+
+	return(oh)
+}

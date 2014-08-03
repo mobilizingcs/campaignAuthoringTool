@@ -1,49 +1,24 @@
 var campaignWrapper = $.parseJSON(localStorage['campaignWrapper']);
+
 $(function() {
     $('#campaignTitle').focus();
 
     // get username
-    oh.user.whoami(function(username) { 
+    oh.user.whoami().done(function(username) {
 
         $('#authors').val(username);
 
         // Get existing campaigns
-        $.post("/app/user_info/read", { auth_token: $.cookie('auth_token'), client: "campaign-webapp" },
-            function(response) {
-                if(response.result === "success"){
-                    var campaignCount = 0;
-                    var classes = Object.keys(response['data'][username]['classes']).join();
-                    $.each(response.data[username]['classes'], function(index, val) {
-                        $('.classes').append('<option value="' + index + '">' + val + "</option>");
-                    });
-                    $.each(response.data[username].campaigns, function(index, val) {
-                        $('.campaign-select').append('<option value="' + index + '">' + val + "</option>");
-                        campaignCount++;
-                    });
-                    if(campaignCount === 0) {
-                        $('.existing-campaigns').remove();
-                    }
 
-                    populateCampaignData();
-                } else {
-                    // relogin
-                    //alert("Time Out")
-                    alert('Time out! Please re-login')
-                    oh.sendtologin();
-                }
-            }, "json");
-
-        // populate the page with current survey's data
-        function populateCampaignData() {
+        populateClasses(username).done(function(){
             //campaign = campaignWrapper['campaign'];
             $('#campaignTitle').val(campaignWrapper['campaign']['campaignName']);
             $('#campaignUrn').val(campaignWrapper['campaign']['campaignUrn']);
             $('#campaignDescription').val(campaignWrapper['description']); // optional
             $('.classes').val(campaignWrapper['classes']);
-            $('#privacyStateBtn').val(campaignWrapper['privacyState']); 
+            $('#privacyStateBtn').val(campaignWrapper['privacyState']);
             $('#runningStateBtn').val(campaignWrapper['runningState']);
-            
-        }
+        })
 
         //populateCampaignData();
         $("#test").click(function() {
@@ -94,7 +69,7 @@ $(function() {
             var title = $('#campaignTitle').val();
             var urn = $('#campaignUrn').val();
             var description = $('#campaignDescription').val();
-            
+
             if (title === '') {
                 $('#campaignTitle').parent().parent().addClass('error');
             } else {

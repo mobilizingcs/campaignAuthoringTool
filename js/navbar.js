@@ -1,11 +1,10 @@
 $(function() {
     var username = "";
-    oh.user.whoami(function(x) { 
-                                 username = x; 
+    oh.user.whoami().done(function(username) {
                                  $('#username').html('<i class="icon-user"></i> Logged in as ' + username);});
 
     //$('#username').html('<i class="icon-user"></i> Logged in as ' + $.cookie('username'));
-    
+
     $('.logoutButton').click(function (e) {
 	e.preventDefault();
 	var theyAreSure = confirm('Are you sure you want to log out? All unsaved data will be lost.');
