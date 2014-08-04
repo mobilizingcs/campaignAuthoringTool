@@ -1,4 +1,8 @@
 $(function() {
+    function isPositiveFloatNumber(x){
+        return (+x > 0) && (x % 1 < 0.000001)
+    }
+
 	jQuery("#groupPromptType").focus(function() {
 		prevValue = $(this).val();
 	}).change(function() {
@@ -142,46 +146,51 @@ $(function() {
         }
     };
 
-	$("table[id=singleChoiceTable] .delete").on("click", function(e) {
-		e.preventDefault();
-        if ($("#singleChoiceTable tr").length <= 2) alert("Cannot delete last option");
-        else $(this).closest("tr").remove();
-        updateOptionSingle();
-        updateSelection();
-    });
+    function activateSingleChoice(){
 
-	$("table[id=singleChoiceTable] .add").on("click", function(e) {
-		e.preventDefault();
-		var $tr = $(this).closest("tr");
-        var $clone = $tr.clone();
-        /*
-        var counter = Number($("#singleCounter").val()) + 1;
-        $("#singleCounter").val(counter);
-        $clone.find(':text').val('');
-        $clone.find('.singleOptionNum').val(counter);
-        */
-        $clone.find(':text').val('');
-        $(this).closest("tr").after($clone);
-        updateOptionSingle();
-        updateSelection();
-    });
+    	$("table[id=singleChoiceTable] .delete").unbind("click").on("click", function(e) {
+    		e.preventDefault();
+            if ($("#singleChoiceTable tr").length <= 2) alert("Cannot delete last option");
+            else $(this).closest("tr").remove();
+            updateOptionSingle();
+            updateSelection();
+        });
 
-    $("table[id=singleChoiceTable] .up,.down").on("click", function(e){
-    	e.preventDefault();
-        var row = $(this).parents("tr:first");
-        var firstrow = $('table tr:first');
-        if ($(this).is(".up") && row.prevAll().length > 1) {
-            row.insertBefore(row.prev());
-        } else if ($(this).is(".down") && row.nextAll().length > 0) {
-            row.insertAfter(row.next());
-        }
-        updateOptionSingle();
-        updateSelection();
-    });
-    // delegate
-    $('#promptTypeModal').delegate('.singleLabel', 'change', updateSelection);
-    $('#promptTypeModal').delegate('.singleLabel', 'change', checkDuplicateSingle);
-    $('#promptTypeModal').delegate('.singleValue', 'change', singleValidateValue);
+    	$("table[id=singleChoiceTable] .add").unbind("click").on("click", function(e) {
+    		e.preventDefault();
+    		var $tr = $(this).closest("tr");
+            var $clone = $tr.clone();
+            /*
+            var counter = Number($("#singleCounter").val()) + 1;
+            $("#singleCounter").val(counter);
+            $clone.find(':text').val('');
+            $clone.find('.singleOptionNum').val(counter);
+            */
+            $clone.find(':text').val('');
+            $(this).closest("tr").after($clone);
+            updateOptionSingle();
+            updateSelection();
+            activateSingleChoice();
+        });
+
+        $("table[id=singleChoiceTable] .up,.down").unbind("click").on("click", function(e){
+        	e.preventDefault();
+            var row = $(this).parents("tr:first");
+            var firstrow = $('table tr:first');
+            if ($(this).is(".up") && row.prevAll().length > 1) {
+                row.insertBefore(row.prev());
+            } else if ($(this).is(".down") && row.nextAll().length > 0) {
+                row.insertAfter(row.next());
+            }
+            updateOptionSingle();
+            updateSelection();
+        });
+        // delegate
+        $('#promptTypeModal .singleLabel').unbind("change")
+        $('#promptTypeModal .singleLabel').on("change", updateSelection)
+        $('#promptTypeModal .singleLabel').on("change", checkDuplicateSingle)
+        $('#promptTypeModal .singleValue').unbind("change").on("change", singleValidateValue);
+    }
 
     // multiple choice
     function updateOptionMulti() {
@@ -240,33 +249,41 @@ $(function() {
         }
     };
 
-    $("table[id=multiChoiceTable] .upMulti,.downMulti,.addMulti,.deleteMulti").on("click", function(e){
-    	e.preventDefault();
-        var row = $(this).parents("tr:first");
-        var firstrow = $('table tr:first');
-        if ($(this).is(".upMulti") && row.prevAll().length > 1) {
-            row.insertBefore(row.prev());
-        } else if ($(this).is(".downMulti") && row.nextAll().length > 0) {
-            row.insertAfter(row.next());
-        } else if ($(this).is(".addMulti")) {
-        	var $tr = $(this).closest("tr");
-    		var $clone = $tr.clone();
-            //var counter = Number($("#multiCounter").val()) + 1;
-            //$("#multiCounter").val(counter);
-            $clone.find(':text').val('');
-            //$clone.find('.multiOptionNum').val(counter);
-        	$(this).closest("tr").after($clone);
-        } else if ($(this).is(".deleteMulti")) {
-            if ($("#multiChoiceTable tr").length <= 2) alert("Cannot delete last option");
-        	else $(this).closest("tr").remove();
-        }
+    function activateMultiChoice(){
 
-        updateOptionMulti();
-        updateSelectionMulti();
-    });
-    // delegate
-    $('#promptTypeModal').delegate('.multiLabel', 'change', updateSelectionMulti);
-    $('#promptTypeModal').delegate('.multiLabel', 'change', checkDuplicateMulti);
-    $('#promptTypeModal').delegate('.multiValue', 'change', multiValidateValue);
+        $("table[id=multiChoiceTable] .upMulti,.downMulti,.addMulti,.deleteMulti").unbind( "click" ).on("click", function(e){
+        	e.preventDefault();
+            var row = $(this).parents("tr:first");
+            var firstrow = $('table tr:first');
+            if ($(this).is(".upMulti") && row.prevAll().length > 1) {
+                row.insertBefore(row.prev());
+            } else if ($(this).is(".downMulti") && row.nextAll().length > 0) {
+                row.insertAfter(row.next());
+            } else if ($(this).is(".addMulti")) {
+            	var $tr = $(this).closest("tr");
+        		var $clone = $tr.clone();
+                //var counter = Number($("#multiCounter").val()) + 1;
+                //$("#multiCounter").val(counter);
+                $clone.find(':text').val('');
+                //$clone.find('.multiOptionNum').val(counter);
+            	$(this).closest("tr").after($clone);
+            } else if ($(this).is(".deleteMulti")) {
+                if ($("#multiChoiceTable tr").length <= 2) alert("Cannot delete last option");
+            	else $(this).closest("tr").remove();
+            }
 
+            updateOptionMulti();
+            updateSelectionMulti();
+            activateMultiChoice();
+        });
+        // delegate
+        $('#promptTypeModal .multiLabel').unbind("change")
+        $('#promptTypeModal .multiLabel').on('change', updateSelectionMulti);
+        $('#promptTypeModal .multiLabel').on('change', checkDuplicateMulti);
+        $('#promptTypeModal .multiValue').unbind("change").on('change', multiValidateValue);
+    }
+
+    //EXPORT
+    window.activateMultiChoice = activateMultiChoice;
+    window.activateSingleChoice = activateSingleChoice;
 });
