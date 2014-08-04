@@ -58,13 +58,13 @@ var campaignEditor = {
     addSurvey: function(campaign, surveyData) {
         // Check if all required components are present
         if (!campaign || !surveyData['id'] || !surveyData['title'] || !surveyData['submitText'] ||
-            (surveyData['showSummary'] && !surveyData['summaryText']) || 
+            (surveyData['showSummary'] && !surveyData['summaryText']) ||
             (typeof(surveyData['anytime']) === 'undefined')) {
             return false;
         }
 
         var survey = {};
-           
+
         //survey['id'] = surveyData['title'].replace(/\s/g, '');    // ID is equivalent to title sans whitespace
         survey['id'] = surveyData['id'];
         survey['title'] = surveyData['title'];
@@ -91,7 +91,7 @@ var campaignEditor = {
     editSurvey: function(campaign, surveyData, index) {
         // Check if all required components are present
         if (!campaign || !surveyData['id'] || !surveyData['title'] || !surveyData['submitText'] ||
-            (surveyData['showSummary'] && !surveyData['summaryText']) || 
+            (surveyData['showSummary'] && !surveyData['summaryText']) ||
             (typeof(surveyData['anytime']) === 'undefined')) {
             return false;
         }
@@ -130,7 +130,7 @@ var campaignEditor = {
         } else {
             // We need to save the ID in case another condition references this item
             savedId = contentList[index]['message']['editId'];
-            
+
             // savedId = contentList[index]['message']['id'];
             contentList.splice(index, 1);
         }
@@ -138,9 +138,9 @@ var campaignEditor = {
 
         message['id'] = messageData['id'];
         message['messageText'] = messageData['messageText'];
-        
+
         if (messageData['messageCondition']) message['condition'] = messageData['messageCondition'];
-        
+
         message['editId'] =  typeof(savedId) === "undefined" ? campaignEditor.maxItemIndex(contentList) + 1 : savedId;
         //message['editId'] = typeof(saveId) === "undefined" ? campaignEditor.maxItemIndex(contentList) + 1 : savedId;
         contentList.splice(index, 0, {'message': message});
@@ -169,13 +169,13 @@ var campaignEditor = {
         console.log(contentList[index]['message']['id']);
         contentList[index]['message']['id'] = messageData['id'];
         contentList[index]['message']['messageText'] = messageData['messageText'];
-        
+
         if (messageData['messageCondition']) {
             contentList[index]['message']['condition'] = messageData['messageCondition'];
         } else {
             delete contentList[index]['message'].condition;
         }
-        
+
         return true;
     },
 
@@ -198,7 +198,7 @@ var campaignEditor = {
         condition,
         skippable,
         skipLabel,
-        properties, 
+        properties,
         index
         ) {
 
@@ -239,8 +239,8 @@ var campaignEditor = {
         }
         if (promptType != 'timestamp') {
             promptItem['properties'] = properties;
-        } 
-            
+        }
+
         promptItem['editId'] = typeof(savedId) === "undefined" ? campaignEditor.maxItemIndex(contentList) + 1 : savedId;
         contentList.splice(index, 0, {'prompt': promptItem});
         //console.log(contentList);
@@ -265,7 +265,7 @@ var campaignEditor = {
         condition,
         skippable,
         skipLabel,
-        properties, 
+        properties,
         index
         ) {
 
@@ -310,7 +310,7 @@ var campaignEditor = {
         contentList[index]['prompt']['skippable'] = skippable;
         if (skippable) {
             if (skipLabel) contentList[index]['prompt']['skipLabel'] = skipLabel;
-        } else { 
+        } else {
             if (contentList[index]['prompt']['skipLabel']) delete contentList[index]['prompt'].skipLabel;
         }
 
@@ -425,7 +425,7 @@ var campaignEditor = {
 
     // function to parse campaign from xml
     campaignParser: function(jsonContent) {
-        
+
         return 0;
     }
 };

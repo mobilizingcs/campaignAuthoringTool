@@ -30,6 +30,7 @@ $(function() {
         } else {
             //alert("Survey needs at least one prompt.\nEmpty survey won't be accepted by the Ohmage server");
             //e.preventDefault();
+            localStorage['campaignWrapper'] = JSON.stringify(campaignWrapper);
             return true;
         }
     }
