@@ -3,22 +3,18 @@ var campaignWrapper = $.parseJSON(localStorage['campaignWrapper']);
 $(function() {
     $('#campaignTitle').focus();
 
+    // Get existing campaigns
+    $('#campaignTitle').val(campaignWrapper['campaign']['campaignName']);
+    $('#campaignUrn').val(campaignWrapper['campaign']['campaignUrn']);
+    $('#campaignDescription').val(campaignWrapper['description']); // optional
+    $('#privacyStateBtn').val(campaignWrapper['privacyState']);
+    $('#runningStateBtn').val(campaignWrapper['runningState']);
+
     // get username
     oh.user.whoami().done(function(username) {
 
         $('#authors').val(username);
-
-        // Get existing campaigns
-
-        populateClasses(username).done(function(){
-            //campaign = campaignWrapper['campaign'];
-            $('#campaignTitle').val(campaignWrapper['campaign']['campaignName']);
-            $('#campaignUrn').val(campaignWrapper['campaign']['campaignUrn']);
-            $('#campaignDescription').val(campaignWrapper['description']); // optional
-            $('.classes').val(campaignWrapper['classes']);
-            $('#privacyStateBtn').val(campaignWrapper['privacyState']);
-            $('#runningStateBtn').val(campaignWrapper['runningState']);
-        })
+        populateClasses(username)
 
         //populateCampaignData();
         $("#test").click(function() {

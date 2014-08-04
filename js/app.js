@@ -27,6 +27,7 @@ function populateClasses(username){
         $.each(classes, function(i, name) {
             $('.classes').append('<option value="' + inverse[name] + '">' + name + "</option>");
         });
+        $('.classes').val(campaignWrapper['classes']);
 
         $.each(data[username].campaigns, function(index, val) {
             //do something with campaigns
