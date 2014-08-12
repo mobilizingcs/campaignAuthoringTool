@@ -42,22 +42,25 @@ function campaigntojson (xml){
 			if(s.contentList){
 				var prompts = s.contentList[""]
 				$.each(prompts, function(j, p){
-					if(p.prompt.skippable){
-						//cast to bool
-						surveys.survey[i].contentList[""][j].prompt.skippable = toBoolean(p.prompt.skippable)
-					}
-					if(p.prompt.properties) {
-						var prop = p.prompt.properties.property;
-						if(!$.isArray(prop)){
-							//cast to array
-							surveys.survey[i].contentList[""][j].prompt.properties.property = [prop];
+					//messages are not prompts
+					if(p.prompt){
+						if(p.prompt.skippable){
+							//cast to bool
+							surveys.survey[i].contentList[""][j].prompt.skippable = toBoolean(p.prompt.skippable)
 						}
-						$.each(surveys.survey[i].contentList[""][j].prompt.properties.property, function(k, thisprop){
-							if(thisprop.key){
-								//cast to numeric
-								surveys.survey[i].contentList[""][j].prompt.properties.property[k].key = toNumber(thisprop.key)
+						if(p.prompt.properties) {
+							var prop = p.prompt.properties.property;
+							if(!$.isArray(prop)){
+								//cast to array
+								surveys.survey[i].contentList[""][j].prompt.properties.property = [prop];
 							}
-						})
+							$.each(surveys.survey[i].contentList[""][j].prompt.properties.property, function(k, thisprop){
+								if(thisprop.key){
+									//cast to numeric
+									surveys.survey[i].contentList[""][j].prompt.properties.property[k].key = toNumber(thisprop.key)
+								}
+							})
+						}
 					}
 				})
 			} else {
