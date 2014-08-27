@@ -1,5 +1,5 @@
 //initiate the client
-var oh = Ohmage("/app", "myclientname")
+var oh = Ohmage("/app", "campaign-author-tool-reloaded")
 
 //attach global callbacks
 oh.callback("done", function(x, status, req){
