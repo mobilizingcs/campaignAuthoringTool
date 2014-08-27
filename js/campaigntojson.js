@@ -85,8 +85,11 @@ $(function(){
 	//hide when existing surveys
 	if( !campaignWrapper.campaign.surveys.survey.length ){
 		$(".importdiv").removeClass("hidden")
-		var filereader = new FileReader();
-		filereader.onload = function(e) {
+	}
+
+	var filereader = new FileReader();
+	filereader.onload = function(e) {
+		try {
 			var xml = e.target.result;
 			var json = campaigntojson(xml.replace(/<!--[\s\S]*?-->/g, ""))
 			if(json.campaign && json.campaign.surveys){
@@ -96,12 +99,15 @@ $(function(){
 			} else {
 				alert("No surveys found in XML. Perhaps invalid XML file.")
 			}
+		} catch(err) {
+    		alert("Error parsing XML: \n\n" + err.message)
 		}
-
-		$("#importxml").on("change", function (e) {
-			e.preventDefault();
-			var file = $("#importxml")[0].files[0];
-			if(file) filereader.readAsText(file);
-		})
 	}
+
+	$("#importxml").on("change", function (e) {
+		e.preventDefault();
+		var file = $("#importxml")[0].files[0];
+		if(file) filereader.readAsText(file);
+		$("#importxml").val("")
+	})
 })
