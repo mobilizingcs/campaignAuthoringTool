@@ -80,3 +80,28 @@ var myxml = json2xml(campaign)
 console.log(JSON.stringify(campaign))
 console.log(JSON.stringify(campaigntojson(myxml)))
 */
+
+$(function(){
+	//hide when existing surveys
+	if( !campaignWrapper.campaign.surveys.survey.length ){
+		$(".importdiv").removeClass("hidden")
+		var filereader = new FileReader();
+		filereader.onload = function(e) {
+			var xml = e.target.result;
+			var json = campaigntojson(xml.replace(/<!--[\s\S]*?-->/g, ""))
+			if(json.campaign && json.campaign.surveys){
+				campaignWrapper.campaign.surveys = json.campaign.surveys;
+				localStorage['campaignWrapper'] = JSON.stringify(campaignWrapper);
+				location.reload()
+			} else {
+				alert("No surveys found in XML. Perhaps invalid XML file.")
+			}
+		}
+
+		$("#importxml").on("change", function (e) {
+			e.preventDefault();
+			var file = $("#importxml")[0].files[0];
+			if(file) filereader.readAsText(file);
+		})
+	}
+})

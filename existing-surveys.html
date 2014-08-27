@@ -33,6 +33,7 @@
         <script type="text/javascript" src="js/campaign-editor.js"></script>
         <script type="text/javascript" src="js/breadcrumb.js"></script>
         <script type="text/javascript" src="js/vkbeautify.0.99.00.beta.js"></script>
+        <script type="text/javascript" src="js/campaigntojson.js"></script>
     </head>
     <body>
         <!-- navbar -->
@@ -107,7 +108,7 @@
                         <h5 class="left">
                             Existing Surveys
                             <small>Reorder surveys by dragging!</small>
-                        </h6>
+                        </h5>
 
                         <table>
                             <div class="existingSurveyss" id="existingSurveys">
@@ -115,6 +116,10 @@
                                 </ul>
                             </div>
                         </table>
+
+                        <form class="importdiv hidden">
+                            Import Survey from XML file: <input type="file" id="importxml">
+                        </form>
                     </div>
                 </div>
             </div>
