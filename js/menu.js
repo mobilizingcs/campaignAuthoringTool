@@ -123,7 +123,8 @@ $(function() {
     });
 
     $("#deleteCampaign").click(function(){
-        delete localStorage.campaignWrapper
+        delete localStorage.campaignWrapper;
+        window.onbeforeunload = function(e){};
         $.removeCookie("currentCampaign");
         $.removeCookie("currentSurvey");
         window.location.replace('./');
