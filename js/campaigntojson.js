@@ -25,6 +25,9 @@ function campaigntojson (xml){
 
 	var myjson = JSON.parse(xml2json(parseXml(xml), " "))
 
+	//hack for IE
+	myjson = myjson.replace("<", "&lt;").replace(">", "&gt;");
+
 	//surveys must be an array
 	var surveys = myjson.campaign.surveys
 	if(surveys && surveys.survey) {
