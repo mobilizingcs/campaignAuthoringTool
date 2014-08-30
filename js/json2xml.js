@@ -235,7 +235,7 @@ function parseXml(xml) {
    var dom = null;
    if (window.DOMParser) {
       try { 
-         dom = (new DOMParser()).parseFromString(xml, "text/xml"); 
+         dom = (new DOMParser()).parseFromString(xml, "application/xml")
       } 
       catch (e) { dom = null; }
    }
