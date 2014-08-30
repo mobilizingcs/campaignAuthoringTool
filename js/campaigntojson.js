@@ -23,10 +23,13 @@ function campaigntojson (xml){
 		return (typeof(num) == "number" && !isNaN(num)) ? num : val;
 	}
 
-	var myjson = JSON.parse(xml2json(parseXml(xml), " "))
+	var jsonstring = xml2json(parseXml(xml), " ")
 
 	//hack for IE
-	myjson = myjson.replace("<", "&lt;").replace(">", "&gt;");
+	jsonstring = jsonstring.replace("<", "&lt;").replace(">", "&gt;");
+	
+	//parse back to JSON
+	var myjson = JSON.parse(jsonstring, " ");
 
 	//surveys must be an array
 	var surveys = myjson.campaign.surveys
