@@ -1,6 +1,6 @@
 
 
-var editPrompt = '<hr>' + 
+var editPrompt = '<hr>' +
             '<div class="accordion-inner editPromptDetails">' +
                 '<div class="control-group">' +
                     '<label class="control-label inline-label" for="promptId">Prompt ID: <span class="red">*</span></label>' +
@@ -17,7 +17,7 @@ var editPrompt = '<hr>' +
                         '<i class="help-icon icon-question-sign help-hover" data-original-title="The user-friendly name of this prompt used in visualizations." rel="tooltip" data-placement="right"></i>'+
                     //</div>'+
                 '</div>'+
-                
+
                 '<div class="control-group">'+
                     '<label class="control-label inline-label" for="promptText">Prompt Text: <span class="red">*</span></label>'+
                     //'<div class="controls">'+
@@ -25,10 +25,10 @@ var editPrompt = '<hr>' +
                         '<i class="help-icon icon-question-sign help-hover" data-original-title="The text to display to the user when prompting them to respond." rel="tooltip" data-placement="right"></i>'+
                     //'</div>'+
                 '</div>'+
-                
+
                 '<div class="control-group">'+
                     '<label class="control-label inline-label" for="promptType">Prompt Type: <span class="red">*</span></label>'+
-                    
+
                     //'<div class="controls">'+
                         '<select class="choosePromptType span4">'+
                             '<option value="">Please choose a prompt type</option>'+
@@ -47,7 +47,7 @@ var editPrompt = '<hr>' +
                         '<input type="hidden" class="promptType" name="promptType" id="promptType"/> '+
                         '<i class="help-icon icon-question-sign help-hover" data-original-title="Choose type of your prompt" rel="tooltip" data-placement="right"></i>'+
                     //'</div>'+
-        
+
                     '</br>'+
                     '<label class="control-label inline-label" for="addedPrompt">Prompt Details:</label>'+
                     //'<div class="controls">'+
@@ -60,7 +60,7 @@ var editPrompt = '<hr>' +
                         //<!--<label type="hiden" class="control-label" for="default">Default</label>-->
                         //'<div class="controls">'+
                             '<input type="hidden" name="default" class="default" placeholder="Default" />'+
-                            '<input type="hidden" class="jsonText" />' + 
+                            '<input type="hidden" class="jsonText" />' +
                             //<!--<i class="help-icon icon-question-sign" data-original-title="The default value for this prompt. This is type-dependent." rel="tooltip" data-placement="right"></i>-->
                         //'</div>'+
                     '</div>'+
@@ -70,7 +70,7 @@ var editPrompt = '<hr>' +
                             //'<div class="input-append">'+
                                 '<input type="hidden" class="promptConditionType" id="promptConditionType" />' +
                                 '<input type="hidden" class="promptConditionJson" id="promptConditionJson" />' +
-                                '<input type="hidden" class="currPromptType" id="currPromptType" />' + 
+                                '<input type="hidden" class="currPromptType" id="currPromptType" />' +
                                 '<textarea name="promptCondition"  class="span4 promptCondition" placeholder="None." disabled></textarea>'+
                                 '<button type="button" class="btn btn-link conditionBtn promptConditionBtn" >Edit Condition </button>'+
                                 '<i class="help-icon icon-question-sign help-hover" data-original-title="The condition which determines if the prompt is displayed or not." rel="tooltip" data-placement="top"></i>'+
@@ -86,12 +86,12 @@ var editPrompt = '<hr>' +
                             //'</label>'+
                         //'</div>'+
                     '</div> '+
-                    
+
                     '<div class="control-group">'+
                         '<label class="control-label inline-label skipLabelText" for="skipLabel">Skip Label:</label>'+
                         //'<div class="controls">'+
                             '<input type="text" class="span4 skipLabel" name="skipLabel" placeholder="Skip" disabled/>'+
-                            '<i class="help-icon icon-question-sign help-hover" data-original-title="If skippable, this is the text of the button to use to skip the label." rel="tooltip" data-placement="right"></i>'+
+                            '<i class="help-icon icon-question-sign help-hover" data-original-title="If skippable, this is the text of the button to use to skip the prompt." rel="tooltip" data-placement="right"></i>'+
                         //'</div> '+
                     '</div>   '+
                 '</div>'+
@@ -113,23 +113,23 @@ function addMessageToPrevItems(index) {
         '<button type="button" class="btn btn-link pull-right deleteItem"><i class="icon-trash icon-black"></i><small> Delete</small></button>' +
         //'<button type="button" class="btn btn-link pull-right editItem"><i class="icon-pencil icon-black"></i> Edit</button>' +
         '<button type="button" class="btn btn-link pull-right editItem" data-toggle="collapse" data-target="#edit' + target + '"><i class="icon-file icon-black"></i><small> Edit</small></button>' +
-        '<i class="icon-comment help-hover"></i> <button type="button" class="btn btn-link help-hover viewDetails" data-original-title="Message (Click for more details)" rel="tooltip" data-placement="top" data-toggle="collapse" href="#' + target + '"><u> <strong class="detailsID">' + message['id'] + '</strong></u></button><br>' + 
-         
-        // prompt details 
-        '<div class="collapse-group1">' + 
+        '<i class="icon-comment help-hover"></i> <button type="button" class="btn btn-link help-hover viewDetails" data-original-title="Message (Click for more details)" rel="tooltip" data-placement="top" data-toggle="collapse" href="#' + target + '"><u> <strong class="detailsID">' + message['id'] + '</strong></u></button><br>' +
+
+        // prompt details
+        '<div class="collapse-group1">' +
             '<div id="' + target + '" class="collapse itemDetails out">'+
                 '<div class="accordion-inner">'+
-                    '<p class="viewDetailsMessageID">Message ID: ' + message['id'] + '</p>' +  
-                    '<p class="viewDetailsMessageText">Message Text: ' + message['messageText'] + '</p>' +  
-                    '<p class="viewDetailsMessageCond">Condition: ' + condition + '</p>' +  
+                    '<p class="viewDetailsMessageID">Message ID: ' + message['id'] + '</p>' +
+                    '<p class="viewDetailsMessageText">Message Text: ' + message['messageText'] + '</p>' +
+                    '<p class="viewDetailsMessageCond">Condition: ' + condition + '</p>' +
                 '</div>'+
             '</div>'+
         '</div>'+
 
         // prompt edit
-        '<div class="collapse-group2">' + 
+        '<div class="collapse-group2">' +
             '<div id="edit' + target + '" class="collapse itemEdit group2">'+
-                '<hr>' + 
+                '<hr>' +
                 '<div class="accordion-inner editPromptDetails">'+
                     '<div class="control-group">' +
                         '<label class="control-label inline-label" for="messageId">Message ID: <span class="red">*</span></label>' +
@@ -165,11 +165,11 @@ function addMessageToPrevItems(index) {
                     '</div>' +
                 '</div>' +
             '</div>'+
-        '</div>'+    
+        '</div>'+
 
         + '</li>';
     $('#previousItemsSortable').children().eq(index).remove();
-    if (index != 0) {   
+    if (index != 0) {
         $(newItem).insertAfter($('#previousItemsSortable').children().eq(index - 1)).slideToggle().removeClass('hide');
     } else {
         $(newItem).prependTo('#previousItemsSortable').slideToggle().removeClass('hide');
@@ -181,7 +181,7 @@ function addAudioToPrevItem(index) {
     var prompt = campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''][index]['prompt'];
     var propertiesText = "";
     var data = eval(prompt['properties']['property']);
-    
+
     for (var key in data) {
         if (data.hasOwnProperty(key)) {
             propertiesText += '<p>' + data[key]['key'] + ': ' + data[key]['label'] + '</p>';
@@ -200,17 +200,17 @@ function addAudioToPrevItem(index) {
         //'<button type="button" class="btn btn-link pull-right editItem"><i class="icon-pencil icon-black"></i> Edit</button>' +
         '<button type="button" class="btn btn-link pull-right editItem" data-toggle="collapse" data-target="#edit' + target + '"><i class="icon-file icon-black"></i><small> Edit</small></button>' +
         '<i class="icon-ok-circle help-hover"> </i><button type="button" class="btn btn-link help-hover viewDetails" data-original-title="Prompt (Click for more details)" rel="tooltip" data-placement="top" data-toggle="collapse" href="#' + target + '"><u> <strong class="detailsID">' + prompt['id'] + '</strong></u></button><br>'+
-        
-        '<div class="collapse-group1">' + 
+
+        '<div class="collapse-group1">' +
             '<div id="' + target + '" class="collapse itemDetails out">'+
                 '<div class="accordion-inner">'+
-                    '<p class="viewDetailsPromptID">Prompt ID: ' + prompt['id'] + '</p>' +  
-                    '<p class="viewDetailsPromptText">Prompt Text: ' + prompt['promptText'] + '</p>' + 
+                    '<p class="viewDetailsPromptID">Prompt ID: ' + prompt['id'] + '</p>' +
+                    '<p class="viewDetailsPromptText">Prompt Text: ' + prompt['promptText'] + '</p>' +
                     '<p class="viewDetailsPromptDisplayLabel">Display Label: ' + prompt['displayLabel'] + '</p>' +
-                    '<p class="viewDetailsPromptType">Prompt Type: ' + prompt['promptType'] + '</p>' +  
+                    '<p class="viewDetailsPromptType">Prompt Type: ' + prompt['promptType'] + '</p>' +
                     '<p>Prompt options: </p>' +
                     '<span class="detailList">' + propertiesText + '</span>' +
-                    '<p class="viewDetailsPromptCond">Condition: ' + condition + '</p>' + 
+                    '<p class="viewDetailsPromptCond">Condition: ' + condition + '</p>' +
                     '<p class="viewDetailsPromptSkippable">Skippable: ' + prompt['skippable'] + '</p>' +
                     '<p class="viewDetailsPromptSkipLabel">Skip Label: ' + skipLabel + '</p>' +
                 '</div>'+
@@ -218,7 +218,7 @@ function addAudioToPrevItem(index) {
         '</div>' +
 
         // prompt edit
-        '<div class="collapse-group2">' + 
+        '<div class="collapse-group2">' +
             '<div id="edit' + target + '" class="collapse itemEdit group2">'+
                 editPrompt +
             '</div>'+
@@ -239,7 +239,7 @@ function addMultipleChoiceToPrevItem(index) {
     var propertiesText = "";
     if (prompt['properties']) {
         var data = eval(prompt['properties']['property']);
-        
+
         for (var key in data) {
             if (data.hasOwnProperty(key)) {
                 propertiesText += '<p>' + data[key]['key'] + ': ' + data[key]['label'] + '</p>';
@@ -260,17 +260,17 @@ function addMultipleChoiceToPrevItem(index) {
         '<button type="button" class="btn btn-link pull-right editItem" data-toggle="collapse" data-target="#edit' + target + '"><i class="icon-file icon-black"></i><small> Edit</small></button>' +
         '<i class="icon-ok-circle help-hover"> </i><button type="button" class="btn btn-link help-hover viewDetails" data-original-title="Prompt (Click for more details)" rel="tooltip" data-placement="top" data-toggle="collapse" href="#' + target + '"><u> <strong class="detailsID">' + prompt['id'] + '</strong></u></button><br>'+
 
-        '<div class="collapse-group1">' + 
+        '<div class="collapse-group1">' +
             '<div id="' + target + '" class="collapse itemDetails out">'+
                 '<div class="accordion-inner">'+
-                    '<p class="viewDetailsPromptID">Prompt ID: ' + prompt['id'] + '</p>' +  
-                    '<p class="viewDetailsPromptText">Prompt Text: ' + prompt['promptText'] + '</p>' + 
-                    '<p class="viewDetailsPromptDisplayLabel">Display Label: ' + prompt['displayLabel'] + '</p>' + 
-                    '<p class="viewDetailsPromptType">Prompt Type: ' + prompt['promptType'] + '</p>' + 
+                    '<p class="viewDetailsPromptID">Prompt ID: ' + prompt['id'] + '</p>' +
+                    '<p class="viewDetailsPromptText">Prompt Text: ' + prompt['promptText'] + '</p>' +
+                    '<p class="viewDetailsPromptDisplayLabel">Display Label: ' + prompt['displayLabel'] + '</p>' +
+                    '<p class="viewDetailsPromptType">Prompt Type: ' + prompt['promptType'] + '</p>' +
                     '<p>Prompt options: </p>' +
                     '<span class="detailList">' + propertiesText + '</span>' +
-                    '<p class="viewDetailsPromptDefault">Default: ' + defaultValue + '</p>' + 
-                    '<p class="viewDetailsPromptCond">Condition: ' + condition + '</p>' + 
+                    '<p class="viewDetailsPromptDefault">Default: ' + defaultValue + '</p>' +
+                    '<p class="viewDetailsPromptCond">Condition: ' + condition + '</p>' +
                     '<p class="viewDetailsPromptSkippable">Skippable: ' + prompt['skippable'] + '</p>' +
                     '<p class="viewDetailsPromptSkipLabel">Skip Label: ' + skipLabel + '</p>' +
                 '</div>'+
@@ -278,7 +278,7 @@ function addMultipleChoiceToPrevItem(index) {
         '</div>' +
 
         // prompt edit
-        '<div class="collapse-group2">' + 
+        '<div class="collapse-group2">' +
             '<div id="edit' + target + '" class="collapse itemEdit group2">'+
                 editPrompt +
             '</div>'+
@@ -296,10 +296,10 @@ function addMultipleChoiceToPrevItem(index) {
 
 function addNumberToPrevItem(index) {
     var prompt = campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''][index]['prompt'];
-    
+
     var propertiesText = "";
     var data = eval(prompt['properties']['property']);
-    
+
     for (var key in data) {
         if (data.hasOwnProperty(key)) {
             propertiesText += '<p>' + data[key]['key'] + ': ' + data[key]['label'] + '</p>';
@@ -318,18 +318,18 @@ function addNumberToPrevItem(index) {
         //'<button type="button" class="btn btn-link pull-right editItem"><i class="icon-pencil icon-black"></i> Edit</button>' +
         '<button type="button" class="btn btn-link pull-right editItem" data-toggle="collapse" data-target="#edit' + target + '"><i class="icon-file icon-black"></i><small> Edit</small></button>' +
         '<i class="icon-ok-circle help-hover"> </i><button type="button" class="btn btn-link help-hover viewDetails" data-original-title="Prompt (Click for more details)" rel="tooltip" data-placement="top" data-toggle="collapse" href="#' + target + '"><u> <strong class="detailsID">' + prompt['id'] + '</strong></u></button><br>'+
-        
-        '<div class="collapse-group1">' + 
+
+        '<div class="collapse-group1">' +
             '<div id="' + target + '" class="collapse itemDetails out">'+
                 '<div class="accordion-inner">'+
-                    '<p class="viewDetailsPromptID">Prompt ID: ' + prompt['id'] + '</p>' +  
-                    '<p class="viewDetailsPromptText">Prompt Text: ' + prompt['promptText'] + '</p>' + 
-                    '<p class="viewDetailsPromptDisplayLabel">Display Label: ' + prompt['displayLabel'] + '</p>' + 
-                    '<p class="viewDetailsPromptType">Prompt Type: ' + prompt['promptType'] + '</p>' + 
+                    '<p class="viewDetailsPromptID">Prompt ID: ' + prompt['id'] + '</p>' +
+                    '<p class="viewDetailsPromptText">Prompt Text: ' + prompt['promptText'] + '</p>' +
+                    '<p class="viewDetailsPromptDisplayLabel">Display Label: ' + prompt['displayLabel'] + '</p>' +
+                    '<p class="viewDetailsPromptType">Prompt Type: ' + prompt['promptType'] + '</p>' +
                     '<p>Prompt options: </p>' +
                     '<span class="detailList">' + propertiesText + '</span>' +
-                    '<p class="viewDetailsPromptDefault">Default: ' + defaultValue + '</p>' + 
-                    '<p class="viewDetailsPromptCond">Condition: ' + condition + '</p>' + 
+                    '<p class="viewDetailsPromptDefault">Default: ' + defaultValue + '</p>' +
+                    '<p class="viewDetailsPromptCond">Condition: ' + condition + '</p>' +
                     '<p class="viewDetailsPromptSkippable">Skippable: ' + prompt['skippable'] + '</p>' +
                     '<p class="viewDetailsPromptSkipLabel">Skip Label: ' + skipLabel + '</p>' +
                 '</div>'+
@@ -337,14 +337,14 @@ function addNumberToPrevItem(index) {
         '</div>' +
 
         // prompt edit
-        '<div class="collapse-group2">' + 
+        '<div class="collapse-group2">' +
             '<div id="edit' + target + '" class="collapse itemEdit group2">'+
                 editPrompt +
             '</div>'+
         '</div>' +
 
         '</li>';
-    $('#previousItemsSortable').children().eq(index).remove();    
+    $('#previousItemsSortable').children().eq(index).remove();
     if (index != 0) {
         $(newItem).insertAfter($('#previousItemsSortable').children().eq(index - 1)).slideToggle().removeClass('hide');
     } else {
@@ -357,7 +357,7 @@ function addPhotoToPrevItem(index) {
     var prompt = campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''][index]['prompt'];
     var propertiesText = "";
     var data = eval(prompt['properties']['property']);
-    
+
     for (var key in data) {
         if (data.hasOwnProperty(key)) {
             propertiesText += '<p>' + data[key]['key'] + ': ' + data[key]['label'] + '</p>';
@@ -376,25 +376,25 @@ function addPhotoToPrevItem(index) {
         //'<button type="button" class="btn btn-link pull-right editItem"><i class="icon-pencil icon-black"></i> Edit</button>' +
         '<button type="button" class="btn btn-link pull-right editItem" data-toggle="collapse" data-target="#edit' + target + '"><i class="icon-file icon-black"></i><small> Edit</small></button>' +
         '<i class="icon-ok-circle help-hover"> </i><button type="button" class="btn btn-link help-hover viewDetails" data-original-title="Prompt (Click for more details)" rel="tooltip" data-placement="top" data-toggle="collapse" href="#' + target + '"><u> <strong class="detailsID">' + prompt['id'] + '</strong></u></button><br>'+
-        
-        '<div class="collapse-group1">' + 
+
+        '<div class="collapse-group1">' +
             '<div id="' + target + '" class="collapse itemDetails out">'+
                 '<div class="accordion-inner">'+
-                    '<p class="viewDetailsPromptID">Prompt ID: ' + prompt['id'] + '</p>' +  
-                    '<p class="viewDetailsPromptText">Prompt Text: ' + prompt['promptText'] + '</p>' + 
+                    '<p class="viewDetailsPromptID">Prompt ID: ' + prompt['id'] + '</p>' +
+                    '<p class="viewDetailsPromptText">Prompt Text: ' + prompt['promptText'] + '</p>' +
                     '<p class="viewDetailsPromptDisplayLabel">Display Label: ' + prompt['displayLabel'] + '</p>' +
-                    '<p class="viewDetailsPromptType">Prompt Type: ' + prompt['promptType'] + '</p>' +  
+                    '<p class="viewDetailsPromptType">Prompt Type: ' + prompt['promptType'] + '</p>' +
                     '<p>Prompt options: </p>' +
                     '<span class="detailList">' + propertiesText + '</span>' +
-                    '<p class="viewDetailsPromptCond">Condition: ' + condition + '</p>' + 
+                    '<p class="viewDetailsPromptCond">Condition: ' + condition + '</p>' +
                     '<p class="viewDetailsPromptSkippable">Skippable: ' + prompt['skippable'] + '</p>' +
                     '<p class="viewDetailsPromptSkipLabel">Skip Label: ' + skipLabel + '</p>' +
                 '</div>'+
             '</div>'+
-        '</div>' +    
+        '</div>' +
 
         // prompt edit
-        '<div class="collapse-group2">' + 
+        '<div class="collapse-group2">' +
             '<div id="edit' + target + '" class="collapse itemEdit group2">'+
                 editPrompt +
             '</div>'+
@@ -414,7 +414,7 @@ function addRemoteToPrevItem(index) {
     var prompt = campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''][index]['prompt'];
     var propertiesText = "";
     var data = eval(prompt['properties']['property']);
-    
+
     for (var key in data) {
         if (data.hasOwnProperty(key)) {
             propertiesText += '<p>' + data[key]['key'] + ': ' + data[key]['label'] + '</p>';
@@ -433,17 +433,17 @@ function addRemoteToPrevItem(index) {
         //'<button type="button" class="btn btn-link pull-right editItem"><i class="icon-pencil icon-black"></i> Edit</button>' +
         '<button type="button" class="btn btn-link pull-right editItem" data-toggle="collapse" data-target="#edit' + target + '"><i class="icon-file icon-black"></i><small> Edit</small></button>' +
         '<i class="icon-ok-circle help-hover"> </i><button type="button" class="btn btn-link help-hover viewDetails" data-original-title="Prompt (Click for more details)" rel="tooltip" data-placement="top" data-toggle="collapse" href="#' + target + '"><u> <strong class="detailsID">' + prompt['id'] + '</strong></u></button><br>'+
-      
-        '<div class="collapse-group1">' +       
+
+        '<div class="collapse-group1">' +
             '<div id="' + target + '" class="collapse itemDetails out">'+
-                '<div class="accordion-inner">'+ 
-                    '<p class="viewDetailsPromptID">Prompt ID: ' + prompt['id'] + '</p>' +  
-                    '<p class="viewDetailsPromptText">Prompt Text: ' + prompt['promptText'] + '</p>' + 
+                '<div class="accordion-inner">'+
+                    '<p class="viewDetailsPromptID">Prompt ID: ' + prompt['id'] + '</p>' +
+                    '<p class="viewDetailsPromptText">Prompt Text: ' + prompt['promptText'] + '</p>' +
                     '<p class="viewDetailsPromptDisplayLabel">Display Label: ' + prompt['displayLabel'] + '</p>' +
-                    '<p class="viewDetailsPromptType">Prompt Type: ' + prompt['promptType'] + '</p>' +  
+                    '<p class="viewDetailsPromptType">Prompt Type: ' + prompt['promptType'] + '</p>' +
                     '<p>Prompt options: </p>' +
                     '<span class="detailList">' + propertiesText + '</span>' +
-                    '<p class="viewDetailsPromptCond">Condition: ' + condition + '</p>' + 
+                    '<p class="viewDetailsPromptCond">Condition: ' + condition + '</p>' +
                     '<p class="viewDetailsPromptSkippable">Skippable: ' + prompt['skippable'] + '</p>' +
                     '<p class="viewDetailsPromptSkipLabel">Skip Label: ' + skipLabel + '</p>' +
                 '</div>'+
@@ -451,7 +451,7 @@ function addRemoteToPrevItem(index) {
         '</div>' +
 
         // prompt edit
-        '<div class="collapse-group2">' + 
+        '<div class="collapse-group2">' +
             '<div id="edit' + target + '" class="collapse itemEdit group2">'+
                 editPrompt +
             '</div>'+
@@ -473,7 +473,7 @@ function addSingleChoiceToPrevItem(index) {
 
     if (prompt['properties']) {
         var data = eval(prompt['properties']['property']);
-        
+
         for (var key in data) {
             if (data.hasOwnProperty(key)) {
                 propertiesText += '<p>' + data[key]['key'] + ': ' + data[key]['label'] + '</p>';
@@ -493,18 +493,18 @@ function addSingleChoiceToPrevItem(index) {
         //'<button type="button" class="btn btn-link pull-right editItem"><i class="icon-pencil icon-black"></i> Edit</button>' +
         '<button type="button" class="btn btn-link pull-right editItem" data-toggle="collapse" data-target="#edit' + target + '"><i class="icon-file icon-black"></i><small> Edit</small></button>' +
         '<i class="icon-ok-circle help-hover"> </i><button type="button" class="btn btn-link help-hover viewDetails" data-original-title="Prompt (Click for more details)" rel="tooltip" data-placement="top" data-toggle="collapse" href="#' + target + '"><u> <strong class="detailsID">' + prompt['id'] + '</strong></u></button><br>'+
-   
-        '<div class="collapse-group1">' + 
+
+        '<div class="collapse-group1">' +
             '<div id="' + target + '" class="collapse itemDetails out">'+
                 '<div class="accordion-inner">'+
-                    '<p class="viewDetailsPromptID">Prompt ID: ' + prompt['id'] + '</p>' +  
-                    '<p class="viewDetailsPromptText">Prompt Text: ' + prompt['promptText'] + '</p>' + 
+                    '<p class="viewDetailsPromptID">Prompt ID: ' + prompt['id'] + '</p>' +
+                    '<p class="viewDetailsPromptText">Prompt Text: ' + prompt['promptText'] + '</p>' +
                     '<p class="viewDetailsPromptDisplayLabel">Display Label: ' + prompt['displayLabel'] + '</p>' +
-                    '<p class="viewDetailsPromptType">Prompt Type: ' + prompt['promptType'] + '</p>' +  
+                    '<p class="viewDetailsPromptType">Prompt Type: ' + prompt['promptType'] + '</p>' +
                     '<p>Prompt options: </p>' +
                     '<span class="detailList">' + propertiesText + '</span>' +
-                    '<p class="viewDetailsPromptDefault">Default: ' + defaultValue + '</p>' + 
-                    '<p class="viewDetailsPromptCond">Condition: ' + condition + '</p>' + 
+                    '<p class="viewDetailsPromptDefault">Default: ' + defaultValue + '</p>' +
+                    '<p class="viewDetailsPromptCond">Condition: ' + condition + '</p>' +
                     '<p class="viewDetailsPromptSkippable">Skippable: ' + prompt['skippable'] + '</p>' +
                     '<p class="viewDetailsPromptSkipLabel">Skip Label: ' + skipLabel + '</p>' +
                 '</div>'+
@@ -512,7 +512,7 @@ function addSingleChoiceToPrevItem(index) {
         '</div>' +
 
         // prompt edit
-        '<div class="collapse-group2">' + 
+        '<div class="collapse-group2">' +
             '<div id="edit' + target + '" class="collapse itemEdit group2">'+
                 editPrompt +
             '</div>'+
@@ -532,7 +532,7 @@ function addTextToPrevItem(index) {
     var prompt = campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''][index]['prompt'];
     var propertiesText = "";
     var data = eval(prompt['properties']['property']);
-    
+
     for (var key in data) {
         if (data.hasOwnProperty(key)) {
             propertiesText += '<p>' + data[key]['key'] + ': ' + data[key]['label'] + '</p>';
@@ -553,17 +553,17 @@ function addTextToPrevItem(index) {
         '<button type="button" class="btn btn-link pull-right editItem" data-toggle="collapse" data-target="#edit' + target + '"><i class="icon-file icon-black"></i><small> Edit</small></button>' +
         '<i class="icon-ok-circle help-hover"> </i><button type="button" class="btn btn-link help-hover viewDetails" data-original-title="Prompt (Click for more details)" rel="tooltip" data-placement="top" data-toggle="collapse" href="#' + target + '"><u> <strong class="detailsID">' + prompt['id'] + '</strong></u></button><br>'+
 
-        '<div class="collapse-group1">' + 
+        '<div class="collapse-group1">' +
             '<div id="' + target + '" class="collapse itemDetails out">'+
                 '<div class="accordion-inner">'+
-                    '<p class="viewDetailsPromptID">Prompt ID: ' + prompt['id'] + '</p>' +  
-                    '<p class="viewDetailsPromptText">Prompt Text: ' + prompt['promptText'] + '</p>' + 
+                    '<p class="viewDetailsPromptID">Prompt ID: ' + prompt['id'] + '</p>' +
+                    '<p class="viewDetailsPromptText">Prompt Text: ' + prompt['promptText'] + '</p>' +
                     '<p class="viewDetailsPromptDisplayLabel">Display Label: ' + prompt['displayLabel'] + '</p>' +
-                    '<p class="viewDetailsPromptType">Prompt Type: ' + prompt['promptType'] + '</p>' +  
+                    '<p class="viewDetailsPromptType">Prompt Type: ' + prompt['promptType'] + '</p>' +
                     '<p>Prompt options: </p>' +
                     '<span class="detailList">' + propertiesText + '</span>' +
-                    '<p class="viewDetailsPromptDefault">Default: ' + defaultValue + '</p>' + 
-                    '<p class="viewDetailsPromptCond">Condition: ' + condition + '</p>' + 
+                    '<p class="viewDetailsPromptDefault">Default: ' + defaultValue + '</p>' +
+                    '<p class="viewDetailsPromptCond">Condition: ' + condition + '</p>' +
                     '<p class="viewDetailsPromptSkippable">Skippable: ' + prompt['skippable'] + '</p>' +
                     '<p class="viewDetailsPromptSkipLabel">Skip Label: ' + skipLabel + '</p>' +
                 '</div>'+
@@ -571,7 +571,7 @@ function addTextToPrevItem(index) {
         '</div>' +
 
         // prompt edit
-        '<div class="collapse-group2">' + 
+        '<div class="collapse-group2">' +
             '<div id="edit' + target + '" class="collapse itemEdit group2">'+
                 editPrompt +
             '</div>'+
@@ -599,15 +599,15 @@ function addTimestampToPrevItem(index) {
         //'<button type="button" class="btn btn-link pull-right editItem"><i class="icon-pencil icon-black"></i> Edit</button>' +
         '<button type="button" class="btn btn-link pull-right editItem" data-toggle="collapse" data-target="#edit' + target + '"><i class="icon-file icon-black"></i><small> Edit</small></button>' +
         '<i class="icon-ok-circle help-hover"> </i><button type="button" class="btn btn-link help-hover viewDetails" data-original-title="Prompt (Click for more details)" rel="tooltip" data-placement="top" data-toggle="collapse" href="#' + target + '"><u> <strong class="detailsID">' + prompt['id'] + '</strong></u></button><br>'+
-        
-        '<div class="collapse-group1">' + 
+
+        '<div class="collapse-group1">' +
             '<div id="' + target + '" class="collapse itemDetails out">'+
                 '<div class="accordion-inner">'+
-                    '<p class="viewDetailsPromptID">Prompt ID: ' + prompt['id'] + '</p>' +  
-                    '<p class="viewDetailsPromptText">Prompt Text: ' + prompt['promptText'] + '</p>' + 
+                    '<p class="viewDetailsPromptID">Prompt ID: ' + prompt['id'] + '</p>' +
+                    '<p class="viewDetailsPromptText">Prompt Text: ' + prompt['promptText'] + '</p>' +
                     '<p class="viewDetailsPromptDisplayLabel">Display Label: ' + prompt['displayLabel'] + '</p>' +
-                    '<p class="viewDetailsPromptType">Prompt Type: ' + prompt['promptType'] + '</p>' +  
-                    '<p class="viewDetailsPromptCond">Condition: ' + condition + '</p>' + 
+                    '<p class="viewDetailsPromptType">Prompt Type: ' + prompt['promptType'] + '</p>' +
+                    '<p class="viewDetailsPromptCond">Condition: ' + condition + '</p>' +
                     '<p class="viewDetailsPromptSkippable">Skippable: ' + prompt['skippable'] + '</p>' +
                     '<p class="viewDetailsPromptSkipLabel">Skip Label: ' + skipLabel + '</p>' +
                 '</div>'+
@@ -615,7 +615,7 @@ function addTimestampToPrevItem(index) {
         '</div>' +
 
         // prompt edit
-        '<div class="collapse-group2">' + 
+        '<div class="collapse-group2">' +
             '<div id="edit' + target + '" class="collapse itemEdit group2">'+
                 editPrompt +
             '</div>'+
@@ -635,7 +635,7 @@ function addVideoToPrevItem(index) {
     var prompt = campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList'][''][index]['prompt'];
     var propertiesText = "";
     var data = eval(prompt['properties']['property']);
-    
+
     for (var key in data) {
         if (data.hasOwnProperty(key)) {
             propertiesText += '<p>' + data[key]['key'] + ': ' + data[key]['label'] + '</p>';
@@ -654,17 +654,17 @@ function addVideoToPrevItem(index) {
         //'<button type="button" class="btn btn-link pull-right editItem"><i class="icon-pencil icon-black"></i> Edit</button>' +
         '<button type="button" class="btn btn-link pull-right editItem" data-toggle="collapse" data-target="#edit' + target + '"><i class="icon-file icon-black"></i><small> Edit</small></button>' +
         '<i class="icon-ok-circle help-hover"> </i><button type="button" class="btn btn-link help-hover viewDetails" data-original-title="Prompt (Click for more details)" rel="tooltip" data-placement="top" data-toggle="collapse" href="#' + target + '"><u> <strong class="detailsID">' + prompt['id'] + '</strong></u></button><br>'+
-        
-        '<div class="collapse-group1">' + 
+
+        '<div class="collapse-group1">' +
             '<div id="' + target + '" class="collapse itemDetails out">'+
                 '<div class="accordion-inner">'+
-                    '<p class="viewDetailsPromptID">Prompt ID: ' + prompt['id'] + '</p>' +  
-                    '<p class="viewDetailsPromptText">Prompt Text: ' + prompt['promptText'] + '</p>' + 
+                    '<p class="viewDetailsPromptID">Prompt ID: ' + prompt['id'] + '</p>' +
+                    '<p class="viewDetailsPromptText">Prompt Text: ' + prompt['promptText'] + '</p>' +
                     '<p class="viewDetailsPromptDisplayLabel">Display Label: ' + prompt['displayLabel'] + '</p>' +
-                    '<p class="viewDetailsPromptType">Prompt Type: ' + prompt['promptType'] + '</p>' +  
+                    '<p class="viewDetailsPromptType">Prompt Type: ' + prompt['promptType'] + '</p>' +
                     '<p>Prompt options: </p>' +
                     '<span class="detailList">' + propertiesText + '</span>' +
-                    '<p class="viewDetailsPromptCond">Condition: ' + condition + '</p>' + 
+                    '<p class="viewDetailsPromptCond">Condition: ' + condition + '</p>' +
                     '<p class="viewDetailsPromptSkippable">Skippable: ' + prompt['skippable'] + '</p>' +
                     '<p class="viewDetailsPromptSkipLabel">Skip Label: ' + skipLabel + '</p>' +
                 '</div>'+
@@ -672,7 +672,7 @@ function addVideoToPrevItem(index) {
         '</div>' +
 
         // prompt edit
-        '<div class="collapse-group2">' + 
+        '<div class="collapse-group2">' +
             '<div id="edit' + target + '" class="collapse itemEdit group2">'+
                 editPrompt +
             '</div>'+
