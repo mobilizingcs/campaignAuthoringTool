@@ -27,7 +27,7 @@ function campaigntojson (xml){
 
 	//hack for IE
 	jsonstring = jsonstring.replace("<", "&lt;").replace(">", "&gt;");
-	
+
 	//parse back to JSON
 	var myjson = JSON.parse(jsonstring, " ");
 
@@ -101,6 +101,7 @@ $(function(){
 			if(json.campaign && json.campaign.surveys){
 				campaignWrapper.campaign.surveys = json.campaign.surveys;
 				localStorage['campaignWrapper'] = JSON.stringify(campaignWrapper);
+				$.cookie('currentSurvey', 0)
 				location.reload()
 			} else {
 				alert("No surveys found in XML. Perhaps invalid XML file.")
