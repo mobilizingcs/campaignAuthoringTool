@@ -7,7 +7,7 @@ $(function() {
     function checkDirty() {
         if($('.surveyItem').find('.collapse-group2').find('.dirtyFlag').val() == 1) {
             return true;
-        } 
+        }
 
     }
     // overide menu buttons
@@ -79,12 +79,12 @@ $(function() {
     });//.disableSelection();
 
     // view survey click event
-    $('#existingSurveysSortable').on('click', 'button.viewSurvey', function(e) {   
+    $('#existingSurveysSortable').on('click', 'button.viewSurvey', function(e) {
         $parent = $(this).parent();
         if (($parent).find('.collapse-group2').find('.in').length > 0) {
             $parent.find('.surveyEdit').collapse('hide');
         }
-        
+
     });
 
     // edit prompts click event
@@ -113,7 +113,7 @@ $(function() {
             // TODO
             // check if collapse already open
             //if (($parent).find('.in').length > 0) {
-            //    alert('visible'); 
+            //    alert('visible');
             //}
             //else alert('not visible');
             //$parent.find('.surveyDetails').collapse('toggle');
@@ -124,9 +124,9 @@ $(function() {
             $.cookie('currentSurvey', index);
 
             var survey = campaignWrapper['campaign']['surveys']['survey'][index];
-        
+
         	//var target = 'edit' + survey['id'] + 'Details';
-        	
+
             //alert($this.find('#' + target).find('.editSurveyDetails').html());
             //alert('ping');
 
@@ -141,7 +141,7 @@ $(function() {
             //var $collapse = $(this).closest('.collapse-group').find('.collapse');
         	//$/collapse.collapse('toggle');
         } else {
-            e.stopPropagation(); 
+            e.stopPropagation();
             alert('Please finish editing or cancel before closing this');
         }
     });
@@ -169,9 +169,9 @@ $(function() {
         $.cookie('currentSurvey', index);
 
         var survey = campaignWrapper['campaign']['surveys']['survey'][index];
-    
+
     	//var target = 'edit' + survey['id'] + 'Details';
-    	
+
         //alert($this.find('#' + target).find('.editSurveyDetails').html());
         //alert('save');
 
@@ -186,13 +186,13 @@ $(function() {
         surveyData['introText'] = false;
         // Check if field is hidden and empty, and if so, don't include it
         if ($edit.find('.editSurveyDetails').find('#surveyIntroText').val()) surveyData['introText'] = $edit.find('.editSurveyDetails').find('#surveyIntroText').val();
-        
+
         surveyData['submitText'] = $edit.find('.editSurveyDetails').find('#surveySubmitText').val();
-        
+
         surveyData['anytime'] = $edit.find('.editSurveyDetails').find('#surveyAnytime').attr('checked') ? true : false;
 
         var success = campaignEditor.editSurvey(campaignWrapper['campaign'], surveyData, index);
-        
+
         if (!success) {
         	alert('Some required field are misssing');
         	/*
@@ -221,7 +221,7 @@ $(function() {
             $parent.find('.viewDetailsAnytime').html('<strong>Anytime: </strong>' + survey['anytime']);
             $parent.find('.group1').collapse('hide');
             $parent.find('.surveyDetails').collapse('show');
-            
+
 
             //$collapse.collapse('toggle');
             //$('.createItemError').slideToggle('slow',function() { $(this).alert('close')});
@@ -232,7 +232,7 @@ $(function() {
             // reset dirty flag
             $edit.find('.editSurveyDetails').find('.dirtyFlag').val('0');
             //if ($edit.find('.editSurveyDetails').find('.dirtyFlag').val() == 0)
-            //    alert("Flag is " + $edit.find('.editSurveyDetails').find('.dirtyFlag').val());            
+            //    alert("Flag is " + $edit.find('.editSurveyDetails').find('.dirtyFlag').val());
 
         }
         //var $collapse = $(this).closest('.collapse-group').find('.collapse');
@@ -243,7 +243,7 @@ $(function() {
         //$parent.find('.editSurvey').attr('data-target','#' + target);
         //$parent.find('.group1').attr('id', target);
 
-        
+
     	//$(this).closest('.collapse').collapse('toggle');
     });
 
@@ -280,3 +280,36 @@ $(function() {
     });
 });
 
+
+//added by jeroen:
+$(function(){
+    //hide when existing surveys
+    if( !campaignWrapper.campaign.surveys.survey.length ){
+        $(".importdiv").removeClass("hidden")
+    }
+
+    var filereader = new FileReader();
+    filereader.onload = function(e) {
+        try {
+            var xml = e.target.result;
+            var json = campaigntojson(xml.replace(/<!--[\s\S]*?-->/g, ""))
+            if(json.campaign && json.campaign.surveys){
+                campaignWrapper.campaign.surveys = json.campaign.surveys;
+                localStorage['campaignWrapper'] = JSON.stringify(campaignWrapper);
+                $.cookie('currentSurvey', 0)
+                location.reload()
+            } else {
+                alert("No surveys found in XML. Perhaps invalid XML file.")
+            }
+        } catch(err) {
+            alert("Error parsing XML: \n\n" + err.message)
+        }
+    }
+
+    $("#importxml").on("change", function (e) {
+        e.preventDefault();
+        var file = $("#importxml")[0].files[0];
+        if(file) filereader.readAsText(file);
+        $("#importxml").val("")
+    })
+})

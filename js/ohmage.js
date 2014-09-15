@@ -105,7 +105,7 @@ function Ohmage(app, client){
 			var filter = $.Deferred();
 
 			//Augment Ohmage error message
-			error("HTTP " + req.status + ": " + req.responseText, -3, req)
+			if(req.status) error("HTTP " + req.status + ": " + req.responseText, -3, req)
 			filter.reject(req, textStatus, errorThrown);
 
 			//return to fail() callback
@@ -135,6 +135,7 @@ function Ohmage(app, client){
 	oh.class = {};
 	oh.campaign = {};
 	oh.document = {};
+	oh.survey = {};
 
 	//API wrappres
 	oh.config.read = function(){
@@ -237,6 +238,14 @@ function Ohmage(app, client){
 		return oh.call("/campaign/read", data, function(x){return x.metadata.items});
 	}
 
+	oh.campaign.readall = function(data){
+		//set a default
+		data = data || {};
+		data.output_format = data.output_format || "short";
+		return oh.call("/campaign/read", data);
+	}
+
+
 	//@args xml
 	//@args privacy_state
 	//@args running_state
@@ -262,6 +271,15 @@ function Ohmage(app, client){
 	//@args campaign_urn
 	oh.campaign.delete = function(data){
 		return oh.call("/campaign/delete", data)
+	}
+
+	oh.survey.count = function(urn){
+		data = {
+			campaign_urn : urn,
+			id : "privacy_state"
+		};
+
+		return oh.call("/survey_response/function/read", data)
 	}
 
 	//@args document_name
