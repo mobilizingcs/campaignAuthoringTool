@@ -108,17 +108,32 @@ $(function() {
         } else {
             var xmlFile = '<?xml version="1.0" encoding="UTF-8"?>' + json2xml({'campaign': campaignWrapper['campaign']});
 
-            oh.campaign.create({
-                xml : xmlFile,
-                privacy_state : campaignWrapper['privacyState'],
-                running_state : campaignWrapper['runningState'],
-                campaign_urn : campaignWrapper['campaign']['campaignUrn'],
-                description : campaignWrapper['description'],
-                class_urn_list : campaignWrapper['classes']
-            }).done(function(){
-                alert("Campaign submitted successfully!");
-                window.location.replace('success.html');
-            })
+            if(campaignWrapper.update){
+                oh.campaign.update({
+                    xml : xmlFile,
+                    privacy_state : campaignWrapper['privacyState'],
+                    running_state : campaignWrapper['runningState'],
+                    campaign_urn : campaignWrapper['campaign']['campaignUrn'],
+                    description : campaignWrapper['description'],
+                    class_list_remove : campaignWrapper['oldclasses'],
+                    class_list_add : campaignWrapper['classes']
+                }).done(function(){
+                    alert("Campaign updated successfully!");
+                    window.location.replace('update.html');
+                })
+            } else {
+                oh.campaign.create({
+                    xml : xmlFile,
+                    privacy_state : campaignWrapper['privacyState'],
+                    running_state : campaignWrapper['runningState'],
+                    campaign_urn : campaignWrapper['campaign']['campaignUrn'],
+                    description : campaignWrapper['description'],
+                    class_urn_list : campaignWrapper['classes']
+                }).done(function(){
+                    alert("Campaign created successfully!");
+                    window.location.replace('update.html');
+                });
+            }
 	    }
     });
 

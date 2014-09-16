@@ -19,6 +19,11 @@
     //prevent timeout
     oh.keepalive();
 
+    //delete old stuff
+    delete localStorage.campaignWrapper;
+    $.removeCookie("currentCampaign");
+    $.removeCookie("currentSurvey");
+
     //get data
     oh.user.whoami().done(function(username){
         oh.campaign.readall().done(function(data){
@@ -49,10 +54,12 @@
 
                             localStorage['campaignWrapper'] = JSON.stringify({
                                 classes : campaign.classes[0],
+                                oldclasses : campaign.classes[0],
                                 description : campaign.description,
                                 privacyState : campaign.privacy_state,
                                 runningState : campaign.running_state,
                                 username : username,
+                                update : true,
                                 campaign : {
                                     campaignName: campaign.name,
                                     campaignUrn : urn,

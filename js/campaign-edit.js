@@ -98,3 +98,11 @@ $(function() {
         });
     });
 });
+
+//added by jeroen
+$(function(){
+    if(campaignWrapper.update){
+        $("#campaignTitle").attr("disabled", "disabled");
+        $("#campaignUrn").attr("disabled", "disabled")
+    }
+});
