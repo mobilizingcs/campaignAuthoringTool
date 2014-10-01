@@ -1,62 +1,35 @@
 <!DOCTYPE HTML>
 <html>
     <head>
-        <title>Update Survey</title>
+        <title>Create Campaign</title>
         <meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
         <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>
-        <link href="css/jquery-ui-1.11.0.min.css" rel="stylesheet" type="text/css"/>
         <link href="css/layout.css" rel="stylesheet" type="text/css"/>
         <link href="css/navbar.css" rel="stylesheet" type="text/css"/>
+        <link href="css/campaign.css" rel="stylesheet" type="text/css"/>
 
         <script type="text/javascript" src="js/jquery.min.js"></script>
         <script type="text/javascript" src="js/jquery-cookie.js"></script>
-        <script type="text/javascript" src="js/json2xml.js"></script>
-        <script type="text/javascript" src="js/campaigntojson.js"></script>
         <script type="text/javascript" src="js/ohmage.js"></script>
-        <script type="text/javascript" src="js/update.js"></script>
-
         <script type="text/javascript" src="js/app.js"></script>
         <script type="text/javascript" src="js/bootstrap.min.js"></script>
         <script type="text/javascript" src="js/campaign.js"></script>
         <script type="text/javascript" src="js/help-icon.js"></script>
         <script type="text/javascript" src="js/campaign-editor.js"></script>
-
     </head>
     <body>
 
         <div class="container">
             <div class="row">
-                <div class="span12">
-
-                        <h2 class="centered">Existing Campaigns</h2>
-
-                        <ul id="campaignlist" class="nav nav-tabs nav-stacked">
-
-                        </ul>
-
-                </div>
-            </div>
-
-            <hr>
-
-            <div class="row">
                 <div class="span12 content">
-
-
-
-                    <div class="well">
-
+                    <div class="boxRounded boxDark">
+                        <h4>Campaign Editor <small>Create a new campaign info, or edit an existing one.</small></h4>
 
                         <div class="new-campaign">
-
-                            <h2 class="centered">New Campaign</h2>
-
-                            <br>
-
-
+                            <hr>
                             <form class="form-horizontal" id="campaign-form" action="survey.html">
-
+                                <h5>Campaign Info </h5>
                                 <div class="control-group">
                                     <label class="control-label" for="campaignTitle">Campaign Name <span class="red">*</span></label>
                                     <div class="controls">
@@ -122,9 +95,7 @@
                     </div>
                 </div>
             </div>
-
         </div>
-
 
         <!-- footer -->
         <div id="footer">
@@ -142,4 +113,3 @@
 
     </body>
 </html>
-
