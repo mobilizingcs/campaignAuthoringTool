@@ -34,6 +34,8 @@
                     var a = $("<a>").attr("href", "campaign-edit.html").text(data[urn].name).appendTo(li).click(function(e) {
                         var self = $(this);
                         e.preventDefault();
+                        if(li.hasClass("disabled")) return;
+
                         oh.campaign.readall({
                             campaign_urn_list: urn,
                             output_format:"long"
