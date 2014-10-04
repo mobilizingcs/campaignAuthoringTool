@@ -33,6 +33,11 @@
 
         <div class="container">
             <div class="row">
+
+                <div class="span12 page-header">
+                    <h1>Campaign Authoring</h1>
+                </div>
+
                 <div class="span3">
                     <div class="boxRounded boxDark" id="campaignMenu">
                         <div class="center">
@@ -41,8 +46,8 @@
                             <button type="button" class="btn btn-block" id="createNewSurvey">Create New Survey</button>
                             <button type="button" class="btn btn-block" id="editExistingSurvey">Edit Existing Surveys</button>
                             <button type="button" class="btn btn-block" id="viewSurveyXML">View Campaign XML</button>
-                            <button type="button" class="btn btn-info btn-block" id="submitCampaign">Submit Campaign to Server</button>
-                            <button type="button" class="btn btn-danger btn-block" id="deleteCampaign">Delete Campaign Draft</button>
+                            <button type="button" class="btn btn-info btn-block" id="submitCampaign">Save Campaign to Server</button>
+                            <button type="button" class="btn btn-danger btn-block" id="deleteCampaign">Exit Campaign</button>
                         </div>
 
                         <div class="xmlModal">
@@ -144,11 +149,7 @@
                                         <i class="help-icon icon-question-sign" data-original-title="Users can only upload responses on running campaigns. This can be updated once you submit your campaign." rel="tooltip" data-placement="right"></i>
                                     </div>
                                 </div>
-                                <div class="control-group">
-                                    <div class="controls">
-                                        <button type="submit" id="edit-campaign" class="btn">Save Campaign Info</button>
-                                    </div>
-                                </div>
+
                             </form>
                             <span class="red">*</span> <small>Required Fields</small>
                         </div>

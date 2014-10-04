@@ -60,42 +60,23 @@ $(function() {
             e.preventDefault();
         });
 
-        // Create Campaign Button
-        $('#edit-campaign').click(function(e) {
+        function updateAll(){
             var title = $('#campaignTitle').val();
             var urn = $('#campaignUrn').val();
             var description = $('#campaignDescription').val();
+            campaignWrapper['privacyState'] = $('#privacyStateBtn').val();
+            campaignWrapper['runningState'] = $('#runningStateBtn').val();
+            campaignWrapper['description'] = description;
+            campaignWrapper['classes'] = $('.classes').val();
+            campaignWrapper['campaign']['campaignUrn'] = urn;
+            campaignWrapper['campaign']['campaignName'] = title
+            $.cookie('currentCampaign', campaignWrapper['campaign']['campaignName']);
+            localStorage['campaignWrapper'] = JSON.stringify(campaignWrapper);
+            console.log("Updated localstorage.")
+        }
 
-            if (title === '') {
-                $('#campaignTitle').parent().parent().addClass('error');
-            } else {
-                $('#campaignTitle').parent().parent().removeClass('error');
-            }
-            if (urn === '') {
-                $('#campaignUrn').parent().parent().addClass('error');
-            } else {
-                urn = urn.replace(/\s/g,"");
-                $('#campaignUrn').parent().parent().removeClass('error');
-            }
-            var campaign = campaignEditor.editCampaign(campaignWrapper['campaign'], title, urn);
-            if (!campaign) {
-                var errorAlert = '<div class="alert alert-error create-campaign-error hide"><button class="close">&times;</button><strong>Error:</strong> One or more required field is missing</div>';
-                $(errorAlert).insertAfter('.new-campaign hr').slideToggle();
-                if($('.create-campaign-error').size() > 1) {
-                    $('.create-campaign-error').slice(1).delay('1000').slideToggle('slow',function() { $(this).alert('close')});
-                }
-                e.preventDefault();
-            } else {
-                campaignWrapper['privacyState'] = $('#privacyStateBtn').val();
-                campaignWrapper['runningState'] = $('#runningStateBtn').val();
-                campaignWrapper['description'] = description;
-                campaignWrapper['classes'] = $('.classes').val();
-                campaignWrapper['campaign']['campaignUrn'] = urn;
-                campaignWrapper['campaign']['campaignName'] = title
-                $.cookie('currentCampaign', campaignWrapper['campaign']['campaignName']);
-                localStorage['campaignWrapper'] = JSON.stringify(campaignWrapper);
-            }
-        });
+        $("input,select").on("change", updateAll)
+        $("textarea").on("blur", updateAll)
     });
 });
 

@@ -36,11 +36,11 @@ $(function() {
             if ($('#surveyIntroText').val()) surveyData['introText'] = $('#surveyIntroText').val();
         }
         surveyData['submitText'] = $('#surveySubmitText').val();
-        
+
         surveyData['anytime'] = $('#surveyAnytime').attr('checked') ? true : false;
 
         var success = campaignEditor.editSurvey(campaignWrapper['campaign'], surveyData, index);
-        
+
         if (!success) {
             var errorAlert = '<div class="alert alert-error createSurveyError hide"><button class="close">&times;</button><strong>Error:</strong> A required field is missing!</div>';
             $(errorAlert).insertAfter('.newSurvey hr').slideToggle();
@@ -53,5 +53,5 @@ $(function() {
             localStorage['campaignWrapper'] = JSON.stringify(campaignWrapper);
         }
     });
-    
+
 });

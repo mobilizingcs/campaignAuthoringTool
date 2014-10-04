@@ -101,7 +101,11 @@ $(function() {
     }
 
     $('#submitCampaign').click(function() {
-        deleteEditField(campaignWrapper['campaign']['surveys']['survey'][$.cookie('currentSurvey')]['contentList']['']);
+        if(!campaignWrapper['campaign']['surveys']['survey'].length){
+            alert("You need to create at least one survey before submitting the campaign.")
+            return;
+        }
+        deleteEditField(campaignWrapper['campaign']['surveys']['survey'][+$.cookie('currentSurvey')]['contentList']['']);
         //test if campaign has a finished survey, don't upload if it doesnt
         if (campaignWrapper['campaign']['surveys']['survey'][0]['contentList'][''].length === 0){
             alert("It doesn't look like your campaign is finished, make sure to finish before you upload!");
@@ -119,7 +123,7 @@ $(function() {
                     class_list_add : campaignWrapper['classes']
                 }).done(function(){
                     alert("Campaign updated successfully!");
-                    window.location.replace('update.html');
+                    window.location.replace('index.html');
                 })
             } else {
                 oh.campaign.create({
@@ -131,7 +135,7 @@ $(function() {
                     class_urn_list : campaignWrapper['classes']
                 }).done(function(){
                     alert("Campaign created successfully!");
-                    window.location.replace('update.html');
+                    window.location.replace('index.html');
                 });
             }
 	    }
