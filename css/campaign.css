@@ -14,8 +14,8 @@
     text-align: left;
 }
 
-#campaignUrn[disabled]{
-    background-color: transparent !important;
+#campaignUrn{
+    background-color: #F0F0F0;
 }
 
 #surveyXml {

@@ -1,6 +1,7 @@
 $(function(){
+	var manual = false;
 	function generateURN(){
-		if($("#campaignUrn").attr("disabled")){
+		if(!manual){
 			var name = $("#campaignTitle").val().toLowerCase().replace(/[^a-z0-9]/gi,'');
 			var class_urn = $(".classes").val().replace("urn:class:","");
 			var author = $(".authors").val().replace(/[^a-z0-9]/gi,'');
@@ -12,8 +13,8 @@ $(function(){
 	$("#campaignTitle").on("keyup", generateURN)
 	$(".classes").on("change", generateURN)
 
-	$("#campaignurncontrols").on("click", function(){
-		$("#campaignUrn").removeAttr("disabled")
+	$("#campaignurncontrols").on("keypress", function(){
+		manual = true;
+		$("#campaignUrn").css("background-color", "white");
 	})
-
 });
