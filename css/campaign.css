@@ -7,11 +7,15 @@
 }
 
 .authors{
-    border: 0; 
-    padding: 0; 
-    margin: 0; 
+    border: 0;
+    padding: 0;
+    margin: 0;
     background-color: transparent !important;
-    text-align: left; 
+    text-align: left;
+}
+
+#campaignUrn[disabled]{
+    background-color: transparent !important;
 }
 
 #surveyXml {
