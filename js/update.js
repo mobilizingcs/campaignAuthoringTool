@@ -1,7 +1,4 @@
 (function(){
-    //some global settings
-    var myrole = "author"
-
     //initiate the client
     var oh = Ohmage("/app", "campaign-author-tool-reloaded")
 
@@ -29,7 +26,7 @@
         oh.campaign.readall().done(function(data){
             var urns = Object.keys(data);
             $.each(urns.sort(), function(i, urn){
-                if(data[urn]["user_roles"].indexOf(myrole) > -1) {
+                if($.inArray("author", data[urn]["user_roles"]) || $.inArray("supervisor", data[urn]["user_roles"])) {
                     var li = $("<li>").addClass("disabled").appendTo("#campaignlist");
                     var a = $("<a>").attr("href", "campaign-edit.html").text(data[urn].name).appendTo(li).click(function(e) {
                         var self = $(this);
