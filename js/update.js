@@ -26,7 +26,8 @@
         oh.campaign.readall().done(function(data){
             var urns = Object.keys(data);
             $.each(urns.sort(), function(i, urn){
-                if($.inArray("author", data[urn]["user_roles"]) || $.inArray("supervisor", data[urn]["user_roles"])) {
+                var roles = data[urn]["user_roles"];
+                if($.inArray("author", roles) > -1 || $.inArray("supervisor", roles) > -1) {
                     var li = $("<li>").addClass("disabled").appendTo("#campaignlist");
                     var a = $("<a>").attr("href", "campaign-edit.html").text(data[urn].name).appendTo(li).click(function(e) {
                         var self = $(this);
