@@ -36,7 +36,7 @@
                     var td4 = $("<td>").appendTo(tr);
                     var td5 = $("<td>").appendTo(tr);
 
-                    var a = $("<a>").addClass("btn disabled").text("Launch").appendTo(td5).click(function(e) {
+                    var a = $("<a>").addClass("btn disabled").text("Update").appendTo(td5).click(function(e) {
                         var self = $(this);
                         e.preventDefault();
                         if(self.hasClass("disabled")) return;
