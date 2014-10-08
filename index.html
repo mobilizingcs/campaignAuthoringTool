@@ -11,6 +11,11 @@
 
         <script type="text/javascript" src="js/jquery.min.js"></script>
         <script type="text/javascript" src="js/jquery-cookie.js"></script>
+
+        <!--datatables-->
+        <link rel="stylesheet" type="text/css" href="css/jquery.dataTables.min.css">
+        <script type="text/javascript" charset="utf8" src="js/jquery.dataTables.min.js"></script>
+
         <script type="text/javascript" src="js/json2xml.js"></script>
         <script type="text/javascript" src="js/campaigntojson.js"></script>
         <script type="text/javascript" src="js/ohmage.js"></script>
@@ -21,6 +26,8 @@
         <script type="text/javascript" src="js/campaign.js"></script>
         <script type="text/javascript" src="js/help-icon.js"></script>
         <script type="text/javascript" src="js/campaign-editor.js"></script>
+
+
 
     </head>
     <body>
@@ -42,10 +49,19 @@
 
                 <div class="span9">
 
+                    <table id="campaigntable" class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Campaign</th>
+                                <th>Created</th>
+                                <th>State</th>
+                                <th>Responses</th>
+                                <th>Update</th>
+                            </tr>
+                        </thead>
 
-                        <ul id="campaignlist" class="nav nav-tabs nav-stacked">
-
-                        </ul>
+                        <tbody id="campaigntablebody"></tbody>
+                    </table>
 
                 </div>
             </div>

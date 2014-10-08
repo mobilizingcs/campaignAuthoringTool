@@ -25,14 +25,21 @@
     oh.user.whoami().done(function(username){
         oh.campaign.readall().done(function(data){
             var urns = Object.keys(data);
-            $.each(urns.sort(), function(i, urn){
+            var requests = $.map(urns.sort(), function(urn, i){
                 var roles = data[urn]["user_roles"];
                 if($.inArray("author", roles) > -1 || $.inArray("supervisor", roles) > -1) {
-                    var li = $("<li>").addClass("disabled").appendTo("#campaignlist");
-                    var a = $("<a>").attr("href", "campaign-edit.html").text(data[urn].name).appendTo(li).click(function(e) {
+
+                    var tr = $("<tr>").appendTo("#campaigntablebody")
+                    var td1 = $("<td>").appendTo(tr).text(data[urn].name);
+                    var td2 = $("<td>").appendTo(tr).text(data[urn].creation_timestamp);
+                    var td3 = $("<td>").appendTo(tr).text(data[urn].running_state);
+                    var td4 = $("<td>").appendTo(tr);
+                    var td5 = $("<td>").appendTo(tr);
+
+                    var a = $("<a>").addClass("btn disabled").text("Launch").appendTo(td5).click(function(e) {
                         var self = $(this);
                         e.preventDefault();
-                        if(li.hasClass("disabled")) return;
+                        if(self.hasClass("disabled")) return;
 
                         oh.campaign.readall({
                             campaign_urn_list: urn,
@@ -73,14 +80,38 @@
                         });
                     });
 
-                    oh.survey.count(urn).done(function(counts){
+                    return oh.survey.count(urn).done(function(counts){
                         if(!Object.keys(counts).length){
                             //no existing responses found
-                            li.removeClass("disabled")
+                            a.removeClass("disabled").addClass("btn-primary").attr("href", "campaign-edit.html");
+                            td4.text(0);
+                        } else {
+                            var total = $.map(counts, function(val, key) {
+                                return val[0].count;
+                            }).reduce(function(previousValue, currentValue) {
+                                return previousValue + currentValue;
+                            });
+                            td4.text(total);
                         }
-                    })
+                    });
                 }
-            })
+            });
+            //init temporary datatable
+            $('#campaigntable').dataTable( {
+                "aoColumnDefs": [
+                   { 'bSortable': false, 'aTargets': [ 4 ] }
+                ]
+            });
+
+            //reinit final datatable after counts have been updated
+            $.when.apply($, requests).always(function() {
+                $('#campaigntable').dataTable().fnDestroy();
+                $('#campaigntable').dataTable( {
+                    "aoColumnDefs": [
+                       { 'bSortable': false, 'aTargets': [ 4 ] }
+                    ]
+                });
+            });
         });
     });
 })();
