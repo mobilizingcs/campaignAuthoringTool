@@ -99,6 +99,7 @@
             //data tables widget
             function initTable(){
                 $('#campaigntable').dataTable( {
+                    "dom" : '<"pull-right"l><"pull-left"f>tip',
                     "lengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]],
                     "aoColumnDefs": [
                        { 'bSortable': false, 'aTargets': [ 4 ] }
