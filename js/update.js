@@ -96,23 +96,23 @@
                     });
                 }
             });
-            //init temporary datatable
-            $('#campaigntable').dataTable( {
-                "lengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]],
-                "aoColumnDefs": [
-                   { 'bSortable': false, 'aTargets': [ 4 ] }
-                ]
-            });
-
-            //reinit final datatable after counts have been updated
-            $.when.apply($, requests).always(function() {
-                $('#campaigntable').dataTable().fnDestroy();
+            //data tables widget
+            function initTable(){
                 $('#campaigntable').dataTable( {
                     "lengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]],
                     "aoColumnDefs": [
                        { 'bSortable': false, 'aTargets': [ 4 ] }
                     ]
                 });
+            }
+
+            //init temporary datatable
+            initTable()
+
+            //reinit final datatable after counts have been updated
+            $.when.apply($, requests).always(function() {
+                $('#campaigntable').dataTable().fnDestroy();
+                initTable();
             });
         });
     });
