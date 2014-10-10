@@ -10,8 +10,8 @@ $(function(){
 		}
 	}
 
-	$("#campaignTitle").on("keyup", generateURN)
-	$(".classes").on("change", generateURN)
+	$("#campaignTitle").on("keyup", generateURN).on("blur", generateURN);
+	$(".classes").on("change", generateURN).on("blur", generateURN);
 
 	$("#campaignurncontrols").on("keypress", function(){
 		manual = true;
