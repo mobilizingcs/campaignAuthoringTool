@@ -37,3 +37,11 @@ function populateClasses(username){
     })
 }
 
+$(function(){
+    //only allow alphanumeric
+    $('#surveyId,#promptId').keyup(function (e) {
+        var fld = $(this);
+        fld.val(fld.val().replace(/[^a-z0-9_]/gi,''));
+    });
+})
+
