@@ -351,9 +351,11 @@ $(function() {
                     $('#promptData').load("promptModals/numberModal.html", function() {
                         var minNum = json['property'][0]['label'];
                         var maxNum = json['property'][1]['label'];
+                        var wholeNumber = json['property'][2]['label'];
                         //var properties = "min:" + minNum + "\n" + "max:" + maxNum;
                         $('#numberTable').find('#minNumber').val(minNum);
                         $('#numberTable').find('#maxNumber').val(maxNum);
+                        $('#numberTable').find('#wholeNumber')[0].checked = wholeNumber;
                         if ($('#default').val()) {
                             //currItem.find('.editPromptDetails').find('.default').val(prompt['default']);
                             $('#numberTable').find('#numberDefault').val($('#default').val());
@@ -1327,9 +1329,11 @@ $(function() {
                 $('#promptData').load("promptModals/numberModal.html", function() {
                     var minNum = json['property'][0]['label'];
                     var maxNum = json['property'][1]['label'];
+                    var wholeNumber = json['property'][2]['label'];
 
                     $('#numberTable').find('#minNumber').val(minNum);
                     $('#numberTable').find('#maxNumber').val(maxNum);
+                    $('#numberTable').find('#wholeNumber')[0].checked = wholeNumber;
                     if (prompt['default']) {
                         currItem.find('.editPromptDetails').find('.default').val(prompt['default']);
                         $('#numberTable').find('#numberDefault').val(prompt['default']);

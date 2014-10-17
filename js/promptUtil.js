@@ -23,7 +23,7 @@ function swapArrayElem(promptArr, typeArr, index_a, index_b) {
     var tmp = promptArr[index_a];
     promptArr[index_a] = promptArr[index_b];
     promptArr[index_b] = tmp;
-    
+
     // swap type
     tmp = typeArr[index_a];
     typeArr[index_a] = typeArr[index_b];
@@ -148,7 +148,7 @@ function addProperties(input, promptType) {
     var text = input['properties'];
     console.log(text);
     if (promptType == "multi_choice" || promptType == "multi_choice_custom") {
-        
+
         $('#multiChoiceTable tr:not(:first-child)').each(function()
         {
             property = {};
@@ -156,7 +156,7 @@ function addProperties(input, promptType) {
             var option = $this.find(".multiOptionNum").val();
             var label = $this.find(".multiLabel").val();
             var value = $this.find(".multiValue").val();
-            
+
             property['key'] = Number(option);
             property['label'] = label;
             if (value != "") property['value'] = value;
@@ -164,9 +164,9 @@ function addProperties(input, promptType) {
             // key++;
         });
         return properties;
-        
+
         //var jsonString = $('#jsonText').val();
-        //return JSON.parse(jsonString); 
+        //return JSON.parse(jsonString);
     }
     else if (promptType == "single_choice" || promptType == "single_choice_custom") {
         $('#singleChoiceTable tr:not(:first-child)').each(function()
@@ -176,7 +176,7 @@ function addProperties(input, promptType) {
             var option = $this.find(".singleOptionNum").val();
             var label = $this.find(".singleLabel").val();
             var value = $this.find(".singleValue").val();
-            
+
             property['key'] = Number(option);
             property['label'] = label;
             if (value != "") property['value'] = value;
@@ -188,6 +188,7 @@ function addProperties(input, promptType) {
     else if (promptType == "number") {
         var minNum = $('#minNumber').val();
         var maxNum = $('#maxNumber').val();
+        var wholeNumber = $("#wholeNumber")[0].checked;
 
         property = {};
         property['key'] = 'min';
@@ -197,6 +198,7 @@ function addProperties(input, promptType) {
         property['key'] = 'max';
         property['label'] = maxNum;
         properties['property'].push(property);
+        properties['property'].push({key:"wholeNumber", label:wholeNumber})
         return properties;
 
         /*
@@ -207,7 +209,7 @@ function addProperties(input, promptType) {
             temp = propertiesText[i].split(":");
             key = temp[0].replace("\r", "");
             label = temp[1].replace("\r", "");
-            
+
             property['key'] = key;
             property['label'] = label;
             properties['property'].push(property);
@@ -233,7 +235,7 @@ function addProperties(input, promptType) {
             if (temp[0] != "" && temp[0] != 'Default') {
                 key = temp[0].toLowerCase();
                 label = temp[1].replace("\r", "");;
-     
+
                 property['key'] = key;
                 property['label'] = label;
                 properties['property'].push(property);

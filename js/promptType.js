@@ -37,12 +37,12 @@ $(function() {
                 editObj.find('.editPromptDetails').find('.default').val("");
             }
         } else {
-            
+
             jQuery.each(defaultValue,function(index, item){
                 tmp += item + ',';
                 var child = Number(item) + 1;
-                //console.log(child + ":" + $('#multiChoiceTable tr').eq(child).find('.multiLabel').val()); 
-                $('#multiChoiceTable tr').eq(child).find('.isDefault').val(1);    
+                //console.log(child + ":" + $('#multiChoiceTable tr').eq(child).find('.multiLabel').val());
+                $('#multiChoiceTable tr').eq(child).find('.isDefault').val(1);
             });
             //console.log(tmp);
             if (editObj == null)
@@ -62,24 +62,24 @@ $(function() {
             var label = $this.find(".multiLabel").val();
             var value = $this.find(".multiValue").val();
             var vDefault = $this.find(".isDefault").val();
-    
+
             // save as a json
             property = {};
             property['key'] = Number(option);
             property['label'] = label;
-            if (value != "") property['value'] = value; 
+            if (value != "") property['value'] = value;
             jsonOption['property'].push(property);
 
             if (vDefault == '1') properties += label + ":" + value + "\t (Default)\n";
             else properties += label + ":" + value + "\n";
-            
+
             key++;
         });
 
         //console.log(jsonOption);
         //console.log(JSON.stringify(jsonOption));
         //j = JSON.stringify(jsonOption);
-        
+
 
         if (editObj == null) {
             $('#addedPrompt').val(properties);
@@ -95,9 +95,9 @@ $(function() {
 
     function displaySingleChoiceValues() {
         var defaultValue = $('#singleChoiceDefault').val();
-        
+
         var child = Number(defaultValue) + 1;
-        $('#singleChoiceTable tr').eq(child).find('.isDefault').val(1);    
+        $('#singleChoiceTable tr').eq(child).find('.isDefault').val(1);
         var defaultText = $('#singleChoiceDefault option:selected').text();
         var defaultVal = "\n\nDefault: ";
 
@@ -126,10 +126,10 @@ $(function() {
             property = {};
             property['key'] = Number(option);
             property['label'] = label;
-            if (value != "") property['value'] = value; 
+            if (value != "") property['value'] = value;
             jsonOption['property'].push(property);
 
-            if (defaultCheck === defaultText) { 
+            if (defaultCheck === defaultText) {
                 if (editObj == null)
                     $('#default').val(key);
                 else {
@@ -163,9 +163,10 @@ $(function() {
     function displayNumberValues() {
         var minNum = $('#minNumber').val();
         var maxNum = $('#maxNumber').val();
+        var wholeNumber = $("#wholeNumber")[0].checked;
         var defaultValue = $('#numberDefault').val();
         var defaultText = "Default: " + defaultValue;
-        var properties = "min:" + minNum + "\n" + "max:" + maxNum;
+        var properties = "min:" + minNum + "\n" + "max:" + maxNum + "\nwholeNumber:" + wholeNumber;
 
         if (defaultValue != "") {
             if (editObj == null)
@@ -189,13 +190,14 @@ $(function() {
         property['key'] = 'max';
         property['label'] = maxNum;
         jsonOption['property'].push(property);
+        jsonOption['property'].push({key:"wholeNumber", label:wholeNumber});
 
         if (editObj == null) {
             $('#addedPrompt').val(properties + '\n' + defaultText);
             $('#jsonText').val(JSON.stringify(jsonOption));
 
             //var t = JSON.parse($('#jsonText').val());
-            //console.log(t['property'][1]['label']);           
+            //console.log(t['property'][1]['label']);
         }
         else {
             editObj.find('.editPromptDetails').find('.addedPrompt').val(properties + '\n' + defaultText);
@@ -277,7 +279,7 @@ $(function() {
                       + "autolaunch:" + auto + "\n"
                       + "Retries:" + retry + "\n"
                       + "Min_runs:" + min + "\n"
-                      + "Input:" + input + "\n"  
+                      + "Input:" + input + "\n"
 
         jsonOption = {'property':[]};
         property = {};
@@ -287,7 +289,7 @@ $(function() {
         property = {};
         property['key'] = 'activity';
         property['label'] = activity;
-        jsonOption['property'].push(property);     
+        jsonOption['property'].push(property);
         property = {};
         property['key'] = 'action';
         property['label'] = action;
@@ -310,7 +312,7 @@ $(function() {
             property['label'] = input;
         else
             property['label'] = 'null';
-        jsonOption['property'].push(property);          
+        jsonOption['property'].push(property);
 
         if (editObj == null) {
             $('#addedPrompt').val(properties);
@@ -413,7 +415,7 @@ $(function() {
         if (errorCode != 0) {
             alert(errorMessage);
             return false;
-        } else 
+        } else
             return true;
     }
 
@@ -476,7 +478,7 @@ $(function() {
         if (errorCode != 0) {
             alert(errorMessage);
             return false;
-        } else 
+        } else
             return true;
     }
 
@@ -520,7 +522,7 @@ $(function() {
                  displayAudioValues();
                 $('#promptTypeModal').modal('hide');
             }
-            break;      
+            break;
         case 'multi_choice':
             var validate = validateMultiChoice();
             if (validate == true) {
@@ -541,7 +543,7 @@ $(function() {
             var validate = validateSingleChoice();
             if (validate == true) {
                 $('#promptTypeText').val("Single Choice");
-                
+
                 displaySingleChoiceValues();
                 $('#promptTypeModal').modal('hide');
             }
@@ -550,7 +552,7 @@ $(function() {
             var validate = validateSingleChoice();
             if (validate == true) {
                 $('#promptTypeText').val("Single Choice Custom");
-                
+
                 displaySingleChoiceValues();
                 $('#promptTypeModal').modal('hide');
             }
@@ -559,6 +561,7 @@ $(function() {
             $('#promptTypeText').val("Number");
             var min = $('#minNumber').val();
             var max = $('#maxNumber').val();
+            var wholeNumber = $("#wholeNumber")[0].checked;
             var defaultValue = $('#numberDefault').val();
             var errorMessage = "Error:";
             var minError = false, maxError = false;
@@ -610,7 +613,7 @@ $(function() {
                 displayPhotoValues();
                 $('#promptTypeModal').modal('hide');
             }
-            break; 
+            break;
         case 'remote_activity':
             $('#promptTypeText').val("Remote Activity");
             var rPackage = $('#packageRemote').val().trim();
@@ -710,7 +713,7 @@ $(function() {
                  displayVideoValues();
                 $('#promptTypeModal').modal('hide');
             }
-            break;                
+            break;
         default:
             break;
         }

@@ -64,7 +64,11 @@ function campaigntojson (xml){
 								if(thisprop.key){
 									//cast to numeric
 									surveys.survey[i].contentList[""][j].prompt.properties.property[k].key = toNumber(thisprop.key)
+
+									//in case of 'wholeNumber' property
+									surveys.survey[i].contentList[""][j].prompt.properties.property[k].label = toBoolean(thisprop.label)
 								}
+
 							})
 						}
 					}

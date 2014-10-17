@@ -129,20 +129,20 @@ var simpleConditionTooltip = "<div class='left'>" +
 							 "</div>"
 var isEditing = false;
 var editObj;
-// 
+//
 
 // Global functions
 // this function create an unique ID
 function uniqueid(){
     // always start with a letter (for DOM friendlyness)
     var idstr=String.fromCharCode(Math.floor((Math.random()*25)+65));
-    do {                
+    do {
         // between numbers and characters (48 is 0 and 90 is Z (42-48 = 90)
         var ascicode=Math.floor((Math.random()*42)+48);
         if (ascicode<58 || ascicode>64){
             // exclude all chars between : (58) and @ (64)
-            idstr+=String.fromCharCode(ascicode);    
-        }                
+            idstr+=String.fromCharCode(ascicode);
+        }
     } while (idstr.length<32);
 
     return (idstr);
@@ -153,6 +153,7 @@ $(function() {
 	// number prompt
 	$('#minNumber').val(NumberPrompt['default_min']);
 	$('#maxNumber').val(NumberPrompt['default_max']);
+	$('#wholeNumber').val(NumberPrompt['default_wholeNumber'])
 
 	// text prompt
 	$('#minTextLength').val(TextPrompt['default_min']);
