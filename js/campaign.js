@@ -3,6 +3,12 @@ $(function() {
 
     oh.user.whoami().done(function(username) {
 
+        oh.user.info().done(function(x){
+          if(x[username].data.can_create_campaigns == false){
+            alert('Your account does not currently have the privileges required to create a campaign on this server. Campaign definitions authored here may be lost.')
+          }
+        })
+
         //check if there is an unsubmitted campaign
         if(localStorage && localStorage.campaignWrapper){
             var mydata = JSON.parse(localStorage.campaignWrapper)
