@@ -4,7 +4,7 @@ $(function() {
     oh.user.whoami().done(function(username) {
 
         oh.user.info().done(function(x){
-          if(x[username].data.can_create_campaigns == false){
+          if(x[username].permissions.can_create_campaigns == false){
             alert('Your account does not currently have the privileges required to create a campaign on this server. Campaign definitions authored here may be lost.')
           }
         })
