@@ -1,4 +1,4 @@
-campaignAuthoringTool
+[DEPRECATED] campaignAuthoringTool
 =====================
 
-This is a repository for a JavaScript and PHP based campaign authoring tool.
+This tool has been deprecated in favor of https://github.com/mobilizingcs/surveytool
